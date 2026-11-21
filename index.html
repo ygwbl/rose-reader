@@ -1139,11 +1139,59 @@
     </div>
   </header>
 
+  <main class="container">
+    <!-- 专属情侣横幅 -->
+    <div class="hero-banner">
+      <div class="badge-sweet">💖 专属于小仙女的追更小筑 · 独家连载</div>
+      <h1 class="hero-title">玫瑰不向深渊折</h1>
+      <p class="hero-sub">“当断则断，自立豪门；深渊万丈，回首已是众神之巅。”</p>
+      
+      <div style="margin: 12px 0 14px; display: flex; gap: 8px;">
+        <button class="nav-aff-pill" onclick="openDrawer('affection-drawer')" style="height:36px; padding:0 14px; font-size:13px;">
+          <span>💖</span> 点击查看【全员心动值与好感度图谱】
+        </button>
+      </div>
+
+      <div class="love-note">
+        <span>💌</span>
+        <span>作者寄语：这是专门为你写的故事。每晚睡前，记得来看更新呀～</span>
+      </div>
+
+      <!-- 实时同步与刷新状态条 -->
+      <div class="banner-sync-bar" style="margin-top: 14px; padding: 8px 12px; background: rgba(0, 0, 0, 0.15); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: var(--font-sans);">
+        <div style="font-size: 11.5px; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
+          <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:#10b981; box-shadow:0 0 6px #10b981;"></span>
+          <span>已连载至第 010 章 · 全员 AI 电影级人设立绘</span>
+        </div>
+        <button onclick="localStorage.removeItem('novel_last_chap'); window.location.href=window.location.pathname+'?v='+Date.now();" style="background:var(--accent); color:#fff; border:none; padding:4px 9px; border-radius:8px; font-size:11px; cursor:pointer; font-weight:600;">
+          🔄 强制刷新
+        </button>
+      </div>
+    </div>
+
+    <!-- 主要角色档案横向滑动条 -->
+    <div class="cast-bar-title" style="display: flex; justify-content: space-between; align-items: center; margin: 24px 0 12px; font-weight: 700; font-size: 14.5px;">
+      <span>主要角色档案（点击查看人设）</span>
+      <span style="font-size: 12px; color: var(--accent-gold); cursor: pointer;" onclick="openDrawer('cast-drawer')">全部 9 位 ›</span>
+    </div>
+    <div class="cast-scroll" id="cast-chips-container" style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 24px; -webkit-overflow-scrolling: touch;"></div>
+
+    <!-- 正文展示卡片 -->
+    <article class="article-box">
+      <header class="article-header">
+        <div class="chapter-number" id="cur-chapter-badge">CHAPTER 01</div>
+        <h2 class="chapter-title" id="cur-chapter-title">第001章 碎裂的威士忌</h2>
+        <div class="chapter-meta" id="cur-chapter-meta">
+          <span id="meta-words">字数：4,859 字</span>
+          <span class="duration-tag" id="meta-duration">📖 预计阅读 7 分钟</span>
+          <span>状态：已校阅落盘</span>
+        </div>
+      </header>
+
       <section class="article-content" id="article-body"></section>
     </article>
 
-    <!-- 章节结尾互动与催更 -->
-    <footer class="chapter-end">
+<footer class="chapter-end">
       <div class="interactive-card">
         <button class="btn-heart" id="btn-heart" onclick="triggerHeart(event)">
           <span>❤️</span>
