@@ -1108,12 +1108,12 @@
     <div class="nav-actions">
       <!-- 睡前轻音乐 -->
       <button class="nav-btn-icon" id="btn-ambient-music" onclick="toggleAmbientMusic()" title="睡前氛围音乐">
-        <span id="music-icon">🎵</span>
+        <span id="music-icon">🎵</span><span id="music-text" style="display:none;">音乐: 关</span>
       </button>
 
       <!-- 快速深浅色切换 -->
       <button class="nav-btn-icon" id="btn-quick-theme" onclick="toggleDarkLight()" title="切换浅色/深色">
-        <span id="quick-theme-icon">☀️</span>
+        <span id="quick-theme-icon">☀️</span><span id="quick-theme-text" style="display:none;">浅色</span>
       </button>
 
       <!-- 好感度专属性感胶囊 -->
@@ -1597,6 +1597,10 @@
       document.getElementById('meta-duration').innerText = `📖 预计阅读 ${readMinutes} 分钟`;
 
       const bodyEl = document.getElementById('article-body');
+      if (!bodyEl) {
+        console.error("article-body container element not found!");
+        return;
+      }
       bodyEl.innerHTML = '';
 
       if (idx === 0) {
@@ -1687,13 +1691,8 @@
       const isDark = (theme === 'dark');
       const icon = document.getElementById('quick-theme-icon');
       const text = document.getElementById('quick-theme-text');
-      if (isDark) {
-        icon.innerText = '☀️';
-        text.innerText = '浅色';
-      } else {
-        icon.innerText = '🌙';
-        text.innerText = '深色';
-      }
+      if (icon) icon.innerText = isDark ? '☀️' : '🌙';
+      if (text) text.innerText = isDark ? '浅色' : '深色';
     }
 
     function setTheme(name) {
@@ -1955,7 +1954,7 @@
         playPianoChord();
 
         document.getElementById('btn-ambient-music').classList.add('playing');
-        document.getElementById('music-text').innerText = '音乐: 开';
+        const mt = document.getElementById('music-text'); if (mt) mt.innerText = '音乐: 开';
         showToast('已开启睡前微风钢琴与雨声 🎶');
       } catch (err) {
         alert('浏览器限制了音频自动播放，请再点击一次即可开启～');
@@ -1969,7 +1968,7 @@
         try { rainNode.stop(); } catch(e) {}
       }
       document.getElementById('btn-ambient-music').classList.remove('playing');
-      document.getElementById('music-text').innerText = '音乐: 关';
+      const mt2 = document.getElementById('music-text'); if (mt2) mt2.innerText = '音乐: 关';
       showToast('已暂停睡前轻音乐');
     }
 
