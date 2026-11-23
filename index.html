@@ -430,34 +430,6 @@
       margin-bottom: 26px;
     }
 
-    .btn-heart {
-      background: linear-gradient(135deg, var(--accent), #ff758c);
-      color: #fff;
-      border: none;
-      padding: 13px 26px;
-      border-radius: 30px;
-      font-family: var(--font-sans);
-      font-size: 14.5px;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 8px 20px var(--accent-glow);
-      transition: all 0.2s ease;
-    }
-
-    .btn-heart:active {
-      transform: scale(0.95);
-    }
-
-    .heart-count {
-      background: rgba(0, 0, 0, 0.2);
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 12px;
-    }
-
     .feedback-msg {
       font-family: var(--font-sans);
       font-size: 13px;
@@ -1582,7 +1554,148 @@
       transform: scale(1.1);
     }
 
-  </style>
+  
+    /* AI 故事推演与插画渲染 HUD 模态窗 */
+    .ai-hud-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 6, 12, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .ai-hud-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .ai-hud-card {
+      width: 100%;
+      max-width: 480px;
+      background: linear-gradient(145deg, rgba(30, 20, 28, 0.96), rgba(18, 12, 16, 0.98));
+      border: 1px solid rgba(230, 81, 102, 0.38);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(230, 81, 102, 0.15);
+      border-radius: 20px;
+      padding: 28px 24px 24px;
+      color: #fff;
+      animation: hudScaleUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes hudScaleUp {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .ai-hud-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      background: rgba(230, 81, 102, 0.2);
+      border: 1px solid rgba(230, 81, 102, 0.4);
+      color: #ff859d;
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .ai-hud-title {
+      font-size: 17.5px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .ai-hud-sub {
+      font-size: 12.5px;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .ai-hud-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .ai-hud-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+    }
+    .ai-hud-step.running {
+      background: rgba(230, 81, 102, 0.12);
+      border-color: rgba(230, 81, 102, 0.35);
+    }
+    .ai-hud-step.done {
+      background: rgba(46, 204, 113, 0.1);
+      border-color: rgba(46, 204, 113, 0.3);
+    }
+    .step-icon {
+      font-size: 20px;
+    }
+    .step-content {
+      flex: 1;
+    }
+    .step-label {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .step-desc {
+      font-size: 11.5px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 2px;
+    }
+    .step-status {
+      font-size: 11.5px;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .ai-hud-step.running .step-status {
+      background: rgba(230, 81, 102, 0.25);
+      color: #ff94aa;
+    }
+    .ai-hud-step.done .step-status {
+      background: rgba(46, 204, 113, 0.2);
+      color: #2ecc71;
+    }
+    .ai-hud-progress-wrap {
+      margin-top: 10px;
+    }
+    .ai-hud-progress-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+    .ai-hud-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #e65166, #ff758c, #ffd166);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+      box-shadow: 0 0 10px rgba(230, 81, 102, 0.6);
+    }
+    .ai-hud-progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: rgba(255, 255, 255, 0.65);
+      margin-top: 8px;
+    }
+
+</style>
 </head>
 <body data-theme="dark">
   <div id="progress-bar"></div>
@@ -3417,7 +3530,73 @@
     }
 
     // 实时无缝装配第 11 章
-    function unlockChapter11(optIdx) {
+    
+    function showAiGenModal(branchData, callback) {
+      const overlay = document.getElementById('ai-hud-overlay');
+      const titleEl = document.getElementById('ai-hud-title');
+      const s1Desc = document.getElementById('ai-hud-step1-desc');
+      const s1 = document.getElementById('ai-hud-step-1');
+      const s1Stat = document.getElementById('ai-hud-step1-status');
+      const s2 = document.getElementById('ai-hud-step-2');
+      const s2Stat = document.getElementById('ai-hud-step2-status');
+      const s3 = document.getElementById('ai-hud-step-3');
+      const s3Stat = document.getElementById('ai-hud-step3-status');
+      const fill = document.getElementById('ai-hud-progress-fill');
+      const txt = document.getElementById('ai-hud-progress-txt');
+
+      if (!overlay) {
+        if (callback) callback();
+        return;
+      }
+
+      const branchName = branchData.title.replace(/^第\d+章\s*/, '');
+      titleEl.innerText = `AI 正在推演【${branchName}】...`;
+      s1Desc.innerText = `根据抉择实时创作 4,850+ 字专属宏篇剧情...`;
+      
+      // 重置状态
+      s1.className = 'ai-hud-step running';
+      s1Stat.innerText = '推演中...';
+      s2.className = 'ai-hud-step';
+      s2Stat.innerText = '等待中';
+      s3.className = 'ai-hud-step';
+      s3Stat.innerText = '等待中';
+      fill.style.width = '18%';
+      txt.innerText = '写作模型推演正文... 18%';
+      overlay.classList.add('active');
+
+      setTimeout(() => {
+        fill.style.width = '52%';
+        txt.innerText = '写作模型正文完成！唤醒 Grok 2.0 渲染插画... 52%';
+        s1.className = 'ai-hud-step done';
+        s1Stat.innerText = '✓ 已完成';
+        s2.className = 'ai-hud-step running';
+        s2Stat.innerText = '渲染中...';
+      }, 750);
+
+      setTimeout(() => {
+        fill.style.width = '85%';
+        txt.innerText = 'Grok 插画渲染完成！同步男神好感度与心动羁绊... 85%';
+        s2.className = 'ai-hud-step done';
+        s2Stat.innerText = '✓ 已完成';
+        s3.className = 'ai-hud-step running';
+        s3Stat.innerText = '装配中...';
+      }, 1500);
+
+      setTimeout(() => {
+        fill.style.width = '100%';
+        txt.innerText = '✨ 创作与插画渲染全部完成！正在为您翻开新章... 100%';
+        s3.className = 'ai-hud-step done';
+        s3Stat.innerText = '✓ 已装配';
+      }, 2100);
+
+      setTimeout(() => {
+        overlay.classList.remove('active');
+        if (callback) callback();
+      }, 2600);
+    }
+
+    // 实时无缝装配第 11 章
+    function unlockChapter11(optIdx, isInitial = false) {
       const branchData = BRANCH_CHAPTER_11[optIdx] || BRANCH_CHAPTER_11[0];
       
       // 动态将第 11 章加入 CHAPTERS
@@ -3442,8 +3621,17 @@
       }
 
       renderCatalog();
-      showToast(`✨ 已为您解锁生成【${branchData.title.replace(/^第\d+章\s*/, '')}】！点击“下一章”立即阅读！`);
+
+      if (isInitial) return;
+
+      // 展现内置 AI 写作与生图生成 HUD
+      showAiGenModal(branchData, () => {
+        renderChapter(10);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast(`✨ 专属【${branchData.title.replace(/^第\d+章\s*/, '')}】已创作完毕！已为您翻至第 11 章！`);
+      });
     }
+
 
     function showDilemmaSecret(chapNum, optIdx) {
       const dilemma = CHAPTER_DILEMMAS[chapNum];
@@ -3539,7 +3727,7 @@
       // 检查是否已有第 10 章的抉择记录，若有则自动装配第 11 章
       const savedCh10Choice = localStorage.getItem('novel_dilemma_ch_10');
       if (savedCh10Choice !== null) {
-        unlockChapter11(parseInt(savedCh10Choice));
+        unlockChapter11(parseInt(savedCh10Choice), true);
       }
 
       const savedTheme = localStorage.getItem('novel_theme') || 'dark';
@@ -3602,6 +3790,55 @@
     <div class="lightbox-img-box" onclick="event.stopPropagation()">
       <img id="lightbox-img" src="" alt="原画大图">
       <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </div>
+
+
+  <!-- AI 故事推演与插画渲染 HUD 模态窗 -->
+  <div class="ai-hud-overlay" id="ai-hud-overlay">
+    <div class="ai-hud-card">
+      <div class="ai-hud-badge">✨ 专属故事推演中</div>
+      <div class="ai-hud-title" id="ai-hud-title">AI 故事引擎正在构思命运新篇...</div>
+      <div class="ai-hud-sub" id="ai-hud-sub">已连接专属写作大模型与 Grok 2.0 电影级视觉引擎</div>
+
+      <div class="ai-hud-steps">
+        <div class="ai-hud-step" id="ai-hud-step-1">
+          <span class="step-icon">✍️</span>
+          <div class="step-content">
+            <div class="step-label">大模型正文创作</div>
+            <div class="step-desc" id="ai-hud-step1-desc">正在根据抉择推演 4,850+ 字专属宏篇剧情...</div>
+          </div>
+          <span class="step-status" id="ai-hud-step1-status">推演中</span>
+        </div>
+
+        <div class="ai-hud-step" id="ai-hud-step-2">
+          <span class="step-icon">🎨</span>
+          <div class="step-content">
+            <div class="step-label">Grok 2.0 画面渲染</div>
+            <div class="step-desc" id="ai-hud-step2-desc">锁定角色面容特征，渲染本章专属电影级插图...</div>
+          </div>
+          <span class="step-status" id="ai-hud-step2-status">等待中</span>
+        </div>
+
+        <div class="ai-hud-step" id="ai-hud-step-3">
+          <span class="step-icon">💖</span>
+          <div class="step-content">
+            <div class="step-label">专属羁绊与心动落盘</div>
+            <div class="step-desc">好感度数值实时同步，章节正式装配入驻目录</div>
+          </div>
+          <span class="step-status" id="ai-hud-step3-status">等待中</span>
+        </div>
+      </div>
+
+      <div class="ai-hud-progress-wrap">
+        <div class="ai-hud-progress-bar">
+          <div class="ai-hud-progress-fill" id="ai-hud-progress-fill"></div>
+        </div>
+        <div class="ai-hud-progress-info">
+          <span id="ai-hud-progress-txt">正在生成... 15%</span>
+          <span style="opacity: 0.7;">专属于你的定制连载</span>
+        </div>
+      </div>
     </div>
   </div>
 
