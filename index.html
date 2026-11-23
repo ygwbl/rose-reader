@@ -1092,7 +1092,330 @@
       border-radius: inherit;
     }
 
-</style>
+
+    /* ===== 动态好感度与互动系统升级 ===== */
+    .timeline-nav {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding: 6px 2px 10px;
+      margin-bottom: 10px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .timeline-nav::-webkit-scrollbar { display: none; }
+    .timeline-pill {
+      flex: 0 0 auto;
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 11.5px;
+      font-weight: 500;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.22s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .timeline-pill:hover {
+      border-color: #f43f5e;
+      color: #f43f5e;
+    }
+    .timeline-pill.active {
+      background: linear-gradient(135deg, #f43f5e, #fb7185);
+      color: #fff !important;
+      border-color: transparent !important;
+      box-shadow: 0 3px 10px rgba(244, 63, 94, 0.35);
+      transform: translateY(-1px);
+    }
+    .timeline-pill.sync-pill {
+      background: rgba(244, 63, 94, 0.1);
+      border-color: rgba(244, 63, 94, 0.3);
+      color: #f43f5e;
+      font-weight: 600;
+    }
+    
+    .timeline-cur-desc {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.08), rgba(212, 175, 55, 0.08));
+      border: 1px dashed rgba(244, 63, 94, 0.35);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    /* 男神卡片投喂按钮 */
+    .hero-heart-btn {
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      color: #e11d48;
+      border-radius: 14px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.2s ease;
+    }
+    .hero-heart-btn:hover, .hero-heart-btn:active {
+      background: linear-gradient(135deg, #f43f5e, #fb7185);
+      color: #fff;
+      transform: scale(1.06);
+      box-shadow: 0 2px 8px rgba(244, 63, 94, 0.4);
+    }
+
+    /* 章节末尾修罗场心选卡片 */
+    .chapter-dilemma-card {
+      margin: 36px 0 16px;
+      padding: 20px 18px;
+      background: linear-gradient(145deg, var(--bg-card), rgba(254, 242, 242, 0.35));
+      border: 1.5px solid rgba(244, 63, 94, 0.28);
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+    [data-theme="dark"] .chapter-dilemma-card {
+      background: linear-gradient(145deg, #1e1b24, #2a1f2c);
+      border-color: rgba(244, 63, 94, 0.35);
+    }
+    .dilemma-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .dilemma-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+    .dilemma-options {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .dilemma-opt-btn {
+      text-align: left;
+      padding: 11px 13px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 13px;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .dilemma-opt-btn:hover {
+      border-color: #f43f5e;
+      background: rgba(244, 63, 94, 0.04);
+      transform: translateX(2px);
+    }
+    .dilemma-opt-btn.selected {
+      border-color: #f43f5e;
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(251, 113, 133, 0.08));
+      box-shadow: 0 3px 12px rgba(244, 63, 94, 0.18);
+    }
+    .dilemma-opt-badge {
+      font-weight: 700;
+      color: #f43f5e;
+      font-size: 12.5px;
+      flex-shrink: 0;
+    }
+    .dilemma-secret-box {
+      margin-top: 12px;
+      padding: 11px 13px;
+      border-radius: 10px;
+      background: rgba(244, 63, 94, 0.08);
+      border-left: 3.5px solid #f43f5e;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+    .dilemma-secret-header {
+      font-weight: 700;
+      color: #e11d48;
+      font-size: 11.5px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 浪漫花瓣与爱心飘落动画 */
+    .petal-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      animation: petalFall linear forwards;
+    }
+    @keyframes petalFall {
+      0% {
+        transform: translateY(-40px) rotate(0deg) scale(0.8);
+        opacity: 0.95;
+      }
+      50% {
+        transform: translateY(50vh) translateX(30px) rotate(180deg) scale(1.1);
+        opacity: 0.85;
+      }
+      100% {
+        transform: translateY(105vh) translateX(-20px) rotate(360deg) scale(0.7);
+        opacity: 0;
+      }
+    }
+
+    /* 浪漫情侣蜜语弹窗 */
+    .love-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(5px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .love-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .love-card-modal {
+      background: var(--bg-card);
+      border: 1.5px solid rgba(244, 63, 94, 0.35);
+      border-radius: 20px;
+      max-width: 380px;
+      width: 100%;
+      padding: 24px 22px;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .love-modal-overlay.active .love-card-modal {
+      transform: scale(1) translateY(0);
+    }
+    .love-card-icon {
+      font-size: 38px;
+      margin-bottom: 6px;
+      animation: pulseHeart 1.6s infinite ease-in-out;
+    }
+    @keyframes pulseHeart {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    .love-card-title {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #e11d48;
+      margin-bottom: 3px;
+    }
+    .love-card-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+    .love-card-quote {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-primary);
+      background: rgba(244, 63, 94, 0.06);
+      padding: 13px 15px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      border: 1px dashed rgba(244, 63, 94, 0.25);
+      text-align: left;
+    }
+    .love-card-btns {
+      display: flex;
+      gap: 10px;
+    }
+    .love-card-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .love-card-btn.primary {
+      background: linear-gradient(135deg, #f43f5e, #fb7185);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(244, 63, 94, 0.35);
+    }
+    .love-card-btn.secondary {
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+    }
+
+    /* 拍立得心动书签卡 */
+    .polaroid-box {
+      background: #fff;
+      color: #262626;
+      border-radius: 12px;
+      padding: 16px 16px 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      max-width: 330px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .polaroid-img-frame {
+      width: 100%;
+      height: 150px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: #111;
+      position: relative;
+    }
+    .polaroid-img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .polaroid-quote {
+      font-family: Georgia, "Songti SC", "SimSun", serif;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+    .polaroid-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #888;
+      border-top: 1px solid #eee;
+      padding-top: 8px;
+    }
+
+  </style>
 </head>
 <body data-theme="dark">
   <div id="progress-bar"></div>
@@ -1230,6 +1553,7 @@
   <!-- 人物库抽屉 -->
   
   <!-- 好感度与心动值图谱抽屉 -->
+    <!-- 好感度与心动值图谱抽屉 (全章节动态进化系统) -->
   <div class="drawer" id="affection-drawer">
     <div class="drawer-header">
       <div>
@@ -1237,256 +1561,36 @@
           <span>💖</span> 全员心动值与好感度图谱
         </div>
         <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 3px;">
-          实时监测各方势力对大女主【温见雪】的心动指数、占有欲与阵营关系
+          实时追踪男主们对【温见雪】的心动指数与羁绊变迁
         </div>
       </div>
       <button class="drawer-close" onclick="closeAllDrawers()">✕</button>
     </div>
     <div class="drawer-content">
+      <!-- 剧情节点时间线选择器 -->
+      <div style="font-size: 11.5px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; display:flex; align-items:center; justify-content:space-between;">
+        <span>📅 剧情节点（点击切换查看各章心动演进）:</span>
+        <span id="timeline-tracking-badge" style="color: #f43f5e; font-size:11px;">跟随时空：第1章</span>
+      </div>
+      <div class="timeline-nav" id="timeline-nav-pills">
+        <!-- JS 动态渲染胶囊 -->
+      </div>
+
+      <div class="timeline-cur-desc" id="timeline-cur-desc">
+        <!-- 当前章节剧情要点 -->
+      </div>
+
       <!-- 标签切换 -->
       <div class="affection-tabs">
         <button class="aff-tab active" onclick="switchAffTab('male')">🔥 四大男神修罗场</button>
         <button class="aff-tab" onclick="switchAffTab('allies')">👯 闺蜜团 vs 渣男小丑</button>
       </div>
 
-      <!-- 男神卡片容器 -->
-      <div id="aff-tab-male" class="aff-panel active">
-        <!-- 傅沉舟 -->
-        <div class="aff-card tier-god">
-          <div class="aff-header">
-            <div class="aff-avatar"><img src="assets/avatars/fu_chenzhou.jpg" class="avatar-img" onerror="this.outerHTML='👑'"></div>
-            <div class="aff-meta">
-              <div class="aff-name-row">
-                <span class="aff-name">傅沉舟</span>
-                <span class="aff-role">男一 · A市首富（No.1）</span>
-                <span class="aff-badge top">至死不渝</span>
-              </div>
-              <div class="aff-desc">傅氏财阀绝对掌舵人 · 禁欲霸主 · 暗恋十二年</div>
-            </div>
-          </div>
-          
-          <div class="aff-meter-group">
-            <div class="meter-label">
-              <span>心动指数 (Affection)</span>
-              <span class="meter-val gold">99.9% 💖💖💖💖💖</span>
-            </div>
-            <div class="meter-bar"><div class="meter-fill gold" style="width: 99.9%;"></div></div>
+      <!-- 男神卡片容器 (JS 动态渲染) -->
+      <div id="aff-tab-male" class="aff-panel active"></div>
 
-            <div class="meter-label" style="margin-top: 8px;">
-              <span>偏执占有欲 (Possessiveness)</span>
-              <span class="meter-val crimson">98% 🔥</span>
-            </div>
-            <div class="meter-bar"><div class="meter-fill crimson" style="width: 98%;"></div></div>
-          </div>
-
-          <div class="aff-event">
-            <div class="event-title">✨ 核心羁绊 · 命运初相识：</div>
-            <div class="event-body">初中时在傅老太爷葬礼上，年少的傅沉舟被亲族夺权排挤、独自蜷缩在长廊绝望痛哭。同样刚遭遇父亲去世变故的温见雪温柔上前安慰，塞给他唯一的橘子软糖与手帕。因女孩这番拯救灵魂的鼓励，他重拾信心夺下铁王座，自此将她奉为一生暗恋与唯一的白月光！</div>
-          </div>
-
-          <div class="aff-quote">“别人看的是图纸，而我要的，是你这个人，和你的整个野心。”</div>
-        </div>
-
-        <!-- 顾宴臣 -->
-        <div class="aff-card">
-          <div class="aff-header">
-            <div class="aff-avatar"><img src="assets/avatars/gu_yanchen.jpg" class="avatar-img" onerror="this.outerHTML='🍷'"></div>
-            <div class="aff-meta">
-              <div class="aff-name-row">
-                <span class="aff-name">顾宴臣</span>
-                <span class="aff-role">男二 · 财阀少东（No.2）</span>
-                <span class="aff-badge blue">猎奇 ➔ 沦陷</span>
-              </div>
-              <div class="aff-desc">顾氏百亿集团少东 · 浪子深情 · 风流掌控者</div>
-            </div>
-          </div>
-          
-          <div class="aff-meter-group">
-            <div class="meter-label">
-              <span>心动指数 (Affection)</span>
-              <span class="meter-val">88% 💖💖💖💖</span>
-            </div>
-            <div class="meter-bar"><div class="meter-fill" style="width: 88%; background: linear-gradient(90deg, #3b82f6, #8b5cf6);"></div></div>
-
-            <div class="meter-label" style="margin-top: 8px;">
-              <span>撩拨征服欲 (Conquest)</span>
-              <span class="meter-val">92% ⚡</span>
-            </div>
-            <div class="meter-bar"><div class="meter-fill" style="width: 92%; background: linear-gradient(90deg, #8b5cf6, #ec4899);"></div></div>
-          </div>
-
-          <div class="aff-event">
-            <div class="event-title">✨ 核心羁绊 · 棋逢对手：</div>
-            <div class="event-body">酒吧亲眼目睹温见雪泼烈酒断情，被那份不掉一滴泪的孤傲与烈性狠狠吸引；深夜开着法拉利在路边摊目睹她喝啤酒立志抢肉吃，心痒难耐。</div>
-          </div>
-
-          <div class="aff-quote">“三十年了……傅沉舟，你到底从哪儿挖出来这么个要人命的妖精……老子怕是真要栽在她手里了。”</div>
-        </div>
-
-        <!-- 江景修 -->
-        <div class="aff-card">
-          <div class="aff-header">
-            <div class="aff-avatar"><img src="assets/avatars/jiang_jingxiu.jpg" class="avatar-img" onerror="this.outerHTML='🩺'"></div>
-            <div class="aff-meta">
-              <div class="aff-name-row">
-                <span class="aff-name">江景修</span>
-                <span class="aff-role">男三 · 医学圣手（青梅竹马）</span>
-                <span class="aff-badge green">清冷偏执</span>
-              </div>
-              <div class="aff-desc">顶尖心胸外科第一刀 · 医学世家唯一继承人</div>
-            </div>
-          </div>
-          
-          <div class="aff-meter-group">
-            <div class="meter-label">
-              <span>心动指数 (Affection)</span>
-              <span class="meter-val green">96% 💖💖💖💖</span>
-            </div>
-            <div class="meter-bar"><div class="meter-fill green" style="width: 96%; background: linear-gradient(90deg, #10b981, #06b6d4);"></div></div>
-
-            <div class="meter-label" style="margin-top: 8px;">
-              <span>舍命守护度 (Devotion)</span>
-              <span class="meter-val green">100% 🛡️</span>
-            </div>
-            <div class="meter-bar"><div class="meter-fill green" style="width: 100%; background: linear-gradient(90deg, #059669, #10b981);"></div></div>
-          </div>
-
-          <div class="aff-event">
-            <div class="event-title">✨ 核心羁绊 · 终身避风港：</div>
-            <div class="event-body">二十余年青梅竹马，白大褂下一心唯系温见雪。分手当晚推掉国外峰会连夜赶到公寓楼下，送上亲手煲的红枣热茶与新公寓钥匙：“见雪，这里永远是你的避风港。”</div>
-          </div>
-
-          <div class="aff-quote">“我带你走，去瑞士去波士顿，我用我的手术刀养你一辈子！我不能再看着你死在我面前！”</div>
-        </div>
-
-        <!-- 裴知砚 -->
-        <div class="aff-card">
-          <div class="aff-header">
-            <div class="aff-avatar"><img src="assets/avatars/pei_zhiyan.jpg" class="avatar-img" onerror="this.outerHTML='⚔️'"></div>
-            <div class="aff-meta">
-              <div class="aff-name-row">
-                <span class="aff-name">裴知砚</span>
-                <span class="aff-role">男四 · 豪门义兄（No.4）</span>
-                <span class="aff-badge purple">禁忌雷霆</span>
-              </div>
-              <div class="aff-desc">裴氏实体工业巨擘 · 极度厌恶权贵轻浮圈 · 护妹狂魔</div>
-            </div>
-          </div>
-          
-          <div class="aff-meter-group">
-            <div class="meter-label">
-              <span>心动指数 (Affection)</span>
-              <span class="meter-val purple">94% 💖💖💖💖</span>
-            </div>
-            <div class="meter-bar"><div class="meter-fill purple" style="width: 94%; background: linear-gradient(90deg, #8b5cf6, #d946ef);"></div></div>
-
-            <div class="meter-label" style="margin-top: 8px;">
-              <span>雷霆护短力 (Protection)</span>
-              <span class="meter-val purple">100% ⚡</span>
-            </div>
-            <div class="meter-bar"><div class="meter-fill purple" style="width: 100%; background: linear-gradient(90deg, #7c3aed, #c026d3);"></div></div>
-          </div>
-
-          <div class="aff-event">
-            <div class="event-title">✨ 核心羁绊 · 撕破伪装的盾牌：</div>
-            <div class="event-body">得知沈淮安背叛后怒不可遏，在董事会上当众撕毁沈家八千万采购订单，递上无限额私人黑卡：“想做什么尽管去，裴氏全产业链给你兜底！”</div>
-          </div>
-
-          <div class="aff-quote">“谁敢把见雪当棋子，老子就崩了谁！裴氏哪怕打光最后一条生产线，也给见雪兜底到底！”</div>
-        </div>
-      </div>
-
-      <!-- 闺蜜与反派容器 -->
-      <div id="aff-tab-allies" class="aff-panel">
-        <!-- 林晚晚 -->
-        <div class="aff-card">
-          <div class="aff-header">
-            <div class="aff-avatar"><img src="assets/avatars/lin_wanwan.jpg" class="avatar-img" onerror="this.outerHTML='💄'"></div>
-            <div class="aff-meta">
-              <div class="aff-name-row">
-                <span class="aff-name">林晚晚</span>
-                <span class="aff-role">女二 · 铁杆闺蜜</span>
-                <span class="aff-badge top">生死与共</span>
-              </div>
-              <div class="aff-desc">时尚买手主理人 · 嘴替战神 · 护短狂魔</div>
-            </div>
-          </div>
-          <div class="meter-label">
-            <span>闺蜜战力契合度</span>
-            <span class="meter-val gold">100% 👯‍♀️</span>
-          </div>
-          <div class="meter-bar"><div class="meter-fill gold" style="width: 100%;"></div></div>
-          <div class="aff-quote" style="margin-top:10px;">“狗东西，拿开你的脏手！再敢碰见雪一下，老娘废了你！”</div>
-        </div>
-
-        <!-- 苏清禾 -->
-        <div class="aff-card">
-          <div class="aff-header">
-            <div class="aff-avatar"><img src="assets/avatars/su_qinghe.jpg" class="avatar-img" onerror="this.outerHTML='📊'"></div>
-            <div class="aff-meta">
-              <div class="aff-name-row">
-                <span class="aff-name">苏清禾</span>
-                <span class="aff-role">女三 · 商业合伙人</span>
-                <span class="aff-badge blue">百亿操盘</span>
-              </div>
-              <div class="aff-desc">前百亿基金投资人 · 人形算盘 · 商业铁三角</div>
-            </div>
-          </div>
-          <div class="meter-label">
-            <span>商业契合指数</span>
-            <span class="meter-val">99% 💼</span>
-          </div>
-          <div class="meter-bar"><div class="meter-fill" style="width: 99%; background: #3b82f6;"></div></div>
-          <div class="aff-quote" style="margin-top:10px;">“你的图纸有灵魂，而我懂资本底层的恶犬游戏。咱们一起从资本嘴里夺食！”</div>
-        </div>
-
-        <!-- 沈淮安 (渣男) -->
-        <div class="aff-card tier-trash">
-          <div class="aff-header">
-            <div class="aff-avatar"><img src="assets/avatars/shen_huaian.jpg" class="avatar-img" onerror="this.outerHTML='🗑️'"></div>
-            <div class="aff-meta">
-              <div class="aff-name-row">
-                <span class="aff-name">沈淮安</span>
-                <span class="aff-role">男五 · 出轨前任（No.5）</span>
-                <span class="aff-badge trash">万劫不复</span>
-              </div>
-              <div class="aff-desc">虚伪卑劣 · 骨灰级火葬场 · 破产清算中</div>
-            </div>
-          </div>
-          <div class="meter-label">
-            <span>女主好感度 (Affection)</span>
-            <span class="meter-val crimson">-9999% 💔 (彻底厌恶)</span>
-          </div>
-          <div class="meter-bar"><div class="meter-fill crimson" style="width: 0%;"></div></div>
-          <div class="meter-label" style="margin-top:8px;">
-            <span>悔恨崩溃度 (Regret)</span>
-            <span class="meter-val crimson">99% 📉 (生不如死)</span>
-          </div>
-          <div class="meter-bar"><div class="meter-fill crimson" style="width: 99%;"></div></div>
-          <div class="aff-quote" style="margin-top:10px; color: #ef4444;">“见雪！我错了！三年感情求你再给我一次机会……啊我的手骨折了！”</div>
-        </div>
-
-        <!-- 宋芊芊 -->
-        <div class="aff-card tier-trash">
-          <div class="aff-header">
-            <div class="aff-avatar"><img src="assets/avatars/song_qianqian.jpg" class="avatar-img" onerror="this.outerHTML='🐍'"></div>
-            <div class="aff-meta">
-              <div class="aff-name-row">
-                <span class="aff-name">宋芊芊</span>
-                <span class="aff-role">女四 · 恶意插足者</span>
-                <span class="aff-badge trash">咎由自取</span>
-              </div>
-              <div class="aff-desc">虚荣嫉妒 · 挑梁跳蚤 · 即将被刑事顶格起诉</div>
-            </div>
-          </div>
-          <div class="meter-label">
-            <span>仇恨值 (Hostility)</span>
-            <span class="meter-val crimson">MAX ⚠️</span>
-          </div>
-          <div class="meter-bar"><div class="meter-fill crimson" style="width: 100%;"></div></div>
-          <div class="aff-quote" style="margin-top:10px; color: #ef4444;">（已在初审会场吓得瑟瑟发抖，后续将因故意伤害罪被判刑十年）</div>
-        </div>
-      </div>
+      <!-- 阵营与反派卡片容器 (JS 动态渲染) -->
+      <div id="aff-tab-allies" class="aff-panel"></div>
     </div>
   </div>
 
@@ -1618,6 +1722,27 @@
         bodyEl.appendChild(pEl);
       });
 
+      // 渲染修罗场心选翻牌互动
+      renderChapterDilemma(idx, bodyEl);
+
+      // 渲染章节互动动作条（拆心动蜜语 / 看好感度变迁）
+      const actionRow = document.createElement('div');
+      actionRow.style.cssText = "display:flex; justify-content:center; gap:12px; margin: 20px 0 12px; flex-wrap:wrap;";
+      actionRow.innerHTML = `
+        <button class="nav-aff-pill" onclick="openLoveModal()" style="height:36px; padding:0 18px; font-size:12.5px; border-radius:18px;">
+          <span>💌</span> 拆开今日心动蜜语
+        </button>
+        <button class="nav-aff-pill" onclick="openDrawer('affection-drawer')" style="height:36px; padding:0 18px; font-size:12.5px; border-radius:18px; background: rgba(244, 63, 94, 0.1); color: #f43f5e; border-color: rgba(244, 63, 94, 0.3);">
+          <span>💖</span> 查看本章男神心动值
+        </button>
+      `;
+      bodyEl.appendChild(actionRow);
+
+      // 若处于同步阅读模式，动态联动更新好感度
+      if (affTrackingMode === 'sync') {
+        renderAffectionCards(idx + 1);
+      }
+
       // 更新翻页按钮状态
       const btnPrev = document.getElementById('btn-prev-chap');
       const btnNext = document.getElementById('btn-next-chap');
@@ -1637,7 +1762,7 @@
         nextTitle.innerText = `第${idx + 2}章 ${CHAPTERS[idx + 1].title.replace(/^第\d+章\s*/, '')} ›`;
       } else {
         btnNext.disabled = false;
-        nextTitle.innerText = '第005章 顶峰交锋 (待解锁) ›';
+        btnNext.disabled = true; nextTitle.innerText = '已是最新连载（作者持续爆更中） ›';
       }
 
       // 保存章节阅读索引
@@ -1998,13 +2123,962 @@
 
       const msg = quotes[Math.floor(Math.random() * quotes.length)];
       const fBox = document.getElementById('feedback-msg');
-      fBox.innerText = msg;
+      if (fBox) fBox.innerText = msg;
+      triggerPetalRain();
+      openLoveModal();
     }
 
     // 初始化
+    
+    // ===== 全章节动态心动进化数据集 (AFFECTION_TIMELINE) =====
+    const AFFECTION_TIMELINE = {
+    1: {
+        "chapter_desc": "第001章 · 绝情断链，夜雨初逢",
+        "fu_chenzhou": {
+            "aff": 55, "pos": 70, "badge": "暗流隐忍",
+            "quote": "“沈淮安，他配不上那双眼睛。”",
+            "event": "二楼包厢俯瞰决绝身影，勾起初中葬礼相遇回忆：她曾递来唯一的橙子软糖，点亮了他至暗的一生。暗恋隐忍十二年。"
+        },
+        "gu_yanchen": {
+            "aff": 25, "pos": 30, "badge": "看客猎奇",
+            "quote": "“冰酒淋头断链绝交，这性子烈得有意思。”",
+            "event": "坐在傅沉舟身侧晃动香槟，原本只当看名媛闹剧，却被温见雪冷艳决绝的狠劲勾起浓厚兴趣。"
+        },
+        "jiang_jingxiu": {
+            "aff": 90, "pos": 85, "badge": "青梅守护",
+            "quote": "“见雪，无论何时，我都在你身后。”",
+            "event": "得知沈淮安背叛，深夜握着方向盘守在霁雪公寓楼下，隐忍克制，生怕唐突了她。"
+        },
+        "pei_zhiyan": {
+            "aff": 85, "pos": 90, "badge": "沉怒待发",
+            "quote": "“裴家的妹妹，谁敢欺负一下试试。”",
+            "event": "收到手下线报，当即召集法务团队核查沈家全部商业订单，杀意已起。"
+        },
+        "shen_huaian": {
+            "aff": 0, "pos": 95, "badge": "气急败坏",
+            "quote": "“温见雪，你古板无趣，凭什么泼我！”",
+            "event": "众目睽睽之下被泼名贵烈酒，恼羞成怒，妄图反咬一口却心虚发慌。"
+        }
+    },
+    2: {
+        "chapter_desc": "第002章 · 裴家义兄，黑卡底气",
+        "fu_chenzhou": {
+            "aff": 58, "pos": 72, "badge": "暗中凝视",
+            "quote": "“三年隐忍，她终于要展翅了。”",
+            "event": "派特助彻查温见雪辞职后的所有动向，严令任何人不得在业内对她下绊子。"
+        },
+        "gu_yanchen": {
+            "aff": 35, "pos": 40, "badge": "跃跃欲试",
+            "quote": "“想在A市自立门户？有点野心。”",
+            "event": "私下找人打探霁雪工作室的注册资本，暗自盘算怎么结识这位冰山美人。"
+        },
+        "jiang_jingxiu": {
+            "aff": 91, "pos": 86, "badge": "细水长流",
+            "quote": "“刚出炉的生煎和红枣茶，趁热吃。”",
+            "event": "起早亲手准备早餐送到工作室，细心观察她的气色，默默帮她打点人脉。"
+        },
+        "pei_zhiyan": {
+            "aff": 90, "pos": 92, "badge": "无限宠溺",
+            "quote": "“密码是你生日，随便刷，刷爆了算哥的。”",
+            "event": "直接拍出裴氏全球黑卡无限额，放言‘天塌下来有义兄顶着’。"
+        },
+        "shen_huaian": {
+            "aff": -10, "pos": 88, "badge": "初尝恶果",
+            "quote": "“裴氏怎么突然卡我们的建材审批？！”",
+            "event": "宏远建材开始遭遇裴氏隐形施压，沈家高层质问焦头烂额。"
+        }
+    },
+    3: {
+        "chapter_desc": "第003章 · 义兄雷霆，撕碎八千万",
+        "fu_chenzhou": {
+            "aff": 65, "pos": 75, "badge": "暗中铺路",
+            "quote": "“新汇中心的招标书，给她送一份。”",
+            "event": "得知她决意独立创业，暗中指示招标办取消行业年限门槛，为霁雪破例留出报名通道。"
+        },
+        "gu_yanchen": {
+            "aff": 45, "pos": 48, "badge": "心痒难耐",
+            "quote": "“傅爷，人家是要自立门户跟你打擂台呢。”",
+            "event": "打探到温见雪退回了裴家的无限额黑卡，对她不依附权贵的傲骨愈发刮目相看。"
+        },
+        "jiang_jingxiu": {
+            "aff": 92, "pos": 88, "badge": "深夜温汤",
+            "quote": "“指纹锁录了你的指纹，这里永远是你的避风港。”",
+            "event": "冒雨连夜送来新公寓钥匙，站在玄关门外克制守候，不愿给她任何压力。"
+        },
+        "pei_zhiyan": {
+            "aff": 92, "pos": 95, "badge": "雷霆霸权",
+            "quote": "“想做什么哥哥兜底，沈家的订单老子撕了！”",
+            "event": "董事会当场手撕八千万合同，宣布全面封杀沈家供应链！"
+        },
+        "shen_huaian": {
+            "aff": -25, "pos": 85, "badge": "慌不择路",
+            "quote": "“裴总求您见我一面……宏远不能倒啊！”",
+            "event": "在裴氏大厦门外淋雨苦求数小时遭保安无情驱逐，声名扫地。"
+        }
+    },
+    4: {
+        "chapter_desc": "第004章 · 霁雪筑梦，神仙合伙",
+        "fu_chenzhou": {
+            "aff": 72, "pos": 80, "badge": "默默相助",
+            "quote": "“新汇中心的地勘报告，把最绝密的一版给她。”",
+            "event": "以集团匿名技术顾问身份，将连沈家都拿不到的核心地质与风洞实测数据交到霁雪手中。"
+        },
+        "gu_yanchen": {
+            "aff": 55, "pos": 60, "badge": "屡屡受挫",
+            "quote": "“连送三天的进口蓝玫瑰，竟然直接被拒签扔进了垃圾桶？”",
+            "event": "派人高调送花却被温见雪冷淡退回，反而激起顾二少空前的征服欲。"
+        },
+        "jiang_jingxiu": {
+            "aff": 93, "pos": 89, "badge": "医者温存",
+            "quote": "“你绘图颈椎压力大，这是根据你骨相定制的人体工学椅。”",
+            "event": "托国外专家手工定制护脊椅送到工作室，贴好防滑脚垫，温柔至极。"
+        },
+        "pei_zhiyan": {
+            "aff": 93, "pos": 95, "badge": "千金买笑",
+            "quote": "“工作室楼上整层我都买下了，安保由退役特种兵负责。”",
+            "event": "不仅豪掷千金买下安保，还派贴身保镖日夜暗中守卫温见雪。"
+        },
+        "shen_huaian": {
+            "aff": -50, "pos": 80, "badge": "暗生毒计",
+            "quote": "“没有宏远的人脉，霁雪初审休想及格！”",
+            "event": "联手宋家企图在初审专家组安插内鬼，故意给霁雪扣帽子打低分。"
+        }
+    },
+    5: {
+        "chapter_desc": "第005章 · 初审惊艳，全场满分",
+        "fu_chenzhou": {
+            "aff": 85, "pos": 92, "badge": "当众破例",
+            "quote": "“三年不见，你的骨头比在沈淮安身边时硬得多。”",
+            "event": "初审评委会主席台上，傅沉舟亲自打出全场唯一的100分！散会后在幽暗回廊将私人黑金名片塞入她西装内袋。"
+        },
+        "gu_yanchen": {
+            "aff": 68, "pos": 75, "badge": "为之折服",
+            "quote": "“温大设计师，今天这一战，简直是神级救场！”",
+            "event": "台下金笔轻敲起哄赞叹，散会主动上前递水，当面邀请云顶私宴庆功。"
+        },
+        "jiang_jingxiu": {
+            "aff": 94, "pos": 90, "badge": "暗中援手",
+            "quote": "“你的图纸有灵魂，注意别熬坏了胃。”",
+            "event": "托关系调取海外结构抗腐蚀材料权威检测报告，为霁雪现场答辩提供核弹级学术背书。"
+        },
+        "pei_zhiyan": {
+            "aff": 94, "pos": 95, "badge": "傲气与共",
+            "quote": "“不愧是我裴知砚的妹妹，有老子的风范。”",
+            "event": "调动集团公关团队，在全网实时压制任何针对霁雪资质的造谣通稿。"
+        },
+        "shen_huaian": {
+            "aff": -80, "pos": 80, "badge": "当众受辱",
+            "quote": "“她怎么可能懂抗风阻和纳米涂层……不可能！”",
+            "event": "在初审现场站起质疑反被温见雪以权威SCI实测打脸，面无人色沦为业界笑柄。"
+        }
+    },
+    6: {
+        "chapter_desc": "第006章 · 雨夜惊雷，黑伞迈巴赫",
+        "fu_chenzhou": {
+            "aff": 92, "pos": 96, "badge": "霸气护驾",
+            "quote": "“别人看的是图纸，而我要的，是你这个人，和你的整个野心。”",
+            "event": "暴雨中亲自撑起纯黑大伞，任凭风雨湿透半肩；迈巴赫车内递上一亿元排他顾问协议，强势相护。"
+        },
+        "gu_yanchen": {
+            "aff": 75, "pos": 80, "badge": "燃起战意",
+            "quote": "“傅沉舟抢先一步又如何，鹿死谁手还不一定。”",
+            "event": "在超跑里亲眼目睹温见雪上了傅沉舟的迈巴赫，狠砸方向盘，彻底被激起斗志。"
+        },
+        "jiang_jingxiu": {
+            "aff": 95, "pos": 92, "badge": "隐忍揪心",
+            "quote": "“雨这么大，她有没有淋湿受凉……”",
+            "event": "在医院急诊值夜班，神经紧绷，隔半小时便刷新一次霁雪写字楼周边的积水与路况。"
+        },
+        "pei_zhiyan": {
+            "aff": 95, "pos": 96, "badge": "严防死守",
+            "quote": "“傅沉舟如果敢动坏心思，裴氏的重工可不是吃素的。”",
+            "event": "立即调动安保车队沿途护送，严密防备傅沉舟的近身接触。"
+        },
+        "shen_huaian": {
+            "aff": -200, "pos": 50, "badge": "泥潭断骨",
+            "quote": "“啊！我的手……傅沉舟你不能这么对我！”",
+            "event": "雨中跪求复合企图拉扯温见雪，被黑衣保镖当场折断手腕摔进泥潭，沈家市政招标资格被彻底注销！"
+        }
+    },
+    7: {
+        "chapter_desc": "第007章 · 暴雪夜谈，云端共鸣",
+        "fu_chenzhou": {
+            "aff": 94, "pos": 96, "badge": "灵魂共鸣",
+            "quote": "“温见雪，这一张蓝图，我陪你画到底。”",
+            "event": "云顶天宫落地窗前俯瞰整座A市雪景，指尖触碰图纸，彼此眼底燃起前所未有的野心火光。"
+        },
+        "gu_yanchen": {
+            "aff": 80, "pos": 85, "badge": "醋意翻涌",
+            "quote": "“听说傅沉舟留你在顶层喝了两个小时的罗曼尼康帝？”",
+            "event": "多方探听两人独处消息，危机感爆棚，连夜筹备顾氏百亿基金的跟投方案。"
+        },
+        "jiang_jingxiu": {
+            "aff": 95, "pos": 93, "badge": "彻夜未眠",
+            "quote": "“雪天路滑，下周降温，手炉给你放门把手上了。”",
+            "event": "清晨冒雪驱车赶来，将换好恒温芯片的暖手炉挂在她公寓门前，转身离去。"
+        },
+        "pei_zhiyan": {
+            "aff": 95, "pos": 96, "badge": "远程坐镇",
+            "quote": "“傅家的小子要敢耍花招，哥明天带人拆了他云顶的承重柱。”",
+            "event": "深夜致电反复叮嘱，既欣慰妹妹的锋芒，又对所有靠近她的雄性充满敌意。"
+        },
+        "shen_huaian": {
+            "aff": -300, "pos": 45, "badge": "绝境惶恐",
+            "quote": "“银行断贷了……宏远的股票跌停了！”",
+            "event": "打着石膏在医院被讨债人堵门，亲眼看着电视里温见雪与傅沉舟并肩的新闻，一口鲜血喷出。"
+        }
+    },
+    8: {
+        "chapter_desc": "第008章 · 顾二赌约，反客为主",
+        "fu_chenzhou": {
+            "aff": 95, "pos": 96, "badge": "掌控一切",
+            "quote": "“顾二的那点小伎俩，她一眼就能看穿。”",
+            "event": "听闻顾宴臣送玫瑰挑衅，不仅未怒反冷笑其自取其辱，暗中压制顾氏海外融资。"
+        },
+        "gu_yanchen": {
+            "aff": 88, "pos": 90, "badge": "彻底沦陷",
+            "quote": "“三十年了……老子这辈子怕是真要栽在她手里了！”",
+            "event": "送六十八万玫瑰被反借去发员工做公关；三十亿赌约被条分缕析反杀，乖乖签下八百万履约保证金！"
+        },
+        "jiang_jingxiu": {
+            "aff": 96, "pos": 94, "badge": "暗自担忧",
+            "quote": "“见雪，你最近脸色很差，必须来做胃镜。”",
+            "event": "察觉到她连续熬夜胃痛，亲手煲好温补砂锅粥派人送去，眼底满是疼惜。"
+        },
+        "pei_zhiyan": {
+            "aff": 96, "pos": 97, "badge": "警告情敌",
+            "quote": "“顾二，收起你那套泡名媛的烂招数，再敢骚扰打断腿。”",
+            "event": "直接给顾氏董事长致电施压，逼得顾老子把顾宴臣臭骂一顿。"
+        },
+        "shen_huaian": {
+            "aff": -500, "pos": 30, "badge": "丧家之犬",
+            "quote": "“宋芊芊你个贱人！要不是你勾引我，我怎么会失去见雪！”",
+            "event": "被沈家彻底踢出核心层，在廉租出租屋与宋芊芊互相撕打，如丧家之犬。"
+        }
+    },
+    9: {
+        "chapter_desc": "第009章 · 绝密地勘，父辈血仇",
+        "fu_chenzhou": {
+            "aff": 97, "pos": 97, "badge": "拔剑欲出",
+            "quote": "“当年害死伯父的人，一个都别想活着走下审判席。”",
+            "event": "亲手交出温父当年被掉包的地下断裂带地质勘探底稿原件，十二年前的布局终于合拢！"
+        },
+        "gu_yanchen": {
+            "aff": 90, "pos": 90, "badge": "倾囊相助",
+            "quote": "“顾氏旗下七条远洋航线随时待命，谁敢跑路我截谁！”",
+            "event": "得知温见雪身负血仇，收起所有纨绔浪荡，调集顾家所有情报网协助封锁嫌犯出境通道。"
+        },
+        "jiang_jingxiu": {
+            "aff": 97, "pos": 96, "badge": "痛彻心扉",
+            "quote": "“为什么你总把所有苦一个人扛着……见雪，看着我！”",
+            "event": "检查出温见雪重度应激性胃出血先兆，夺下她的画笔，红着眼眶将她紧紧护在怀中。"
+        },
+        "pei_zhiyan": {
+            "aff": 97, "pos": 98, "badge": "铁腕肃清",
+            "quote": "“动用最高司法特别干预权，把当年所有涉案官员名单拉出来！”",
+            "event": "动用裴家所有军政商顶级背景，准备以雷霆手段发动最后清算！"
+        },
+        "shen_huaian": {
+            "aff": -1000, "pos": 20, "badge": "战栗等死",
+            "quote": "“立案了……检察院找上门了……救命……”",
+            "event": "收到最高检反贪局传票，沈父突发脑溢血入院，沈家大宅被贴上封条。"
+        }
+    },
+    10: {
+        "chapter_desc": "第010章 · 急诊修罗，神明博弈",
+        "fu_chenzhou": {
+            "aff": 99.9, "pos": 98, "badge": "至死不渝",
+            "quote": "“我花了十二年踏碎仇敌骨头，就是为了给你当最锋利的刀！”",
+            "event": "携最高检调查密令破门而入，揭穿当年温父殉职内幕，誓死为她手刃仇敌！"
+        },
+        "gu_yanchen": {
+            "aff": 92, "pos": 90, "badge": "心急如焚",
+            "quote": "“她吐血休克了？！哪家医院，我立刻调私人直升机！”",
+            "event": "得知温见雪急诊住院，推掉百亿签约会疯狂赶往医院，一路闯红灯心跳失序。"
+        },
+        "jiang_jingxiu": {
+            "aff": 98, "pos": 99, "badge": "偏执爆发",
+            "quote": "“跟我去瑞士！我用手术刀养你一辈子！我不能再看着你死在我面前！”",
+            "event": "刚下13小时大手术冲入抢救室，额头相抵哭着告白，二十年疯狂爱意彻底决堤！"
+        },
+        "pei_zhiyan": {
+            "aff": 99, "pos": 100, "badge": "铁血重盾",
+            "quote": "“你们争风吃醋伸手到我妹妹床头，真当裴家没人了？谁动她老子崩了谁！”",
+            "event": "防弹重兵封锁整层楼，一把挥开傅沉舟的手，玄铁重盾般誓死捍卫！"
+        },
+        "shen_huaian": {
+            "aff": -9999, "pos": 0, "badge": "万劫不复",
+            "quote": "“调查令……完了……沈家全完了……”",
+            "event": "当年偷工减料强行施工害死温父的铁证被立案，沈家面临全网清算坐牢！"
+        }
+    }
+};
+
+    // 章节修罗场心动抉择互动数据 (CHAPTER_DILEMMAS)
+    const CHAPTER_DILEMMAS = {
+      1: {
+        question: "面对沈淮安的无耻纠缠与二楼暗处傅沉舟的注视，你会？",
+        options: [
+          {
+            badge: "A. 冷艳反杀",
+            text: "泼完名贵烈酒断链绝交，步入夜色冷雨之中",
+            secretHeader: "温见雪 · 决绝离场",
+            secretText: "温见雪眼神冰寒：“沈淮安，拿开你的脏手。从今往后，我的天地只由我自己执掌。”",
+            ratio: "42%"
+          },
+          {
+            badge: "B. 敏锐回眸",
+            text: "抬头对上二楼VIP包厢傅沉舟深沉漆黑的狭长凤眸",
+            secretHeader: "傅沉舟 · 独家心声",
+            secretText: "傅沉舟喉结轻滚，指尖摩挲酒杯：“小雪，你终于肯看我了。这一眼，我等了整整十二年。”",
+            ratio: "46%"
+          },
+          {
+            badge: "C. 拨通电话",
+            text: "给从小护你到大的神经外科竹马江景修发去消息",
+            secretHeader: "江景修 · 守候回应",
+            secretText: "江景修几乎秒接，嗓音温润发颤：“见雪，别怕，我在。无论发生什么，都有我在。”",
+            ratio: "12%"
+          }
+        ]
+      },
+      2: {
+        question: "面对裴知砚甩出的无限额黑卡与霸道护短，你会？",
+        options: [
+          {
+            badge: "A. 独立自强",
+            text: "心怀感激退回黑卡，誓要凭自己的双手自立门户",
+            secretHeader: "裴知砚 · 傲气宠溺",
+            secretText: "裴知砚气笑揉乱你头发：“行，骨头够硬！但记住，谁敢欺负你，哥提刀拆了他的家。”",
+            ratio: "71%"
+          },
+          {
+            badge: "B. 收下底气",
+            text: "将黑卡妥善收好，作为未来创业最坚实的后盾",
+            secretHeader: "裴知砚 · 满意护短",
+            secretText: "裴知砚眉梢舒展：“这才对，老子的妹妹，就该有横着走的资本。”",
+            ratio: "29%"
+          }
+        ]
+      },
+      3: {
+        question: "深夜江景修送来温热红枣茶与新公寓钥匙，站在门外克制守候，你会？",
+        options: [
+          {
+            badge: "A. 请他进屋",
+            text: "接过热茶，让他进屋坐坐并递上干毛巾",
+            secretHeader: "江景修 · 耳尖微红",
+            secretText: "江景修耳尖泛红，指尖微颤接过毛巾：“见雪……只要你一句话，我随时都在。”",
+            ratio: "58%"
+          },
+          {
+            badge: "B. 克制道谢",
+            text: "接过钥匙与热饮，温和道晚安，守护彼此的舒适边界",
+            secretHeader: "江景修 · 隐忍包容",
+            secretText: "江景修温柔一笑，替你拉拢门缝：“快进去趁热喝，把门反锁好，别着凉。”",
+            ratio: "42%"
+          }
+        ]
+      },
+      4: {
+        question: "霁雪独立工作室成立，匿名神秘人送来千金难求的地质勘探绝密底稿，你会？",
+        options: [
+          {
+            badge: "A. 敏锐彻查",
+            text: "比对加密印章与笔迹，识破这是傅沉舟的私人手笔",
+            secretHeader: "傅沉舟 · 唇角微扬",
+            secretText: "傅沉舟在云顶接起特助汇报，唇角微扬：“她认出来了？果然冰雪聪明。”",
+            ratio: "65%"
+          },
+          {
+            badge: "B. 欣然采纳",
+            text: "将绝密数据融入设计，打造无懈可击的建筑图纸",
+            secretHeader: "温见雪 · 傲骨回馈",
+            secretText: "温见雪伏案绘图：“无论暗中相助的人是谁，这份人情，霁雪必在顶峰奉还。”",
+            ratio: "35%"
+          }
+        ]
+      },
+      5: {
+        question: "初审会场傅沉舟当众给出100分满分，并在长廊将黑金名片塞入你口袋，你会？",
+        options: [
+          {
+            badge: "A. 迎难而上",
+            text: "指尖拂过名片，从容对视：“傅总，商场如战场，我不会手下留情。”",
+            secretHeader: "傅沉舟 · 步步紧逼",
+            secretText: "傅沉舟逼近一步，气息灼热：“那我拭目以待。若你赢了，新汇归你，我也归你。”",
+            ratio: "69%"
+          },
+          {
+            badge: "B. 顾二打岔",
+            text: "后退半步保持距离，听顾二少在旁边嬉皮笑脸起哄",
+            secretHeader: "顾宴臣 · 浪子吃醋",
+            secretText: "顾宴臣一把挤上前递水：“哎呀傅爷，碰壁了吧！温大美人，今晚坐本少爷的跑车兜风去？”",
+            ratio: "31%"
+          }
+        ]
+      },
+      6: {
+        question: "暴雨夜沈淮安纠缠被折断手腕，傅沉舟黑伞倾斜湿透半肩请你上车，你会？",
+        options: [
+          {
+            badge: "A. 坐入迈巴赫",
+            text: "抬手轻拭他肩头雨水，接下一亿元独家顾问协议",
+            secretHeader: "傅沉舟 · 深情执伞",
+            secretText: "傅沉舟掌心扣住你微凉的指尖：“温见雪，别怕，往后所有的风雨，我替你挡。”",
+            ratio: "81%"
+          },
+          {
+            badge: "B. 执伞独行",
+            text: "撑开透明雨伞，步履从容走入雨幕去赶地铁",
+            secretHeader: "傅沉舟 · 默默守护",
+            secretText: "傅沉舟撑黑伞静静跟在你身后三步之遥，迈巴赫缓缓低鸣随行：“我护送你到站台。”",
+            ratio: "19%"
+          }
+        ]
+      },
+      7: {
+        question: "云顶落地窗前暴雪纷飞，傅沉舟为你倒了一杯热红酒，你会？",
+        options: [
+          {
+            badge: "A. 并肩论道",
+            text: "与他并肩俯瞰A市雪景，畅谈建筑与千亿商业野心",
+            secretHeader: "傅沉舟 · 灵魂共鸣",
+            secretText: "傅沉舟眼眸深邃：“世人只知我杀伐果决，唯有你能看懂我的孤寂与蓝图。”",
+            ratio: "74%"
+          },
+          {
+            badge: "B. 开门见山",
+            text: "直截了当询问当年父亲地勘事故的蛛丝马迹",
+            secretHeader: "傅沉舟 · 拔剑欲出",
+            secretText: "傅沉舟神色骤冷：“有些真相太沉重，但只要你想查，我把整座城市翻过来也给你交代。”",
+            ratio: "26%"
+          }
+        ]
+      },
+      8: {
+        question: "顾宴臣豪掷68万玫瑰逼你签约，反而被你套路签下800万履约金，你会？",
+        options: [
+          {
+            badge: "A. 借花献佛",
+            text: "将红玫瑰全部分发给全栋楼女性做品牌公关",
+            secretHeader: "顾宴臣 · 彻底折服",
+            secretText: "顾宴臣又气又爱地捂心口：“温见雪！借我的花做你的好人，你真是个磨人的小妖精！”",
+            ratio: "67%"
+          },
+          {
+            badge: "B. 告状义兄",
+            text: "给裴知砚打个小报告，让义兄带人收拾顾二少",
+            secretHeader: "裴知砚 · 提刀上门",
+            secretText: "裴知砚当晚直接打上顾家大宅：“顾二皮痒了？敢拿玫瑰骚扰我妹！”",
+            ratio: "33%"
+          }
+        ]
+      },
+      9: {
+        question: "查出当年温父图纸被调换的铁证，但你因积劳成疾胃部剧痛吐血，你会？",
+        options: [
+          {
+            badge: "A. 强撑瞒着",
+            text: "咬牙擦去血迹，把图纸锁入保险柜继续工作",
+            secretHeader: "江景修 · 痛心疾首",
+            secretText: "江景修突然推门而入，目眦欲裂抱住你：“温见雪！你不要命了吗？！”",
+            ratio: "45%"
+          },
+          {
+            badge: "B. 立刻呼救",
+            text: "按响江景修给的紧急呼叫器求助",
+            secretHeader: "江景修 · 飞奔相救",
+            secretText: "救护车三分钟内尖啸而至，江景修飞奔下车将你横抱而起，眼眶血红。",
+            ratio: "55%"
+          }
+        ]
+      },
+      10: {
+        question: "抢救室门前修罗场，傅沉舟持令拔剑、江医生红眼告白、裴哥重兵封楼，你的手递给谁？",
+        options: [
+          {
+            badge: "A. 递给傅沉舟",
+            text: "“傅总，我要当年害死我父亲的人，全部万劫不复。”",
+            secretHeader: "傅沉舟 · 执剑誓言",
+            secretText: "傅沉舟握紧你的手贴在胸膛：“遵命，我的女王。天凉了，让沈家彻底覆灭吧。”",
+            ratio: "48%"
+          },
+          {
+            badge: "B. 递给江景修",
+            text: "“景修，我好疼……抱抱我。”",
+            secretHeader: "江景修 · 疯狂爱意",
+            secretText: "江景修把脸埋进你掌心无声痛哭：“再也不让你离开我的视线，一分一秒都不行。”",
+            ratio: "27%"
+          },
+          {
+            badge: "C. 递给裴知砚",
+            text: "“哥哥，带我回家。”",
+            secretHeader: "裴知砚 · 铁血护短",
+            secretText: "裴知砚脱下大衣把你裹得严严实实，冷眼扫视全场：“听到没有？都给老子滚开，我妹要回家！”",
+            ratio: "25%"
+          }
+        ]
+      }
+    };
+
+    // 异地恋浪漫情话库
+    const LOVE_QUOTES = [
+      "见雪在书里有四位神级男主修罗场，而在我的现实世界里，我的唯一神明永远是你 💖",
+      "异地恋虽然隔着距离，但我的心跳每分每秒都在朝你全速奔赴 🌹",
+      "小仙女今天辛苦啦！每一章的文字，都藏着我对你悄悄说的心里话 ✨",
+      "为你写下的千言万语，不及初次见你时的一眼心动 💌",
+      "无论外面的世界有多少风雨，我永远是你可以毫无保留依靠的避风港 🧸",
+      "今天也要按时吃饭、早点睡觉，不要让我远距离担心哦~ 🌙",
+      "如果思念有声音，那你此刻听到的一定是震耳欲聋的心跳声 💓",
+      "你在读这一行字的时候，我正在地球的这一端默默想念你 🌸",
+      "不管是傅爷的霸道、江医生的温柔还是裴哥的护短，我对你的爱集齐了全天下所有的偏爱 💕",
+      "给你投喂一枚专属爱心！今天也是超级超级喜欢你的一天 🍬",
+      "远距离的恋爱像是一场考验，但我坚信，终点站一定会紧紧抱住你 🚄",
+      "温见雪当断则断登临众神之巅，而你在我心里，早已是万千星河中最耀眼的存在 🌟"
+    ];
+
+    // 男神专属投喂傲娇语音台词
+    const HERO_VOICES = {
+      fu_chenzhou: [
+        "傅沉舟（握住你的手腕）：“不要乱撩……除非你想让我今晚就去见你。”",
+        "傅沉舟（喉结滚动）：“只要你在我身边，整个傅氏任你差遣。”",
+        "傅沉舟（眼神幽深）：“十二年暗恋太苦，往后的一生，我只求朝夕相伴。”"
+      ],
+      gu_yanchen: [
+        "顾宴臣（挑眉低笑）：“怎么，小祖宗今天终于发现本少爷的好了？”",
+        "顾宴臣（晃了晃法拉利钥匙）：“走，带你去海边兜风，三十亿都给你当零花钱。”",
+        "顾宴臣（收起浪荡）：“在遇见你之前我是浪子，遇见你之后……我只想栽在你手里。”"
+      ],
+      jiang_jingxiu: [
+        "江景修（耳尖微红）：“心跳监测器好像要爆表了……见雪，别闹。”",
+        "江景修（温柔抚额）：“手怎么这么凉？快把刚炖的百合银耳喝了。”",
+        "江景修（嗓音微哑）：“从小到大，我的心里从来没有装下过第二个人。”"
+      ],
+      pei_zhiyan: [
+        "裴知砚（揉乱你的头发）：“想要什么跟哥说，天上的月亮老子也给你摘下来。”",
+        "裴知砚（冷哼一声）：“傅顾那俩小子要是敢惹你生气，哥带重工车队去拆了他们！”",
+        "裴知砚（递来热奶茶）：“多吃点，裴家养得起你一辈子。”"
+      ]
+    };
+
+    // 当前好感度查看章节状态
+    let affViewingChapter = 1;
+    let affTrackingMode = 'sync'; // 'sync' 跟随阅读进度, 'manual' 手动选章
+
+    // 渲染好感度时间线导航与卡片
+    function initAffectionTimeline() {
+      const container = document.getElementById('timeline-nav-pills');
+      if (!container) return;
+      
+      let html = `<button class="timeline-pill sync-pill active" id="pill-sync" onclick="setAffSyncMode()">🌟 跟随阅读进度</button>`;
+      for (let i = 1; i <= 10; i++) {
+        html += `<button class="timeline-pill" id="pill-ch-${i}" onclick="viewAffectionChapter(${i})">第${i}章</button>`;
+      }
+      container.innerHTML = html;
+      renderAffectionCards(currentChapterIndex + 1);
+    }
+
+    function setAffSyncMode() {
+      affTrackingMode = 'sync';
+      document.querySelectorAll('.timeline-pill').forEach(p => p.classList.remove('active'));
+      document.getElementById('pill-sync').classList.add('active');
+      renderAffectionCards(currentChapterIndex + 1);
+      showToast('已切换为：跟随时空阅读进度 ✨');
+    }
+
+    function viewAffectionChapter(chapNum) {
+      affTrackingMode = 'manual';
+      affViewingChapter = chapNum;
+      document.querySelectorAll('.timeline-pill').forEach(p => p.classList.remove('active'));
+      const activePill = document.getElementById(`pill-ch-${chapNum}`);
+      if (activePill) activePill.classList.add('active');
+      renderAffectionCards(chapNum);
+    }
+
+    function renderAffectionCards(chapNum) {
+      affViewingChapter = chapNum;
+      const data = AFFECTION_TIMELINE[chapNum] || AFFECTION_TIMELINE[10];
+
+      // 更新追踪标签与剧情摘要
+      const badge = document.getElementById('timeline-tracking-badge');
+      if (badge) {
+        badge.innerText = affTrackingMode === 'sync' ? `跟随时空：第${chapNum}章 (实时)` : `回溯时空：第${chapNum}章`;
+      }
+      const descEl = document.getElementById('timeline-cur-desc');
+      if (descEl) {
+        descEl.innerHTML = `<span>📖 <b>${data.chapter_desc}</b></span><span style="font-size:11px; color:#f43f5e; cursor:pointer;" onclick="triggerPetalRain(); showToast('好感度已实时同步 ✨')">同步脉动 💓</span>`;
+      }
+
+      // 渲染四大男神卡片
+      const malePanel = document.getElementById('aff-tab-male');
+      if (malePanel) {
+        const fc = data.fu_chenzhou;
+        const gy = data.gu_yanchen;
+        const jj = data.jiang_jingxiu;
+        const pz = data.pei_zhiyan;
+
+        malePanel.innerHTML = `
+          <!-- 傅沉舟 -->
+          <div class="aff-card tier-god">
+            <div class="aff-header">
+              <div class="aff-avatar"><img src="assets/avatars/fu_chenzhou.jpg" class="avatar-img" onerror="this.outerHTML='👑'"></div>
+              <div class="aff-meta">
+                <div class="aff-name-row">
+                  <span class="aff-name">傅沉舟</span>
+                  <span class="aff-role">男一 · A市首富</span>
+                  <span class="aff-badge top">${fc.badge}</span>
+                  <button class="hero-heart-btn" onclick="feedHeroHeart('fu_chenzhou', event)">💖 投喂+1</button>
+                </div>
+                <div class="aff-desc">傅氏财阀绝对掌舵人 · 禁欲霸主 · 暗恋十二年</div>
+              </div>
+            </div>
+            <div class="aff-meter-group">
+              <div class="meter-label">
+                <span>心动指数 (Affection)</span>
+                <span class="meter-val gold">${fc.aff}% 💖💖💖💖💖</span>
+              </div>
+              <div class="meter-bar"><div class="meter-fill gold" style="width: ${Math.min(100, Math.max(0, fc.aff))}%;"></div></div>
+
+              <div class="meter-label" style="margin-top: 8px;">
+                <span>偏执占有欲 (Possessiveness)</span>
+                <span class="meter-val crimson">${fc.pos}% 🔥</span>
+              </div>
+              <div class="meter-bar"><div class="meter-fill crimson" style="width: ${fc.pos}%;"></div></div>
+            </div>
+            <div class="aff-event">
+              <div class="event-title">✨ 本章羁绊演变：</div>
+              <div class="event-body">${fc.event}</div>
+            </div>
+            <div class="aff-quote">${fc.quote}</div>
+          </div>
+
+          <!-- 顾宴臣 -->
+          <div class="aff-card">
+            <div class="aff-header">
+              <div class="aff-avatar"><img src="assets/avatars/gu_yanchen.jpg" class="avatar-img" onerror="this.outerHTML='🍷'"></div>
+              <div class="aff-meta">
+                <div class="aff-name-row">
+                  <span class="aff-name">顾宴臣</span>
+                  <span class="aff-role">男二 · 财阀少东</span>
+                  <span class="aff-badge blue">${gy.badge}</span>
+                  <button class="hero-heart-btn" onclick="feedHeroHeart('gu_yanchen', event)">💖 投喂+1</button>
+                </div>
+                <div class="aff-desc">顾氏百亿集团少东 · 浪子深情 · 风流掌控者</div>
+              </div>
+            </div>
+            <div class="aff-meter-group">
+              <div class="meter-label">
+                <span>心动指数 (Affection)</span>
+                <span class="meter-val">${gy.aff}% 💖💖💖💖</span>
+              </div>
+              <div class="meter-bar"><div class="meter-fill" style="width: ${Math.min(100, Math.max(0, gy.aff))}%; background: linear-gradient(90deg, #3b82f6, #8b5cf6);"></div></div>
+
+              <div class="meter-label" style="margin-top: 8px;">
+                <span>撩拨征服欲 (Conquest)</span>
+                <span class="meter-val">${gy.pos}% ⚡</span>
+              </div>
+              <div class="meter-bar"><div class="meter-fill" style="width: ${gy.pos}%; background: linear-gradient(90deg, #8b5cf6, #ec4899);"></div></div>
+            </div>
+            <div class="aff-event">
+              <div class="event-title">✨ 本章羁绊演变：</div>
+              <div class="event-body">${gy.event}</div>
+            </div>
+            <div class="aff-quote">${gy.quote}</div>
+          </div>
+
+          <!-- 江景修 -->
+          <div class="aff-card">
+            <div class="aff-header">
+              <div class="aff-avatar"><img src="assets/avatars/jiang_jingxiu.jpg" class="avatar-img" onerror="this.outerHTML='🩺'"></div>
+              <div class="aff-meta">
+                <div class="aff-name-row">
+                  <span class="aff-name">江景修</span>
+                  <span class="aff-role">男三 · 顶尖神外圣手</span>
+                  <span class="aff-badge cyan">${jj.badge}</span>
+                  <button class="hero-heart-btn" onclick="feedHeroHeart('jiang_jingxiu', event)">💖 投喂+1</button>
+                </div>
+                <div class="aff-desc">神经外科第一刀 · 温润如玉白切黑 · 二十年痴心</div>
+              </div>
+            </div>
+            <div class="aff-meter-group">
+              <div class="meter-label">
+                <span>心动与守护 (Devotion)</span>
+                <span class="meter-val">${jj.aff}% 💖💖💖💖💖</span>
+              </div>
+              <div class="meter-bar"><div class="meter-fill" style="width: ${Math.min(100, Math.max(0, jj.aff))}%; background: linear-gradient(90deg, #06b6d4, #3b82f6);"></div></div>
+
+              <div class="meter-label" style="margin-top: 8px;">
+                <span>隐忍占有欲 (Deep Love)</span>
+                <span class="meter-val">${jj.pos}% ❄️</span>
+              </div>
+              <div class="meter-bar"><div class="meter-fill" style="width: ${jj.pos}%; background: linear-gradient(90deg, #3b82f6, #ec4899);"></div></div>
+            </div>
+            <div class="aff-event">
+              <div class="event-title">✨ 本章羁绊演变：</div>
+              <div class="event-body">${jj.event}</div>
+            </div>
+            <div class="aff-quote">${jj.quote}</div>
+          </div>
+
+          <!-- 裴知砚 -->
+          <div class="aff-card">
+            <div class="aff-header">
+              <div class="aff-avatar"><img src="assets/avatars/pei_zhiyan.jpg" class="avatar-img" onerror="this.outerHTML='🐺'"></div>
+              <div class="aff-meta">
+                <div class="aff-name-row">
+                  <span class="aff-name">裴知砚</span>
+                  <span class="aff-role">男四 · 京圈太子爷 / 义兄</span>
+                  <span class="aff-badge purple">${pz.badge}</span>
+                  <button class="hero-heart-btn" onclick="feedHeroHeart('pei_zhiyan', event)">💖 投喂+1</button>
+                </div>
+                <div class="aff-desc">裴氏重工掌权人 · 铁血硬汉 · 护短狂魔义兄</div>
+              </div>
+            </div>
+            <div class="aff-meter-group">
+              <div class="meter-label">
+                <span>宠溺爱护值 (Protection)</span>
+                <span class="meter-val">${pz.aff}% 💖💖💖💖💖</span>
+              </div>
+              <div class="meter-bar"><div class="meter-fill" style="width: ${Math.min(100, Math.max(0, pz.aff))}%; background: linear-gradient(90deg, #8b5cf6, #ec4899);"></div></div>
+
+              <div class="meter-label" style="margin-top: 8px;">
+                <span>铁血撑腰指数 (Power Shield)</span>
+                <span class="meter-val">${pz.pos}% 🛡️</span>
+              </div>
+              <div class="meter-bar"><div class="meter-fill" style="width: ${pz.pos}%; background: linear-gradient(90deg, #ec4899, #f59e0b);"></div></div>
+            </div>
+            <div class="aff-event">
+              <div class="event-title">✨ 本章羁绊演变：</div>
+              <div class="event-body">${pz.event}</div>
+            </div>
+            <div class="aff-quote">${pz.quote}</div>
+          </div>
+        `;
+      }
+
+      // 渲染闺蜜与渣男卡片
+      const alliesPanel = document.getElementById('aff-tab-allies');
+      if (alliesPanel) {
+        const sh = data.shen_huaian;
+        alliesPanel.innerHTML = `
+          <!-- 林晚晚 -->
+          <div class="aff-card">
+            <div class="aff-header">
+              <div class="aff-avatar"><img src="assets/avatars/lin_wanwan.jpg" class="avatar-img" onerror="this.outerHTML='💄'"></div>
+              <div class="aff-meta">
+                <div class="aff-name-row">
+                  <span class="aff-name">林晚晚</span>
+                  <span class="aff-role">女二 · 铁杆闺蜜</span>
+                  <span class="aff-badge top">生死与共</span>
+                </div>
+                <div class="aff-desc">时尚买手主理人 · 嘴替战神 · 护短狂魔</div>
+              </div>
+            </div>
+            <div class="meter-label">
+              <span>闺蜜战力契合度</span>
+              <span class="meter-val gold">100% 👯‍♀️</span>
+            </div>
+            <div class="meter-bar"><div class="meter-fill gold" style="width: 100%;"></div></div>
+            <div class="aff-quote" style="margin-top:10px;">“狗东西，拿开你的脏手！再敢碰见雪一下，老娘废了你！”</div>
+          </div>
+
+          <!-- 苏清禾 -->
+          <div class="aff-card">
+            <div class="aff-header">
+              <div class="aff-avatar"><img src="assets/avatars/su_qinghe.jpg" class="avatar-img" onerror="this.outerHTML='📊'"></div>
+              <div class="aff-meta">
+                <div class="aff-name-row">
+                  <span class="aff-name">苏清禾</span>
+                  <span class="aff-role">女三 · 商业合伙人</span>
+                  <span class="aff-badge blue">百亿操盘</span>
+                </div>
+                <div class="aff-desc">前百亿基金投资人 · 人形算盘 · 商业铁三角</div>
+              </div>
+            </div>
+            <div class="meter-label">
+              <span>商业契合指数</span>
+              <span class="meter-val">99% 💼</span>
+            </div>
+            <div class="meter-bar"><div class="meter-fill" style="width: 99%; background: #3b82f6;"></div></div>
+            <div class="aff-quote" style="margin-top:10px;">“你的图纸有灵魂，而我懂资本底层的恶犬游戏。咱们一起从资本嘴里夺食！”</div>
+          </div>
+
+          <!-- 沈淮安 (渣男) -->
+          <div class="aff-card tier-trash">
+            <div class="aff-header">
+              <div class="aff-avatar"><img src="assets/avatars/shen_huaian.jpg" class="avatar-img" onerror="this.outerHTML='🗑️'"></div>
+              <div class="aff-meta">
+                <div class="aff-name-row">
+                  <span class="aff-name">沈淮安</span>
+                  <span class="aff-role">男五 · 出轨前任</span>
+                  <span class="aff-badge trash">${sh.badge}</span>
+                </div>
+                <div class="aff-desc">虚伪卑劣 · 骨灰级火葬场 · 破产清算中</div>
+              </div>
+            </div>
+            <div class="meter-label">
+              <span>女主好感度 (Affection)</span>
+              <span class="meter-val crimson">${sh.aff}% 💔 (彻底厌恶)</span>
+            </div>
+            <div class="meter-bar"><div class="meter-fill crimson" style="width: ${Math.max(0, 100 + sh.aff)}%;"></div></div>
+            <div class="meter-label" style="margin-top:8px;">
+              <span>崩溃悔恨度 (Regret)</span>
+              <span class="meter-val crimson">${100 - Math.min(100, Math.max(0, sh.pos))}% 📉</span>
+            </div>
+            <div class="meter-bar"><div class="meter-fill crimson" style="width: ${100 - Math.min(100, Math.max(0, sh.pos))}%;"></div></div>
+            <div class="aff-event" style="margin-top:10px;">
+              <div class="event-title">⚠️ 本章报应进度：</div>
+              <div class="event-body">${sh.event}</div>
+            </div>
+            <div class="aff-quote" style="margin-top:10px; color: #ef4444;">${sh.quote}</div>
+          </div>
+        `;
+      }
+    }
+
+    // 男神投喂交互
+    function feedHeroHeart(heroKey, e) {
+      if (e) e.stopPropagation();
+      triggerPetalRain();
+      
+      const clips = HERO_VOICES[heroKey] || ["（温柔注视着你，眼底泛起深情波澜）"];
+      const reply = clips[Math.floor(Math.random() * clips.length)];
+      showToast(reply);
+    }
+
+    // 渲染章节末尾修罗场抉择卡片
+    function renderChapterDilemma(idx, container) {
+      const chapNum = idx + 1;
+      const dilemma = CHAPTER_DILEMMAS[chapNum];
+      if (!dilemma) return;
+
+      const card = document.createElement('div');
+      card.className = 'chapter-dilemma-card';
+
+      const savedChoiceKey = `novel_dilemma_ch_${chapNum}`;
+      const savedChoice = localStorage.getItem(savedChoiceKey);
+
+      let optionsHtml = '';
+      dilemma.options.forEach((opt, optIdx) => {
+        const isSelected = savedChoice === String(optIdx);
+        optionsHtml += `
+          <button class="dilemma-opt-btn ${isSelected ? 'selected' : ''}" onclick="selectDilemma(${chapNum}, ${optIdx})">
+            <span class="dilemma-opt-badge">${opt.badge}</span>
+            <span>${opt.text}</span>
+            <span style="margin-left:auto; font-size:11px; color:#f43f5e; opacity:0.8;">${opt.ratio} 仙女首选</span>
+          </button>
+        `;
+      });
+
+      card.innerHTML = `
+        <div class="dilemma-title">
+          <span>✨</span> 【第 ${String(chapNum).padStart(2, '0')} 章 · 修罗场抉择时刻】
+        </div>
+        <div class="dilemma-subtitle">如果是你，置身于本章的高能现场，你会做出怎样的心动选择？</div>
+        <div class="dilemma-options" id="dilemma-opts-${chapNum}">
+          ${optionsHtml}
+        </div>
+        <div id="dilemma-secret-container-${chapNum}"></div>
+      `;
+
+      container.appendChild(card);
+
+      if (savedChoice !== null) {
+        showDilemmaSecret(chapNum, parseInt(savedChoice));
+      }
+    }
+
+    function selectDilemma(chapNum, optIdx) {
+      localStorage.setItem(`novel_dilemma_ch_${chapNum}`, optIdx);
+      triggerPetalRain();
+
+      const container = document.getElementById(`dilemma-opts-${chapNum}`);
+      if (container) {
+        const btns = container.querySelectorAll('.dilemma-opt-btn');
+        btns.forEach((b, i) => {
+          if (i === optIdx) b.classList.add('selected');
+          else b.classList.remove('selected');
+        });
+      }
+
+      showDilemmaSecret(chapNum, optIdx);
+      showToast('已记录你的专属抉择 ✨ 专属羁绊已解锁！');
+    }
+
+    function showDilemmaSecret(chapNum, optIdx) {
+      const dilemma = CHAPTER_DILEMMAS[chapNum];
+      if (!dilemma || !dilemma.options[optIdx]) return;
+      const opt = dilemma.options[optIdx];
+      const secContainer = document.getElementById(`dilemma-secret-container-${chapNum}`);
+      if (!secContainer) return;
+
+      secContainer.innerHTML = `
+        <div class="dilemma-secret-box">
+          <div class="dilemma-secret-header">
+            <span>💖</span> 【专属剧情分支彩蛋 · ${opt.secretHeader}】
+          </div>
+          <div>${opt.secretText}</div>
+        </div>
+      `;
+    }
+
+    // 浪漫花瓣与爱心全屏飘落粒子流
+    function triggerPetalRain() {
+      const count = 16;
+      const symbols = ['🌸', '🌹', '💖', '✨', '💕', '🌷'];
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'petal-particle';
+        p.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        p.style.left = (Math.random() * 94 + 3) + 'vw';
+        p.style.fontSize = (Math.random() * 12 + 16) + 'px';
+        p.style.animationDuration = (Math.random() * 1.5 + 2.2) + 's';
+        p.style.animationDelay = (Math.random() * 0.4) + 's';
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 4000);
+      }
+    }
+
+    // 打开专属情侣心动蜜语弹窗
+    function openLoveModal() {
+      triggerPetalRain();
+      const modal = document.getElementById('love-modal-overlay');
+      const textEl = document.getElementById('love-card-quote-text');
+      const randomQuote = LOVE_QUOTES[Math.floor(Math.random() * LOVE_QUOTES.length)];
+      if (textEl) textEl.innerText = `“${randomQuote}”`;
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeLoveModal(sendBack = false) {
+      const modal = document.getElementById('love-modal-overlay');
+      if (modal) modal.classList.remove('active');
+      if (sendBack) {
+        showToast('收到你的爱心啦，今晚做个好梦 💕');
+        triggerPetalRain();
+      }
+    }
+
+    function copyLoveQuote() {
+      const textEl = document.getElementById('love-card-quote-text');
+      if (!textEl) return;
+      const text = textEl.innerText;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('已复制蜜语，快去发给他撒娇吧~ 🥰');
+        }).catch(() => {
+          showToast('已长按复制 ✨');
+        });
+      } else {
+        showToast('已长按复制 ✨');
+      }
+    }
+
+
     window.addEventListener('DOMContentLoaded', () => {
       renderCharacters();
       renderCatalog();
+      initAffectionTimeline();
 
       const savedTheme = localStorage.getItem('novel_theme') || 'dark';
       setTheme(savedTheme);
@@ -2042,5 +3116,22 @@
       renderChapter(startIdx, true);
     });
   </script>
+
+  <!-- 浪漫情侣蜜语心动弹窗 -->
+  <div class="love-modal-overlay" id="love-modal-overlay" onclick="if(event.target===this)closeLoveModal()">
+    <div class="love-card-modal">
+      <div class="love-card-icon">💌</div>
+      <div class="love-card-title">专属于小仙女的心动蜜语</div>
+      <div class="love-card-sub">异地恋专属 · 每一页故事都是奔向你的心跳</div>
+      <div class="love-card-quote" id="love-card-quote-text">
+        “见雪在书里有四位神级男主修罗场，而在我的现实世界里，我的唯一神明永远是你 💖”
+      </div>
+      <div class="love-card-btns">
+        <button class="love-card-btn secondary" onclick="copyLoveQuote()">📋 复制发给他</button>
+        <button class="love-card-btn primary" onclick="closeLoveModal(true)">💖 我也想你啦</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
