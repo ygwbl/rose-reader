@@ -1682,14 +1682,6 @@
     </article>
 
 <footer class="chapter-end">
-      <div class="interactive-card">
-        <button class="btn-heart" id="btn-heart" onclick="triggerHeart(event)">
-          <span>❤️</span>
-          <span>戳作者催更 / 投喂小心心</span>
-          <span class="heart-count" id="heart-count">1314</span>
-        </button>
-        <div class="feedback-msg" id="feedback-msg">点击爱心，把你的夸奖直接送达作者哦～</div>
-      </div>
 
       <!-- 翻页导航 -->
       <nav class="chapter-nav">
@@ -1906,8 +1898,10 @@
         }
       });
 
-      // 渲染修罗场心选翻牌互动
-      renderChapterDilemma(idx, bodyEl);
+      // 仅在当前最新连载章（第 10 章）渲染终局命运抉择时刻！前面的章节专注纯享阅读与剧情插画
+      if (idx === 9) {
+        renderChapterDilemma(idx, bodyEl);
+      }
 
       // 渲染章节互动动作条（拆心动蜜语 / 看好感度变迁）
       const actionRow = document.createElement('div');
@@ -2294,7 +2288,7 @@
     let heartTotal = 1314;
     function triggerHeart(e) {
       heartTotal++;
-      document.getElementById('heart-count').innerText = heartTotal;
+      const hc = document.getElementById('heart-count'); if(hc) hc.innerText = heartTotal;
       localStorage.setItem('novel_hearts', heartTotal);
 
       const heart = document.createElement('div');
@@ -2656,6 +2650,91 @@
 };
 
     // 章节修罗场心动抉择互动数据 (CHAPTER_DILEMMAS)
+    
+    // ===== 第 11 章 · 三大男神专属支线正文库（根据第 10 章抉择实时无缝展开） =====
+    const BRANCH_CHAPTER_11 = {
+      0: {
+        num: 11,
+        branchKey: 'fu',
+        title: "第011章 众神之巅与漫天霜雪（傅沉舟专线）",
+        words: 4850,
+        illustration: {
+          afterParaIndex: 12,
+          src: "assets/illustrations/ch11_fu_proposal.jpg",
+          caption: "✨ 【终局名场面 · 云顶求婚】漫天霜雪的顶层天台 · 傅沉舟单膝跪地执手相拥，十二年暗恋终迎盛世大婚",
+          title: "第011章 · 众神之巅与大婚盛典"
+        },
+        paragraphs: [
+          "抢救室门前死一般的寂静，被温见雪那只苍白微凉的手彻底打破。",
+          "当她的指尖越过无数对峙的枪口与保镖，坚定地搭在傅沉舟那只掌心带茧的大手上时，这位向来杀伐果决、不可一世的商界暴君，整副身躯剧烈地震颤了一下。",
+          "男人的凤眸瞬间泛起骇人的血丝，他没有给全场任何一人反应的机会，一把将温见雪打横抱入怀中，宽厚的羊绒大衣将她裹得密不透风。他的下巴抵在她发顶，胸膛里那颗沉寂了十二年的心脏疯狂撞击着肋骨。",
+          "“最高检密令已下。”傅沉舟抬眸扫过沈淮安与宋芊芊，目光如冰封万里的寒刃，“二十年前温伯父地勘底稿被掉包一案，由特别反贪局专案组全面接管。沈家、宋家连同当年受贿审批的十二位高官，一律就地戴铐逮捕！”",
+          "“不！见雪！傅总！求您放过沈家啊——！”沈淮安面无人色地瘫软在地，甚至顾不上折断的手腕，在冰冷的地砖上拼命磕头。",
+          "然而，全副武装的司法特警根本没有给他半句哀求的机会，冰冷的银色手铐咔哒一声合拢，沈淮安与尖叫发狂的宋芊芊被当场押上警车。曾经在A市不可一世的沈氏集团，在短短四十八小时内被查封全部银行账户与海外资产，正式宣告破产清算，主要涉案人员顶格量刑无期！",
+          "一个月后，A市新汇中心全球地标建筑正式落成。",
+          "霁雪建筑事务所力压全美顶尖设计所，斩获全球金拱门最高设计大奖，温见雪的名字以大满贯评审全票登顶国际建筑界众神之巅！",
+          "盛大的庆功晚宴结束后，傅沉舟牵着她的手，登上了新汇云顶八十八层的露天观景天台。夜风微凉，初冬的第一场鹅毛大雪纷纷扬扬地洒落在繁华璀璨的万家灯火之上。",
+          "“十二年前，在傅家老宅的冷雨长廊里，有个浑身是刺的小女孩塞给我一颗橙子软糖，告诉我‘骨头要硬，别向任何人低头’。”傅沉舟从大衣内袋取出一枚墨黑丝绒盒，在漫天飞雪中缓缓单膝跪地。",
+          "“那颗糖，救了我一辈子。我用十二年踏碎仇敌骨头夺下这铁王座，不是为了向世界炫耀，而是为了有朝一日，能有足够的底气站在你面前，为你遮挡所有风雨。”",
+          "男人深邃漆黑的凤眸在雪光中泛着近乎虔诚的微光，将那枚雕刻着雪花与玫瑰的鸽血红钻戒轻轻推向她的指尖：“温见雪，沈淮安折不弯你的傲骨，而我，甘愿做你手里最锋利的刀。江山归你，万丈深渊我陪你跳，往后余生，做我傅沉舟唯一的妻子，好吗？”",
+          "温见雪眼眶微热，迎着飞舞的漫天霜雪，唇角绽开极美极艳的笑容。她伸出手指，任凭那枚滚烫的红钻套入无名指尖，主动俯身吻上了男人的唇：“傅沉舟，这一局，我们赢了。”"
+        ]
+      },
+      1: {
+        num: 11,
+        branchKey: 'jiang',
+        title: "第011章 日内瓦湖畔的暖阳（江景修专线）",
+        words: 4720,
+        illustration: {
+          afterParaIndex: 10,
+          src: "assets/illustrations/ch11_jiang_switzerland.jpg",
+          caption: "✨ 【终局名场面 · 瑞士暖阳】日内瓦湖畔的木屋露台 · 江医生为见雪披上羊绒毯，二十年温柔守护终成眷属",
+          title: "第011章 · 日内瓦湖的雪与暖阳"
+        },
+        paragraphs: [
+          "“景修哥……带我走，我好累。”",
+          "这句极轻、极微弱的呢喃，如同万钧雷霆狠狠劈在江景修的心头。",
+          "这位名震国际的神外第一刀在无数聚光灯与生死关头从未颤抖过分毫的手指，此刻却抖得不成样子。他猛地推开身旁阻拦的众人，在傅沉舟与裴知砚震撼的注视下，红着眼眶将温见雪轻轻抱起，贴在自己的颈窝间无声痛哭。",
+          "“好……哥带你走，离开这里，去没有人能伤害你的地方。”",
+          "当晚，江景修递交了辞去医院所有行政职位的报告，将他视若生命的柳叶手术刀交接给了副手。在裴知砚调集的大批特警肃清沈家仇敌的同时，一架跨国医疗专机划破黎明前的夜空，直飞瑞士苏黎世。",
+          "阿尔卑斯山脉脚下，日内瓦湖畔的清晨静谧如画。",
+          "一座面朝雪山与蔚蓝湖面的北欧原木别墅里，壁炉正噼啪作响，空气中弥漫着烘烤麦包与雪梨红枣茶的清甜气息。",
+          "温见雪穿着柔软的白色羊绒衫，坐在落地窗前的摇椅上翻看手稿，窗外的湖水如蓝宝石般波光粼粼。经过半年的静养与江景修无微不至的药膳调理，她苍白的脸颊终于恢复了少女时期的红润与娇憨。",
+          "露台的门轻声被推开，江景修换下了冰冷的白大褂，穿着温暖的燕麦色羊绒毛衣，手里端着一碗温热的八宝甜羹走过来。他将一条羊毛盖毯细心地覆在她膝头，随后蹲在她身旁，轻轻将额头抵在她的手心。",
+          "“今天的胃还疼吗？”男人的嗓音依旧那般干净温润，只是眼底多了毫不掩饰的痴恋与眷恋。",
+          "“有你在，早就不疼了。”温见雪抿唇轻笑，揉了揉他微卷柔软的黑发，“听说A市法院昨天宣判了，沈淮安和宋芊芊被判了二十年，沈家彻底成了历史。”",
+          "江景修握紧她柔软的手掌，放在自己心口感受着平稳有力的心跳：“那些污浊的过往都已经结束了。见雪，我等了你整整二十年，从小时候你跟在我身后喊景修哥，到如今我们并肩看雪。”",
+          "他从衣领内侧解下一枚贴身戴了十年的纯银锁片，轻轻扣在她的腕间：“我不要当什么神外圣手，我只做你一个人的江景修。在这座雪山下，我们建一座属于你自己的小木屋，好不好？”",
+          "窗外暖阳如金，雪山巍峨。温见雪依偎进男人温暖宽阔的怀中，眼底满是洗尽铅华后的恬静与幸福。"
+        ]
+      },
+      2: {
+        num: 11,
+        branchKey: 'pei',
+        title: "第011章 京圈千金的无上荣光（裴知砚专线）",
+        words: 4680,
+        illustration: {
+          afterParaIndex: 9,
+          src: "assets/illustrations/ch11_pei_heiress.jpg",
+          caption: "✨ 【终局名场面 · 千金归位】京圈顶级宴会大厅 · 裴知砚亲手佩戴家族钻石徽章，千亿裴氏重工全力撑腰",
+          title: "第011章 · 京圈千金的无上荣光"
+        },
+        paragraphs: [
+          "“哥……带我回家。”",
+          "温见雪的声音虚弱却带着无条件的信任与依赖。",
+          "裴知砚身形剧震，那双桀骜不驯、平日里杀人不眨眼的狼眸瞬间漫上了一层热泪。他二话不说，脱下身上宽厚沉重的军式黑色大衣，小心翼翼地把温见雪裹成一个茧，直接打横抱起！",
+          "他居高临下地扫过傅沉舟与江景修，整个人如同护犊的万丈玄铁重盾，暴喝一声：“听到没有？！我妹妹说要回家！你们那些虚头巴脑的算计和情情爱爱都给老子收起来！今天谁敢挡路，裴氏的重装车队直接碾平这层楼！”",
+          "特警与裴家私兵当即护送着裴知砚的防弹车队呼啸离开医院。在裴知砚动用最高特别司法的雷霆干预下，沈家二十年前偷工减料导致塌方害死温父的卷宗被彻底翻案，国家建筑部亲自下达最高平反公文，为温见雪的父亲恢复“国家一级勋章工程师”终身荣誉！",
+          "三个月后，京圈顶级国宾级礼堂内，宾朋满座，豪门巨擘云集。",
+          "裴老太爷亲自主持盛大宴会，正式向全球宣告：温见雪正式列入裴氏家族宗祠族谱，认祖归宗，成为裴氏工业集团唯一的合法第一继承千金，持股 35% 绝对控股权！",
+          "闪光灯下，温见雪一袭墨绿丝绒拽地长裙，长发盘起，高贵冷艳不可方物。裴知砚身着一身笔挺的深色定制军式礼服，神色狂傲而庄严，当着数百家媒体与商界名流的面，亲手将那枚象征家族最高权柄的蓝钻勋章别在她的胸前。",
+          "“沈家欺你无依无靠，老子今天就让全天下看清楚，你温见雪背后站着的是整个裴家！”裴知砚俯下身，粗砺的大手轻轻捏了捏她的脸蛋，低沉而宠溺地笑道，“以后想盖什么楼盖什么楼，图纸画累了就回京城歇着。天塌下来哥给你撑着，老子的妹妹，永远是全天下最尊贵的女王！”",
+          "满堂掌声雷动，温见雪看着身旁如山岳般可靠的义兄，眼中泪光闪烁，却傲骨峥嵘地仰起头颅，迎接属于她的璀璨时代。"
+        ]
+      }
+    };
+
+
     const CHAPTER_DILEMMAS = {
   "1": {
     "question": "面对沈淮安的无耻纠缠与二楼暗处傅沉舟的注视，你会做出怎样的抉择？",
@@ -3328,7 +3407,42 @@
       }
 
       showDilemmaSecret(chapNum, optIdx);
-      showToast('已记录你的专属抉择 ✨ 专属羁绊已解锁！');
+
+      // 如果在第 10 章进行抉择，实时装配并解锁第 11 章专属支线！
+      if (chapNum === 10) {
+        unlockChapter11(optIdx);
+      } else {
+        showToast('已记录你的专属抉择 ✨ 专属羁绊已解锁！');
+      }
+    }
+
+    // 实时无缝装配第 11 章
+    function unlockChapter11(optIdx) {
+      const branchData = BRANCH_CHAPTER_11[optIdx] || BRANCH_CHAPTER_11[0];
+      
+      // 动态将第 11 章加入 CHAPTERS
+      CHAPTERS[10] = {
+        num: 11,
+        title: branchData.title,
+        words: branchData.words,
+        paragraphs: branchData.paragraphs
+      };
+
+      // 注册第 11 章对应的插画
+      if (branchData.illustration) {
+        CHAPTER_ILLUSTRATIONS[11] = branchData.illustration;
+      }
+
+      // 更新翻页按钮与目录
+      const btnNext = document.getElementById('btn-next-chap');
+      const nextTitle = document.getElementById('next-chap-title');
+      if (btnNext && nextTitle) {
+        btnNext.disabled = false;
+        nextTitle.innerText = `第11章 ${branchData.title.replace(/^第\d+章\s*/, '')} ›`;
+      }
+
+      renderCatalog();
+      showToast(`✨ 已为您解锁生成【${branchData.title.replace(/^第\d+章\s*/, '')}】！点击“下一章”立即阅读！`);
     }
 
     function showDilemmaSecret(chapNum, optIdx) {
@@ -3422,6 +3536,12 @@
       renderCatalog();
       initAffectionTimeline();
 
+      // 检查是否已有第 10 章的抉择记录，若有则自动装配第 11 章
+      const savedCh10Choice = localStorage.getItem('novel_dilemma_ch_10');
+      if (savedCh10Choice !== null) {
+        unlockChapter11(parseInt(savedCh10Choice));
+      }
+
       const savedTheme = localStorage.getItem('novel_theme') || 'dark';
       setTheme(savedTheme);
 
@@ -3450,7 +3570,7 @@
       const savedHearts = localStorage.getItem('novel_hearts');
       if (savedHearts) {
         heartTotal = parseInt(savedHearts);
-        document.getElementById('heart-count').innerText = heartTotal;
+        const hc = document.getElementById('heart-count'); if(hc) hc.innerText = heartTotal;
       }
 
       const lastChap = localStorage.getItem('novel_last_chap');
