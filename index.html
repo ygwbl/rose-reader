@@ -2165,61 +2165,7 @@
       filter: brightness(1.1);
     }
 
-    /* ===== 角色沉浸耳语浮窗 ===== */
-    .hero-whisper-capsule {
-      position: fixed;
-      left: 20px;
-      bottom: 24px;
-      z-index: 998;
-      max-width: 340px;
-      background: linear-gradient(135deg, rgba(28, 18, 24, 0.95), rgba(16, 12, 18, 0.98));
-      border: 1px solid rgba(255, 77, 121, 0.35);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 77, 121, 0.15);
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      backdrop-filter: blur(12px);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: pointer;
-    }
-    .hero-whisper-capsule.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .whisper-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #ff4d79;
-      flex-shrink: 0;
-    }
-    .whisper-content {
-      flex: 1;
-      min-width: 0;
-    }
-    .whisper-name {
-      font-size: 11px;
-      font-weight: 700;
-      color: #ff859d;
-    }
-    .whisper-text {
-      font-size: 12.5px;
-      color: #fff;
-      line-height: 1.4;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .whisper-heart-icon {
-      font-size: 16px;
-      color: #ff4d79;
-      animation: pulseHeart 1.5s infinite ease-in-out;
-    }
+    
 
     /* ===== 第11章专属终局：AI 番外定制工坊 ===== */
     .epilogue-studio-card {
@@ -4428,6 +4374,437 @@
       const startIdx = (lastChap !== null && lastChap < CHAPTERS.length) ? parseInt(lastChap) : 0;
       renderChapter(startIdx, true);
     });
+
+    // ==========================================
+    // 1. 男神专属密聊数据库 (HERO_CHATS)
+    // ==========================================
+    const HERO_CHATS = {
+      fu_chenzhou: {
+        name: "傅沉舟",
+        role: "首富掌舵人 / 华尔街猎鹰",
+        avatar: "assets/avatars/fu_chenzhou.jpg",
+        status: "环球中心楼下 · 迈巴赫暖气开着 🌧️",
+        lastTime: "23:42",
+        history: [
+          { from: 'hero', text: "见雪，夜深了。别一直在二十八层吹风画图。" },
+          { from: 'hero', text: "新汇中心的地下双螺旋方案惊艳全场。但比起图纸，我更在乎你今晚胃还疼不疼。我在楼下，下来，车里有你想吃的那家糖。" }
+        ],
+        replies: [
+          {
+            text: "傅总，方案还没收尾，我还要再看半小时结构荷载。",
+            heroReply: "我上楼陪你。需要什么夜宵？金丝燕窝还是小时候灵堂前你爱吃的那种橙子软糖？我全带上来了。",
+            aff: 5
+          },
+          {
+            text: "你怎么知道我胃又有点冷了？……我这就收拾好下楼。",
+            heroReply: "因为你的一颦一笑，我看了整整十二年。慢点走，不着急，雨伞我已经给你撑开了。",
+            aff: 10
+          }
+        ]
+      },
+      jiang_jingxiu: {
+        name: "江景修",
+        role: "神经外科圣手 / 仁心医院院长",
+        avatar: "assets/avatars/jiang_jingxiu.jpg",
+        status: "刚下手术台 · 24小时专线为你开着 🍵",
+        lastTime: "23:38",
+        history: [
+          { from: 'hero', text: "见雪，刚结束一台六小时开颅手术。" },
+          { from: 'hero', text: "给你熬的白术百合暖胃汤喝了吗？不许空腹喝冰美式。知道你倔，但身体是自己的，听哥的话。" }
+        ],
+        replies: [
+          {
+            text: "景修哥辛苦了，快去休息吧。汤我已经趁温喝完了，胃里很舒服。",
+            heroReply: "你乖乖听话，比什么补药都管用。今晚我就在院里值班，有任何难受随时拨1号键，专线随时为你秒接。",
+            aff: 5
+          },
+          {
+            text: "景修哥，新汇中心地下的事……你真的没有瞒着我什么吗？",
+            heroReply: "……傻丫头。哥就算瞒着全世界，也绝不会害你分毫。别给自己太大压力，天塌下来哥替你抗。",
+            aff: 10
+          }
+        ]
+      },
+      pei_zhiyan: {
+        name: "裴知砚",
+        role: "裴氏工业少东 / 护妹狂魔",
+        avatar: "assets/avatars/pei_zhiyan.jpg",
+        status: "裴氏重工特装基地 · 谁敢惹我妹虽远必诛 🛡️",
+        lastTime: "23:15",
+        history: [
+          { from: 'hero', text: "沈家那个老杂毛的八千万合同，哥当着董事会面撕碎了，爽！" },
+          { from: 'hero', text: "沈淮安再敢带人骚扰你半步，给哥说一声，老子的特勤重装车队直接堵平他家大门！黑卡随便刷，不许省！" }
+        ],
+        replies: [
+          {
+            text: "哥，别冲动动武，商战上的事我想凭实力堂堂正正赢下来。",
+            heroReply: "好！有骨气！不愧是我裴知砚的妹妹！你想怎么建楼怎么玩都行，裴氏所有特种钢构生产线二十四小时随时为你单开！",
+            aff: 5
+          },
+          {
+            text: "哥，有你在，我真的一点都不怕沈家了。",
+            heroReply: "老子的妹妹，本来就该是全天下最尊贵的女王。周日回裴公馆，爷爷亲自下厨给你做糖醋排骨！",
+            aff: 10
+          }
+        ]
+      },
+      gu_yanchen: {
+        name: "顾宴臣",
+        role: "顾氏跨国集团少东 / 名利场孔雀",
+        avatar: "assets/avatars/gu_yanchen.jpg",
+        status: "云顶会所68层 · 满城红玫瑰 🌹",
+        lastTime: "22:50",
+        history: [
+          { from: 'hero', text: "68万朵红玫瑰把你们整栋环球中心围得水泄不通，够不够排场？" },
+          { from: 'hero', text: "沈建山昨晚买通黑公关想抹黑你，老子今天送花引全城媒体镜头，就是做你的金钟罩。温首席，赏脸吹个风？" }
+        ],
+        replies: [
+          {
+            text: "顾二少好大的手笔，整个金融圈都在笑话你的风流账。",
+            heroReply: "传就传呗。全城皆知我顾二少栽在你温见雪手里，老子不仅不丢人，还觉得倍有面子。",
+            aff: 5
+          },
+          {
+            text: "我知道你在暗中帮我防黑公关。顾二少，谢了。",
+            heroReply: "……操，突然这么正经干嘛，老子心跳都漏了半拍。明晚带你上云顶天台吹风，给个面子呗？",
+            aff: 10
+          }
+        ]
+      }
+    };
+
+    let activeHeroKey = null;
+
+    // 打开男神密聊手机
+    function openPhoneModal() {
+      const modal = document.getElementById('phone-modal-overlay');
+      if (modal) {
+        renderPhoneContacts();
+        modal.classList.add('active');
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        const timeEl = document.getElementById('phone-current-time');
+        if (timeEl) timeEl.innerText = timeStr;
+      }
+    }
+
+    function closePhoneModal() {
+      const modal = document.getElementById('phone-modal-overlay');
+      if (modal) modal.classList.remove('active');
+      backToContacts();
+    }
+
+    // 渲染联系人列表
+    function renderPhoneContacts() {
+      const listEl = document.getElementById('phone-contact-list');
+      if (!listEl) return;
+      listEl.innerHTML = '';
+
+      Object.keys(HERO_CHATS).forEach(key => {
+        const hero = HERO_CHATS[key];
+        const lastMsg = hero.history[hero.history.length - 1];
+        const item = document.createElement('div');
+        item.className = 'phone-contact-item';
+        item.onclick = () => openHeroChat(key);
+        item.innerHTML = `
+          <div class="phone-avatar-wrap">
+            <img src="${hero.avatar}" class="phone-avatar-img" alt="${hero.name}">
+            <span class="phone-status-dot"></span>
+          </div>
+          <div class="phone-contact-info">
+            <div class="phone-contact-name-row">
+              <div>
+                <span class="phone-contact-name">${hero.name}</span>
+                <span class="phone-contact-role">${hero.role.split('/')[0]}</span>
+              </div>
+              <span class="phone-contact-time">${hero.lastTime}</span>
+            </div>
+            <div class="phone-contact-snippet">${lastMsg ? lastMsg.text : hero.status}</div>
+          </div>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    // 打开与某个男神的对话
+    function openHeroChat(heroKey) {
+      activeHeroKey = heroKey;
+      const hero = HERO_CHATS[heroKey];
+      if (!hero) return;
+
+      document.getElementById('chat-hero-name').innerText = hero.name;
+      document.getElementById('chat-hero-status').innerText = hero.status;
+
+      const chatView = document.getElementById('phone-chat-view');
+      if (chatView) chatView.classList.add('active');
+
+      renderChatMessages(hero);
+      renderReplyOptions(hero);
+    }
+
+    function backToContacts() {
+      const chatView = document.getElementById('phone-chat-view');
+      if (chatView) chatView.classList.remove('active');
+      activeHeroKey = null;
+    }
+
+    // 渲染消息气泡
+    function renderChatMessages(hero) {
+      const msgBox = document.getElementById('phone-chat-messages');
+      if (!msgBox) return;
+      msgBox.innerHTML = `
+        <div class="chat-time-tag">今天 ${hero.lastTime} · 专属于温见雪的加密频道</div>
+      `;
+
+      hero.history.forEach(m => {
+        const row = document.createElement('div');
+        row.className = `chat-row ${m.from}`;
+        const avatarSrc = m.from === 'hero' ? hero.avatar : 'assets/avatars/wen_jianxue.jpg';
+        row.innerHTML = `
+          <img src="${avatarSrc}" class="chat-avatar" alt="avatar">
+          <div class="chat-bubble">${m.text}</div>
+        `;
+        msgBox.appendChild(row);
+      });
+
+      msgBox.scrollTop = msgBox.scrollHeight;
+    }
+
+    // 渲染回复选项
+    function renderReplyOptions(hero) {
+      const optBox = document.getElementById('phone-reply-options');
+      if (!optBox) return;
+      optBox.innerHTML = '';
+
+      if (!hero.replies || hero.replies.length === 0) {
+        optBox.innerHTML = `<div style="font-size:12px; color:rgba(255,255,255,0.4); text-align:center;">暂无更多回复选项，男神正在默默守候中...</div>`;
+        return;
+      }
+
+      hero.replies.forEach((r, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'reply-btn';
+        btn.innerText = `💬 见雪：${r.text}`;
+        btn.onclick = () => sendUserReply(idx);
+        optBox.appendChild(btn);
+      });
+    }
+
+    // 发送回复
+    function sendUserReply(idx) {
+      if (!activeHeroKey) return;
+      const hero = HERO_CHATS[activeHeroKey];
+      const opt = hero.replies[idx];
+      if (!opt) return;
+
+      hero.history.push({ from: 'user', text: opt.text });
+      renderChatMessages(hero);
+
+      const optBox = document.getElementById('phone-reply-options');
+      if (optBox) {
+        optBox.innerHTML = `<div style="font-size:12px; color:#ff859d; text-align:center;">${hero.name} 正在输入... ✍️</div>`;
+      }
+
+      setTimeout(() => {
+        hero.history.push({ from: 'hero', text: opt.heroReply });
+        renderChatMessages(hero);
+        renderReplyOptions(hero);
+
+        showToast(`💖 与 ${hero.name} 羁绊加深！心动值 +${opt.aff}！`);
+        if (typeof feedHeroHeart === 'function') {
+          feedHeroHeart(activeHeroKey, { clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 });
+        }
+      }, 1200);
+    }
+
+    // ==========================================
+    // 2. 名场面专属心动拍立得生成器 (HTML5 Canvas)
+    // ==========================================
+    const CHAPTER_POLAROID_QUOTES = {
+      1: { quote: "“沈淮安配不上这双眼睛，更不配碰温良臣的图纸。”", hero: "傅沉舟 · 浮光初见" },
+      3: { quote: "“动我妹妹者，虽远必诛！撕你八千万合同，只是第一笔利息！”", hero: "裴知砚 · 铁血护短" },
+      5: { quote: "“新汇中心不需要粉饰太平的豆腐渣，只要能在地狱上托起天堂的硬骨头。”", hero: "傅沉舟 · 百分之选" },
+      6: { quote: "“别人看的是图纸。而我要的，是你这个人，和你的整个野心。”", hero: "傅沉舟 · 雨夜迈巴赫" },
+      8: { quote: "“68万朵玫瑰把全城媒体引到你门前，就是拉全网舆论做你的金钟罩。”", hero: "顾宴臣 · 名利场豪赌" },
+      10: { quote: "“我父亲的仇，霁雪的未来，我要亲自一刀一刀讨回来！”", hero: "温见雪 · 傲骨昭雪" },
+      11: { quote: "“踏碎仇敌骨头夺下铁王座，只为在雪中为你撑伞。此生唯你，死生不渝。”", hero: "终局 · 漫天霜雪" }
+    };
+
+    let curPolaroidDataUrl = null;
+
+    function generatePolaroid(imgSrc, title, chapNum) {
+      const modal = document.getElementById('polaroid-modal-overlay');
+      const canvas = document.getElementById('polaroid-canvas');
+      if (!canvas || !modal) return;
+
+      const ctx = canvas.getContext('2d');
+      const quoteData = CHAPTER_POLAROID_QUOTES[chapNum] || { quote: "“玫瑰不向深渊折，回首皆为座下臣。”", hero: "温见雪 · 逆袭神话" };
+
+      ctx.clearRect(0, 0, 600, 920);
+      ctx.fillStyle = "#faf9f6";
+      ctx.fillRect(0, 0, 600, 920);
+
+      ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(6, 6, 588, 908);
+
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = imgSrc;
+      img.onload = () => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(36, 36, 528, 640, 8);
+        ctx.clip();
+        ctx.drawImage(img, 36, 36, 528, 640);
+        ctx.restore();
+
+        ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(36, 36, 528, 640);
+
+        ctx.fillStyle = "#2c2428";
+        ctx.font = "bold 22px 'Noto Serif SC', serif";
+        ctx.textAlign = "center";
+        ctx.fillText(`CHAPTER ${String(chapNum).padStart(2, '0')} · ${title}`, 300, 725);
+
+        ctx.fillStyle = "#5c4d54";
+        ctx.font = "italic 16px 'Noto Serif SC', serif";
+        ctx.fillText(quoteData.quote, 300, 770);
+
+        ctx.fillStyle = "#ff4d79";
+        ctx.font = "bold 15px sans-serif";
+        ctx.fillText(`—— ${quoteData.hero}`, 300, 810);
+
+        ctx.fillStyle = "#d4af37";
+        ctx.font = "12px sans-serif";
+        ctx.fillText("✨ 《玫瑰不向深渊折》· 专属典藏拍立得 · 2026.11.23", 300, 860);
+
+        curPolaroidDataUrl = canvas.toDataURL('image/png');
+        modal.classList.add('active');
+      };
+    }
+
+    function closePolaroidModal() {
+      const modal = document.getElementById('polaroid-modal-overlay');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function downloadPolaroid() {
+      if (!curPolaroidDataUrl) return;
+      const a = document.createElement('a');
+      a.href = curPolaroidDataUrl;
+      a.download = `玫瑰不向深渊折_心动拍立得_${Date.now()}.png`;
+      a.click();
+      showToast('📸 拍立得卡片已开始保存至您的相册！');
+    }
+
+    function copyPolaroidQuote() {
+      const quoteData = CHAPTER_POLAROID_QUOTES[currentChapterIndex + 1] || { quote: "“玫瑰不向深渊折，回首皆为座下臣。”", hero: "温见雪" };
+      const copyText = `${quoteData.quote} —— ${quoteData.hero}（《玫瑰不向深渊折》专属语录）`;
+      navigator.clipboard.writeText(copyText).then(() => {
+        showToast('📋 金句文案已复制到剪贴板！');
+      }).catch(() => {
+        showToast('文案复制成功！');
+      });
+    }
+
+    // ==========================================
+    // 3. 第11章专属终局：AI 番外定制工坊
+    // ==========================================
+    const EPILOGUE_DATA = {
+      wedding: {
+        title: "【番外 · 盛世大婚与漫天烟花】",
+        paragraphs: [
+          "初雪降临的这一晚，A市迎来了百年未遇的盛世大婚。",
+          "滨海新汇中心云顶八十八层，全城最顶级的权贵、国际建筑评审主席、司法高层悉数盛装出席。全城三百块巨型户外大屏同步点亮，无人机方阵在墨黑夜空中编织出璀璨夺目的盛大玫瑰图腾。",
+          "红毯尽头，温见雪一袭重工定制的抹胸碎钻白纱，长发如瀑，泪痣清冷而娇艳不可方物。而在神圣的鲜花拱门前，傅沉舟一身笔挺墨黑礼服，狭长深邃的凤眸中蓄满了滚烫而克制的热泪。",
+          "当神父宣读誓词的那一刻，傅沉舟没有等神父念完，便紧紧握住温见雪纤细无名指，将那枚象征家族永恒王冠的鸽血红钻稳稳推进她的指根。",
+          "“十二年前，你的一颗糖救了我的命。”男人俯身，冰凉性感的薄唇微颤着贴上她的唇瓣，“从今往后，我傅沉舟所有的王座、江山与生命，生生世世，皆臣服于你。”",
+          "漫天璀璨的烟花在此刻呼啸升空，照亮了整座城市与紧紧相拥的二人。"
+        ]
+      },
+      honeymoon: {
+        title: "【番外 · 日内瓦湖畔与壁炉私语】",
+        paragraphs: [
+          "瑞士阿尔卑斯山麓，日内瓦湖畔的纯木质湖景别墅内，炉火噼啪作响。",
+          "窗外是大雪漫天的银白世界，窗内却暖意融融，弥漫着热红酒与肉桂的甘醇香气。",
+          "温见雪穿着宽大的米白羊绒毛衣，盘腿坐在厚实的长毛地毯上，膝头摊开着未完成的设计图纸。身后忽然落下一件带着熟悉雪松冷香的厚重大衣，紧接着，一双结实有力的长臂将她整个人打横圈入怀中。",
+          "“还在画图，嗯？”男人的下巴抵在她修长白皙的颈窝，呼吸灼热而霸道地洒在她的耳垂，“度蜜月还这么不专心，温首席，是要受罚的。”",
+          "温见雪轻笑转头，唇瓣不偏不倚撞进男人的深吻之中。室外风雪呼啸，壁炉火光摇曳，所有的深渊与过往皆已远去，只剩下余生彼此缠绵的心跳。"
+        ]
+      },
+      jealous: {
+        title: "【番外 · 霸总深夜吃醋与领带缠绵】",
+        paragraphs: [
+          "深夜十一点，霁雪建筑事务所总裁办公室。",
+          "温见雪刚签完最后一份合同，办公室大门便被无声推开。傅沉舟迈着沉稳冷冽的步伐走入，目光落在了茶几上一束娇艳欲滴的蓝色妖姬上——那是某位跨国投资人下午送来的祝贺花束。",
+          "男人的凤眸瞬间危险地眯起，抬手松了松领带，直接走到大班椅前，居高临下地将温见雪禁锢在双臂之间。",
+          "“蓝色妖姬？字条写着‘慕名已久’？”傅沉舟冷嗤一声，修长手指挑起温见雪精巧的下巴，语调低沉带着浓浓的酸意与危险占有欲，“看来傅太太名扬国际后，外面的狂蜂浪蝶有点多啊。”",
+          "温见雪忍俊不禁，伸手拽住他的黑色领带，微微用力将首富霸总拉近自己鼻尖：“傅总这是在吃醋？”",
+          "傅沉舟直接俯身封住那张微扬的红唇，哑声道：“是，老子吃醋快吃疯了。今晚别想回家了，在这儿陪我。”"
+        ]
+      }
+    };
+
+    function unlockEpilogue(type) {
+      const data = EPILOGUE_DATA[type];
+      if (!data) return;
+
+      if (typeof showAiGenModal === 'function') {
+        showAiGenModal({ title: data.title }, () => {
+          renderEpilogueContent(data);
+        });
+      } else {
+        renderEpilogueContent(data);
+      }
+    }
+
+    function renderEpilogueContent(data) {
+      const existing = document.getElementById('epilogue-display-card');
+      if (existing) existing.remove();
+
+      const articleBody = document.getElementById('article-body');
+      if (!articleBody) return;
+
+      const card = document.createElement('div');
+      card.id = 'epilogue-display-card';
+      card.className = 'chapter-illustration';
+      card.style.cssText = "margin-top: 30px; padding: 24px 20px; background: var(--bg-card); border: 1px solid var(--accent);";
+      card.innerHTML = `
+        <div style="font-size: 18px; font-weight: 700; color: #ff859d; margin-bottom: 16px; text-align: center;">
+          ✨ ${data.title} ✨
+        </div>
+        ${data.paragraphs.map(p => `<p style="font-size: 15.5px; line-height: 1.85; margin-bottom: 12px; color: var(--text-primary); text-indent: 2em;">${p}</p>`).join('')}
+        <div style="text-align: center; margin-top: 20px; font-size: 13px; color: var(--text-muted);">
+          💖 专属于你们的浪漫番外 · 愿现实世界的你也被温柔以待
+        </div>
+      `;
+      articleBody.appendChild(card);
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showToast(`✨ ${data.title} 专属番外已生成落盘！`);
+    }
+
+    function generateCustomEpilogue() {
+      const input = document.getElementById('epilogue-custom-input');
+      if (!input || !input.value.trim()) {
+        showToast('请输入你想看到的番外愿望哦～');
+        return;
+      }
+      const wish = input.value.trim();
+      const customData = {
+        title: `【专属定制愿望番外 · ${wish.slice(0, 10)}】`,
+        paragraphs: [
+          `围绕着“${wish}”，属于温见雪与男神的专属甜蜜时光悄然展开。`,
+          `在属于你们的私密天地里，向来叱咤风云的男神脱下了平日冷酷的伪装，满心满眼皆是对见雪毫无底线的宠溺与迁就。`,
+          `“只要是你想要的，上天入地我都替你寻来。”男人在她耳边低语，将温热的吻落在她发梢，“余生很长，我们慢慢过。”`
+        ]
+      };
+      unlockEpilogue('custom');
+      renderEpilogueContent(customData);
+    }
+
+
   </script>
 
   <!-- 浪漫情侣蜜语心动弹窗 -->
@@ -4575,16 +4952,5 @@
       </div>
     </div>
   </div>
-
-  <!-- 沉浸式男神心动耳语浮窗 -->
-  <div class="hero-whisper-capsule" id="hero-whisper-capsule" onclick="whisperHeartReaction()">
-    <img src="assets/avatars/fu_chenzhou.jpg" class="whisper-avatar" id="whisper-avatar" alt="男神">
-    <div class="whisper-content">
-      <div class="whisper-name" id="whisper-name">傅沉舟 · 心动耳语</div>
-      <div class="whisper-text" id="whisper-text">“这次抓住，我就不会再放手了。”</div>
-    </div>
-    <span class="whisper-heart-icon">💖</span>
-  </div>
-
 </body>
 </html>
