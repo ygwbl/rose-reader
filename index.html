@@ -1459,6 +1459,129 @@
       margin-bottom: 0 !important;
     }
 
+  
+    /* ===== 沉浸式名场面原画插图样式 ===== */
+    .chapter-illustration {
+      margin: 28px 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      transition: all 0.3s ease;
+    }
+    .chapter-illustration:hover {
+      box-shadow: 0 14px 40px rgba(244, 63, 94, 0.2);
+      transform: translateY(-2px);
+    }
+    .illus-img-wrap {
+      width: 100%;
+      max-height: 480px;
+      overflow: hidden;
+      position: relative;
+      background: #0d0d12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .illus-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      cursor: zoom-in;
+      transition: transform 0.5s ease;
+    }
+    .illus-img:hover {
+      transform: scale(1.02);
+    }
+    .illus-caption {
+      padding: 12px 16px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .illus-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      color: #f43f5e;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+  
+    /* 原画大图全屏灯箱 */
+    .img-lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 20000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .img-lightbox-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lightbox-img-box {
+      max-width: 96vw;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lightbox-img-box img {
+      max-width: 100%;
+      max-height: 78vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.6);
+    }
+    .lightbox-caption {
+      color: #fff;
+      font-size: 13px;
+      margin-top: 12px;
+      text-align: center;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+    .lightbox-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .lightbox-close-btn:hover {
+      background: rgba(244, 63, 94, 0.8);
+      transform: scale(1.1);
+    }
+
   </style>
 </head>
 <body data-theme="dark">
@@ -1764,6 +1887,23 @@
         pEl.innerText = p;
         pEl.id = `para-${idx}-${i}`;
         bodyEl.appendChild(pEl);
+
+        // 如果本段后有名场面原画插图，在此渲染插入
+        const illus = CHAPTER_ILLUSTRATIONS[idx + 1];
+        if (illus && i === illus.afterParaIndex) {
+          const card = document.createElement('div');
+          card.className = 'chapter-illustration';
+          card.innerHTML = `
+            <div class="illus-img-wrap" onclick="viewFullImage('${illus.src}', '${illus.caption.replace(/'/g, "\\'")}')">
+              <img src="${illus.src}" class="illus-img" alt="${illus.title}" loading="lazy">
+            </div>
+            <div class="illus-caption">
+              <span>${illus.caption}</span>
+              <span class="illus-badge">🎨 剧情原画</span>
+            </div>
+          `;
+          bodyEl.appendChild(card);
+        }
       });
 
       // 渲染修罗场心选翻牌互动
@@ -2175,6 +2315,44 @@
     // 初始化
     
     // ===== 全章节动态心动进化数据集 (AFFECTION_TIMELINE) =====
+    
+    // 沉浸式名场面原画插图映射表（严格符合剧情）
+    const CHAPTER_ILLUSTRATIONS = {
+      1: {
+        afterParaIndex: 59,
+        src: "assets/illustrations/ch01_bar_rain.jpg",
+        caption: "✨ 【名场面原画 · 雨夜回眸】碎裂的威士忌与漫天冷雨 · 二楼VIP包厢傅沉舟凝视那道决绝身影，勾起初中葬礼相遇前缘",
+        title: "第001章 · 绝情断链与暗流深情"
+      },
+      6: {
+        afterParaIndex: 32,
+        src: "assets/illustrations/ch06_maybach_umbrella.jpg",
+        caption: "✨ 【名场面原画 · 雨夜执伞】暴雨夜的黑色迈巴赫 · 傅沉舟撑黑伞遮挡任凭半肩湿透，递上一亿元独家协议霸气相护",
+        title: "第006章 · 绝对偏爱与霸气护驾"
+      },
+      10: {
+        afterParaIndex: 42,
+        src: "assets/illustrations/ch10_hospital_faceoff.jpg",
+        caption: "✨ 【名场面原画 · 巅峰对峙】抢救室门前三强修罗场 · 傅沉舟携最高检密令破门，江医生泪洒白大褂，裴哥重兵封楼",
+        title: "第010章 · 暴风眼中的神明博弈"
+      }
+    };
+
+    function viewFullImage(src, caption) {
+      const overlay = document.getElementById('img-lightbox-overlay');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      if (img) img.src = src;
+      if (cap) cap.innerText = caption;
+      if (overlay) overlay.classList.add('active');
+    }
+
+    function closeLightbox() {
+      const overlay = document.getElementById('img-lightbox-overlay');
+      if (overlay) overlay.classList.remove('active');
+    }
+
+
     const AFFECTION_TIMELINE = {
     1: {
         "chapter_desc": "第001章 · 绝情断链，夜雨初逢",
@@ -2466,7 +2644,6 @@
       {
         "badge": "A. 冷艳反杀 · 主线",
         "text": "泼完名贵烈酒断链绝交，步入夜色冷雨之中",
-        "ratio": "42% 读者选择",
         "branchTitle": "【大女主主线 · 绝情断念自立豪门】",
         "branchParagraphs": [
           "温见雪没有回头，甚至没有再施舍给沈淮安半个眼神。冰冷的高跟鞋声在雨夜的旋转门前清脆作响，她将那件沾染了残酒的风衣随手扔进街角垃圾桶，抬手在雨中拦停了一辆出租车。",
@@ -2479,7 +2656,6 @@
       {
         "badge": "B. 敏锐回眸 · 傅总线",
         "text": "抬头对上二楼VIP包厢傅沉舟深沉漆黑的狭长凤眸",
-        "ratio": "46% 读者选择",
         "branchTitle": "【傅沉舟专属支线 · 执伞同行】",
         "branchParagraphs": [
           "旋转门推开的刹那，温见雪清绝冷傲的视线穿透昏暗迷离的浮光掠影，精准撞入了二楼那双狭长漆黑的凤眸之中。",
@@ -2492,7 +2668,6 @@
       {
         "badge": "C. 拨通电话 · 竹马线",
         "text": "给从小护你到大的神经外科竹马江景修发去消息",
-        "ratio": "12% 读者选择",
         "branchTitle": "【江景修专属支线 · 雨夜温情】",
         "branchParagraphs": [
           "手机屏幕在指尖亮起，短信刚刚发出不到三秒，刺耳的急刹车声便撕裂了雨夜的寂静。",
@@ -2510,7 +2685,6 @@
       {
         "badge": "A. 独立自强 · 婉拒",
         "text": "心怀感激退回黑卡，誓要凭自己的双手自立门户",
-        "ratio": "71% 读者选择",
         "branchTitle": "【独美主线 · 傲骨无双】",
         "branchParagraphs": [
           "温见雪轻轻将那张全球限量的黑金副卡推回裴知砚面前，神色从容清澈：“哥，裴家的庇护是我的退路，但不是我的拐杖。如果我连自立门户都要靠你的卡，我凭什么在沈淮安面前昂首挺胸？”",
@@ -2522,7 +2696,6 @@
       {
         "badge": "B. 收下底气 · 裴哥撑腰",
         "text": "将黑卡妥善收好，作为未来创业最坚实的后盾",
-        "ratio": "29% 读者选择",
         "branchTitle": "【裴知砚专属支线 · 豪横宠妹】",
         "branchParagraphs": [
           "温见雪指尖微动，收下了黑卡：“好，这笔钱算我向哥借的创业启动金，算顶格商业利息。”",
@@ -2539,7 +2712,6 @@
       {
         "badge": "A. 请他进屋 · 柔情",
         "text": "接过热茶，让他进屋坐坐并递上干毛巾",
-        "ratio": "58% 读者选择",
         "branchTitle": "【江景修专属支线 · 灯下耳语】",
         "branchParagraphs": [
           "门轴轻响，温见雪侧身拉开房门，递上一条干燥的白色毛巾：“雨这么大，进来喝口热水再走吧。”",
@@ -2551,7 +2723,6 @@
       {
         "badge": "B. 克制道谢 · 边界",
         "text": "接过钥匙与热饮，温和道晚安，守护彼此的舒适边界",
-        "ratio": "42% 读者选择",
         "branchTitle": "【青梅竹马主线 · 克制深情】",
         "branchParagraphs": [
           "温见雪接过保温杯，眼底带着清浅的感激：“景修哥，谢谢你，路上开车慢点，早点回去休息。”",
@@ -2568,7 +2739,6 @@
       {
         "badge": "A. 敏锐彻查 · 识破",
         "text": "比对加密印章与笔迹，识破这是傅沉舟的私人手笔",
-        "ratio": "65% 读者选择",
         "branchTitle": "【傅沉舟专属支线 · 棋逢对手】",
         "branchParagraphs": [
           "放大镜下，那份绝密地勘底稿右下角隐秘的水印被温见雪精准捕捉——那是傅氏顶层战略投资部的绝密防伪暗纹。",
@@ -2580,7 +2750,6 @@
       {
         "badge": "B. 欣然采纳 · 绘图",
         "text": "将绝密数据融入设计，打造无懈可击的建筑图纸",
-        "ratio": "35% 读者选择",
         "branchTitle": "【大女主主线 · 震撼图纸】",
         "branchParagraphs": [
           "不管神秘送稿人是谁，温见雪将所有精力倾注在图纸上。连续四十八小时不眠不休，风洞抗阻曲线与纳米防腐图层在她的笔下完美咬合，一张足以颠覆整座A市地标标准的宏伟蓝图破茧而出！"
@@ -2596,7 +2765,6 @@
       {
         "badge": "A. 迎难而上 · 交锋",
         "text": "指尖拂过名片，从容对视：“傅总，商场如战场，我不会手下留情。”",
-        "ratio": "69% 读者选择",
         "branchTitle": "【傅沉舟专属支线 · 强强交锋】",
         "branchParagraphs": [
           "散会后的幽暗长廊里，温见雪指尖捏住那张烫金黑名片，抬眸迎上傅沉舟那双极具侵略性的黑眸：“傅总当众给我100分，不怕全行业说你偏袒？”",
@@ -2608,7 +2776,6 @@
       {
         "badge": "B. 顾二打岔 · 邀约",
         "text": "后退半步保持距离，听顾二少在旁边嬉皮笑脸起哄",
-        "ratio": "31% 读者选择",
         "branchTitle": "【顾宴臣专属支线 · 超跑邀约】",
         "branchParagraphs": [
           "“哎呀呀，傅大总裁，在长廊堵女孩子可不是君子所为啊！”顾宴臣晃着金色跑车钥匙突然杀出，桃花眼笑得妖孽至极，“温首席，台上的SCI反杀简直绝了！本少爷在云顶包了全场，坐我的法拉利兜风庆功去？”"
@@ -2624,7 +2791,6 @@
       {
         "badge": "A. 坐入迈巴赫 · 偏爱",
         "text": "抬手轻拭他肩头雨水，接下一亿元独家顾问协议",
-        "ratio": "81% 读者选择",
         "branchTitle": "【傅沉舟专属支线 · 绝对偏爱】",
         "branchParagraphs": [
           "暴雨如注，温见雪收起雨伞，抬步坐进了迈巴赫宽敞温暖的后座。车门合上，隔绝了外面的凄风苦雨与沈淮安惨痛的嚎叫。",
@@ -2636,7 +2802,6 @@
       {
         "badge": "B. 执伞独行 · 随行",
         "text": "撑开透明雨伞，步履从容走入雨幕去赶地铁",
-        "ratio": "19% 读者选择",
         "branchTitle": "【大女主主线 · 孤勇前行】",
         "branchParagraphs": [
           "温见雪婉拒了上车，撑起透明雨伞，一步步走向地铁站。而在她身后三步之外，纯黑的迈巴赫以极低的速度缓缓随行，车灯撕裂夜雨，为她照亮脚下每一滩泥泞，直到亲眼看着她安稳步入闸机。"
@@ -2652,7 +2817,6 @@
       {
         "badge": "A. 并肩论道 · 知己",
         "text": "与他并肩俯瞰A市雪景，畅谈建筑与千亿商业野心",
-        "ratio": "74% 读者选择",
         "branchTitle": "【傅沉舟专属支线 · 灵魂知己】",
         "branchParagraphs": [
           "落地窗外暴雪漫天，傅沉舟将温热的罗曼尼康帝递到她手心。两人指尖相对，展开铺满整面长桌的千亿规划蓝图。",
@@ -2664,7 +2828,6 @@
       {
         "badge": "B. 开门见山 · 追凶",
         "text": "直截了当询问当年父亲地勘事故的蛛丝马迹",
-        "ratio": "26% 读者选择",
         "branchTitle": "【悬疑主线 · 撕开暗幕】",
         "branchParagraphs": [
           "温见雪放下酒杯，开门见山：“傅沉舟，当年我父亲地勘报告事故，沈家背后到底还有谁？”傅沉舟眼眸骤寒，声音低沉如雷：“沈家只是推出来的替罪羊。幕后操盘的人牵扯到老一辈的军政商巨头。见雪，相信我，我花了十二年，就是为了把这群恶鬼全部送上审判席！”"
@@ -2680,7 +2843,6 @@
       {
         "badge": "A. 借花献佛 · 诛心",
         "text": "将红玫瑰全部分发给全栋楼女性做品牌公关",
-        "ratio": "67% 读者选择",
         "branchTitle": "【顾宴臣专属支线 · 棋差一着】",
         "branchParagraphs": [
           "价值六十八万的顶级厄瓜多尔玫瑰，被温见雪吩咐行政全部分发给整栋写字楼的女性员工，甚至以霁雪名义登上了同城热搜榜首！",
@@ -2692,7 +2854,6 @@
       {
         "badge": "B. 告状义兄 · 护短",
         "text": "给裴知砚打个小报告，让义兄带人收拾顾二少",
-        "ratio": "33% 读者选择",
         "branchTitle": "【裴知砚专属支线 · 暴力宠妹】",
         "branchParagraphs": [
           "裴知砚当晚直接带着特警退役保镖车队堵住了顾家大门，手里拎着钢管冷笑：“顾老二，皮痒了是吧？拿泡名媛的下作手段骚扰我妹妹，给老子滚出来领打！”顾董事长吓得亲自出门赔笑，顾宴臣被罚跪了一整晚祠堂。"
@@ -2708,7 +2869,6 @@
       {
         "badge": "A. 强撑瞒着 · 吐血",
         "text": "咬牙擦去血迹，把图纸锁入保险柜继续工作",
-        "ratio": "45% 读者选择",
         "branchTitle": "【江景修专属支线 · 痛心疾首】",
         "branchParagraphs": [
           "喉间涌上一股腥甜，温见雪咬牙咽下，将沾血的纸巾揉碎扔掉，迅速把温父的底稿锁进保险柜。",
@@ -2720,7 +2880,6 @@
       {
         "badge": "B. 立刻呼救 · 入院",
         "text": "按响江景修给的紧急呼叫器求助",
-        "ratio": "55% 读者选择",
         "branchTitle": "【主线剧情 · 风雨欲来】",
         "branchParagraphs": [
           "温见雪按响了紧急呼叫器，三分钟内救护车呼啸而至。江景修脸色煞白地将她抱上担架，一路警笛长鸣。而消息在半小时内传遍A市高层，傅沉舟在跨国电话中失控摔碎手机，裴知砚下令全城封锁，风暴在医院彻底引爆！"
@@ -2736,7 +2895,6 @@
       {
         "badge": "A. 递给傅沉舟 · 称帝",
         "text": "“傅总，我要当年害死我父亲的人，全部万劫不复。”",
-        "ratio": "48% 读者选择",
         "branchTitle": "【傅沉舟专属结局支线 · 众神之巅】",
         "branchParagraphs": [
           "急救室门外，在无数黑衣保镖与冰冷枪械的对峙中，温见雪苍白的手指越过众人，缓缓落在了傅沉舟微颤的掌心。",
@@ -2748,7 +2906,6 @@
       {
         "badge": "B. 递给江景修 · 归隐",
         "text": "“景修，我好疼……抱抱我。”",
-        "ratio": "27% 读者选择",
         "branchTitle": "【江景修专属结局支线 · 白月光执念】",
         "branchParagraphs": [
           "温见雪轻轻将手搭在江景修沾着消毒水气息的手背上：“景修哥……我好疼。”",
@@ -2760,7 +2917,6 @@
       {
         "badge": "C. 递给裴知砚 · 回家",
         "text": "“哥哥，带我回家。”",
-        "ratio": "25% 读者选择",
         "branchTitle": "【裴知砚专属结局支线 · 裴家千金】",
         "branchParagraphs": [
           "“哥……带我回家。”",
@@ -3117,7 +3273,6 @@
           <button class="dilemma-opt-btn ${isSelected ? 'selected' : ''}" onclick="selectDilemma(${chapNum}, ${optIdx})">
             <span class="dilemma-opt-badge">${opt.badge}</span>
             <span>${opt.text}</span>
-            <span style="margin-left:auto; font-size:11px; color:#f43f5e; opacity:0.8;">${opt.ratio} 读者选择</span>
           </button>
         `;
       });
@@ -3298,6 +3453,16 @@
         <button class="love-card-btn secondary" onclick="copyLoveQuote()">📋 复制发给他</button>
         <button class="love-card-btn primary" onclick="closeLoveModal(true)">💖 我也想你啦</button>
       </div>
+    </div>
+  </div>
+
+
+  <!-- 原画大图全屏预览灯箱 -->
+  <div class="img-lightbox-overlay" id="img-lightbox-overlay" onclick="closeLightbox()">
+    <button class="lightbox-close-btn" onclick="closeLightbox()">✕</button>
+    <div class="lightbox-img-box" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="原画大图">
+      <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
   </div>
 
