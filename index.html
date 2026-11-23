@@ -1434,7 +1434,8 @@
   
     /* ===== 沉浸式名场面原画插图样式 ===== */
     .chapter-illustration {
-      margin: 28px 0;
+      margin: 32px auto;
+      max-width: 580px;
       border-radius: 16px;
       overflow: hidden;
       background: var(--bg-card);
@@ -1448,8 +1449,6 @@
     }
     .illus-img-wrap {
       width: 100%;
-      max-height: 480px;
-      overflow: hidden;
       position: relative;
       background: #0d0d12;
       display: flex;
@@ -1460,12 +1459,12 @@
       width: 100%;
       height: auto;
       display: block;
-      object-fit: cover;
+      object-fit: contain;
       cursor: zoom-in;
-      transition: transform 0.5s ease;
+      transition: transform 0.4s ease;
     }
     .illus-img:hover {
-      transform: scale(1.02);
+      transform: scale(1.015);
     }
     .illus-caption {
       padding: 12px 16px;
