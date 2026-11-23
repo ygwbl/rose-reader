@@ -1699,97 +1699,7 @@
     
     
 
-    /* ===== 拍立得卡片模态窗 ===== */
-    .illus-btn-polaroid {
-      background: rgba(255, 77, 121, 0.15);
-      border: 1px solid rgba(255, 77, 121, 0.4);
-      color: #ff859d;
-      font-size: 11.5px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .illus-btn-polaroid:hover {
-      background: #ff4d79;
-      color: #fff;
-    }
-    .polaroid-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      z-index: 10003;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s ease;
-    }
-    .polaroid-modal-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .polaroid-modal-card {
-      width: 100%;
-      max-width: 440px;
-      background: #181922;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 20px 16px;
-    }
-    .polaroid-canvas-wrap {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 14px;
-    }
-    .polaroid-canvas {
-      max-width: 100%;
-      max-height: 60vh;
-      border-radius: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-    .polaroid-actions {
-      display: flex;
-      gap: 10px;
-      width: 100%;
-      justify-content: center;
-    }
-    .polaroid-action-btn {
-      flex: 1;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-    .polaroid-action-btn.primary {
-      background: linear-gradient(135deg, #e65166, #ff758c);
-      color: #fff;
-    }
-    .polaroid-action-btn.secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: #f0f0f5;
-    }
-    .polaroid-action-btn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.1);
-    }
+    
 
     
 
@@ -2199,10 +2109,7 @@
             </div>
             <div class="illus-caption">
               <span>${illus.caption}</span>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <button class="illus-btn-polaroid" onclick="generatePolaroid('${illus.src}', '${illus.title}', ${idx+1})" title="生成心动拍立得海报">📸 拍立得</button>
-                <span class="illus-badge">🎨 剧情原画</span>
-              </div>
+              <span class="illus-badge">🎨 剧情原画</span>
             </div>
           `;
           bodyEl.appendChild(card);
@@ -3997,97 +3904,7 @@
 
     
 
-    // ==========================================
-    // 2. 名场面专属心动拍立得生成器 (HTML5 Canvas)
-    // ==========================================
-    const CHAPTER_POLAROID_QUOTES = {
-      1: { quote: "“沈淮安配不上这双眼睛，更不配碰温良臣的图纸。”", hero: "傅沉舟 · 浮光初见" },
-      3: { quote: "“动我妹妹者，虽远必诛！撕你八千万合同，只是第一笔利息！”", hero: "裴知砚 · 铁血护短" },
-      5: { quote: "“新汇中心不需要粉饰太平的豆腐渣，只要能在地狱上托起天堂的硬骨头。”", hero: "傅沉舟 · 百分之选" },
-      6: { quote: "“别人看的是图纸。而我要的，是你这个人，和你的整个野心。”", hero: "傅沉舟 · 雨夜迈巴赫" },
-      8: { quote: "“68万朵玫瑰把全城媒体引到你门前，就是拉全网舆论做你的金钟罩。”", hero: "顾宴臣 · 名利场豪赌" },
-      10: { quote: "“我父亲的仇，霁雪的未来，我要亲自一刀一刀讨回来！”", hero: "温见雪 · 傲骨昭雪" },
-      11: { quote: "“踏碎仇敌骨头夺下铁王座，只为在雪中为你撑伞。此生唯你，死生不渝。”", hero: "终局 · 漫天霜雪" }
-    };
-
-    let curPolaroidDataUrl = null;
-
-    function generatePolaroid(imgSrc, title, chapNum) {
-      const modal = document.getElementById('polaroid-modal-overlay');
-      const canvas = document.getElementById('polaroid-canvas');
-      if (!canvas || !modal) return;
-
-      const ctx = canvas.getContext('2d');
-      const quoteData = CHAPTER_POLAROID_QUOTES[chapNum] || { quote: "“玫瑰不向深渊折，回首皆为座下臣。”", hero: "温见雪 · 逆袭神话" };
-
-      ctx.clearRect(0, 0, 600, 920);
-      ctx.fillStyle = "#faf9f6";
-      ctx.fillRect(0, 0, 600, 920);
-
-      ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
-      ctx.lineWidth = 4;
-      ctx.strokeRect(6, 6, 588, 908);
-
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = imgSrc;
-      img.onload = () => {
-        ctx.save();
-        ctx.beginPath();
-        ctx.roundRect(36, 36, 528, 640, 8);
-        ctx.clip();
-        ctx.drawImage(img, 36, 36, 528, 640);
-        ctx.restore();
-
-        ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
-        ctx.lineWidth = 1;
-        ctx.strokeRect(36, 36, 528, 640);
-
-        ctx.fillStyle = "#2c2428";
-        ctx.font = "bold 22px 'Noto Serif SC', serif";
-        ctx.textAlign = "center";
-        ctx.fillText(`CHAPTER ${String(chapNum).padStart(2, '0')} · ${title}`, 300, 725);
-
-        ctx.fillStyle = "#5c4d54";
-        ctx.font = "italic 16px 'Noto Serif SC', serif";
-        ctx.fillText(quoteData.quote, 300, 770);
-
-        ctx.fillStyle = "#ff4d79";
-        ctx.font = "bold 15px sans-serif";
-        ctx.fillText(`—— ${quoteData.hero}`, 300, 810);
-
-        ctx.fillStyle = "#d4af37";
-        ctx.font = "12px sans-serif";
-        ctx.fillText("✨ 《玫瑰不向深渊折》· 专属典藏拍立得 · 2026.11.23", 300, 860);
-
-        curPolaroidDataUrl = canvas.toDataURL('image/png');
-        modal.classList.add('active');
-      };
-    }
-
-    function closePolaroidModal() {
-      const modal = document.getElementById('polaroid-modal-overlay');
-      if (modal) modal.classList.remove('active');
-    }
-
-    function downloadPolaroid() {
-      if (!curPolaroidDataUrl) return;
-      const a = document.createElement('a');
-      a.href = curPolaroidDataUrl;
-      a.download = `玫瑰不向深渊折_心动拍立得_${Date.now()}.png`;
-      a.click();
-      showToast('📸 拍立得卡片已开始保存至您的相册！');
-    }
-
-    function copyPolaroidQuote() {
-      const quoteData = CHAPTER_POLAROID_QUOTES[currentChapterIndex + 1] || { quote: "“玫瑰不向深渊折，回首皆为座下臣。”", hero: "温见雪" };
-      const copyText = `${quoteData.quote} —— ${quoteData.hero}（《玫瑰不向深渊折》专属语录）`;
-      navigator.clipboard.writeText(copyText).then(() => {
-        showToast('📋 金句文案已复制到剪贴板！');
-      }).catch(() => {
-        showToast('文案复制成功！');
-      });
-    }
+    
 
     // ==========================================
     // 3. 第11章专属终局：AI 番外定制工坊
@@ -4266,21 +4083,5 @@
   </div>
   </div>
 
-  <!-- 拍立得生成模态窗 -->
-  <div class="polaroid-modal-overlay" id="polaroid-modal-overlay" onclick="if(event.target===this)closePolaroidModal()">
-    <div class="polaroid-modal-card">
-      <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:12px; align-items:center;">
-        <div style="font-size:15px; font-weight:700; color:#fff;">📸 剧情名场面 · 专属心动拍立得</div>
-        <button class="phone-close-btn" onclick="closePolaroidModal()">✕</button>
-      </div>
-      <div class="polaroid-canvas-wrap">
-        <canvas id="polaroid-canvas" class="polaroid-canvas" width="600" height="920"></canvas>
-      </div>
-      <div class="polaroid-actions">
-        <button class="polaroid-action-btn primary" onclick="downloadPolaroid()">💾 保存高清卡片</button>
-        <button class="polaroid-action-btn secondary" onclick="copyPolaroidQuote()">📋 复制金句</button>
-      </div>
-    </div>
-  </div>
-</body>
+  </body>
 </html>
