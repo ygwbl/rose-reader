@@ -1787,6 +1787,94 @@
       cursor: pointer;
     }
 
+
+    /* 严格锁定的翻页导航 */
+    .btn-nav-locked {
+      opacity: 0.65;
+      cursor: not-allowed !important;
+      border: 1px dashed var(--accent) !important;
+      background: rgba(212, 175, 55, 0.05) !important;
+    }
+    .btn-nav-locked:hover {
+      background: rgba(212, 175, 55, 0.12) !important;
+      border-color: var(--accent) !important;
+    }
+    .btn-nav-active {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(197, 160, 89, 0.15)) !important;
+      border: 1px solid var(--accent) !important;
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.25);
+    }
+
+    /* 抉择状态提示卡 */
+    .dilemma-status-box {
+      margin-top: 18px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      animation: fadeIn 0.3s ease;
+    }
+    .dilemma-status-box.pending {
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px dashed rgba(212, 175, 55, 0.4);
+    }
+    .dilemma-status-box.active {
+      background: rgba(46, 213, 115, 0.08);
+      border: 1px solid rgba(46, 213, 115, 0.4);
+    }
+    .dilemma-status-box .status-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+    .dilemma-status-box .status-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .dilemma-status-box .status-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .dilemma-status-box .status-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-read-branch {
+      background: linear-gradient(135deg, #d4af37, #aa820a);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-read-branch:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
+    }
+    .btn-reset-branch {
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-reset-branch:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
 </style>
 </head>
 <body data-theme="dark">
@@ -2052,6 +2140,30 @@
       setTimeout(() => el.classList.remove('show'), 2200);
     }
 
+    // 严格章节解锁门禁引擎：未在第1章做出抉择前，后续章节绝不存在！
+    function isChapterUnlocked(chapIdx) {
+      if (chapIdx === 0) return true; // 第 1 章始终开放
+      const ch1Choice = localStorage.getItem('novel_dilemma_ch_1');
+      if (chapIdx === 1) return ch1Choice !== null; // 第 2 章必须在第 1 章做出抉择后才解锁
+      if (chapIdx < 10) return ch1Choice !== null; // 第 3~10 章必须在第 2 章已解锁的世界线内
+      if (chapIdx === 10) { // 第 11 章必须在第 10 章做出终局抉择后才解锁
+        const ch10Choice = localStorage.getItem('novel_dilemma_ch_10');
+        return ch10Choice !== null;
+      }
+      return false;
+    }
+
+    // 重置第 1 章世界线（允许读者随时重新推演体验三大分支）
+    function resetChapter1Choice() {
+      if (confirm('确定要重新选择第 1 章的命运走向吗？\n当前已生成的第 2 章分支将被重置，您可重新体验其他男神路线！')) {
+        localStorage.removeItem('novel_dilemma_ch_1');
+        renderCatalog();
+        renderChapter(0, false);
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        showToast('🔄 世界线已重置！请重新做出您的心动抉择。');
+      }
+    }
+
     // 渲染指定章节
     function renderChapter(idx, restoreScroll = false) {
       if (idx < 0 || idx >= CHAPTERS.length) return;
@@ -2172,12 +2284,37 @@
         prevTitle.innerText = '前面没有啦';
       }
 
-      if (idx + 1 < CHAPTERS.length) {
+      // 严格门禁：未在第 1 章做出抉择前，第 2 章绝对不可翻阅！
+      if (idx === 0) {
+        const isCh2Ready = isChapterUnlocked(1);
+        if (!isCh2Ready) {
+          btnNext.disabled = false;
+          btnNext.className = 'nav-btn btn-nav-locked';
+          nextTitle.innerHTML = '<span style="color:#d4af37;">🔒 第2章未生成</span> <span style="font-size:12px;color:var(--text-muted);">（请在上方做出抉择）</span>';
+        } else {
+          btnNext.disabled = false;
+          btnNext.className = 'nav-btn btn-nav-active';
+          nextTitle.innerText = `第2章 ${CHAPTERS[1].title.replace(/^第\d+章\s*/, '')} ›`;
+        }
+      } else if (idx === 9) {
+        const isCh11Ready = isChapterUnlocked(10);
+        if (!isCh11Ready) {
+          btnNext.disabled = false;
+          btnNext.className = 'nav-btn btn-nav-locked';
+          nextTitle.innerHTML = '<span style="color:#d4af37;">🔒 终章未解锁</span> <span style="font-size:12px;color:var(--text-muted);">（请在上方终局抉择）</span>';
+        } else {
+          btnNext.disabled = false;
+          btnNext.className = 'nav-btn btn-nav-active';
+          nextTitle.innerText = `第11章 ${CHAPTERS[10].title.replace(/^第\d+章\s*/, '')} ›`;
+        }
+      } else if (idx + 1 < CHAPTERS.length) {
         btnNext.disabled = false;
+        btnNext.className = 'nav-btn';
         nextTitle.innerText = `第${idx + 2}章 ${CHAPTERS[idx + 1].title.replace(/^第\d+章\s*/, '')} ›`;
       } else {
-        btnNext.disabled = false;
-        btnNext.disabled = true; nextTitle.innerText = '已是最新连载（作者持续爆更中） ›';
+        btnNext.disabled = true;
+        btnNext.className = 'nav-btn';
+        nextTitle.innerText = '已是最新连载（作者持续爆更中） ›';
       }
 
       // 保存章节阅读索引
@@ -2208,10 +2345,22 @@
     }
 
     function nextChapter() {
-      if (currentChapterIndex + 1 < CHAPTERS.length) {
+      if (currentChapterIndex === 0 && !isChapterUnlocked(1)) {
+        const dilemmaEl = document.querySelector('.chapter-dilemma-card');
+        if (dilemmaEl) dilemmaEl.scrollIntoView({ behavior: 'smooth' });
+        showToast('🔒 第 2 章尚未生成！请先在上方做出心动抉择，由 AI 实时推演生成！');
+        return;
+      }
+      if (currentChapterIndex === 9 && !isChapterUnlocked(10)) {
+        const dilemmaEl = document.querySelector('.chapter-dilemma-card');
+        if (dilemmaEl) dilemmaEl.scrollIntoView({ behavior: 'smooth' });
+        showToast('🔒 终章大结局尚未解锁！请先在上方做出终局抉择！');
+        return;
+      }
+      if (currentChapterIndex + 1 < CHAPTERS.length && isChapterUnlocked(currentChapterIndex + 1)) {
         renderChapter(currentChapterIndex + 1, false);
       } else {
-        alert("作者大大正在激情执笔【第005章 顶峰的初次交锋】中！\n\n新汇中心初审会震撼开幕！温见雪将迎战老牌巨头，拿下首富傅沉舟全场唯一满分～\n快点下方的爱心按钮给作者发微信催更吧！");
+        showToast('当前已是最新剧情，后续篇章持续推演中！');
       }
     }
 
@@ -2290,27 +2439,86 @@
     // 目录生成与高亮
     function renderCatalog() {
       const listEl = document.getElementById('catalog-list');
+      if (!listEl) return;
       listEl.innerHTML = '';
-      CATALOG.forEach(item => {
-        const [num, title, desc, isRead] = item;
+
+      const isCh1Done = isChapterUnlocked(1);
+      const isCh10Done = isChapterUnlocked(10);
+
+      CATALOG.forEach((item, itemIdx) => {
+        const [num, defaultTitle, defaultDesc] = item;
         const div = document.createElement('div');
         const isCurrent = (num === (currentChapterIndex + 1));
-        div.className = `catalog-item${isCurrent ? ' active' : ''}${isRead ? ' ready' : ''}`;
+        const unlocked = isChapterUnlocked(itemIdx);
+
+        let displayTitle = defaultTitle;
+        let displayDesc = defaultDesc;
+        let badgeText = '可阅读';
+
+        if (num === 2) {
+          if (!isCh1Done) {
+            displayTitle = '【🔒 待第1章抉择实时推演生成】';
+            displayDesc = '剧情将根据您在第 1 章末尾做出的心动抉择，由内置大模型实时创作与生图';
+            badgeText = '🔒 待抉择';
+          } else {
+            const ch2Data = CHAPTERS[1] || {};
+            displayTitle = (ch2Data.title || defaultTitle).replace(/^第\d+章\s*/, '');
+            displayDesc = '已根据您选择的男神路线实时生成专属万字剧情与名场面插画';
+            badgeText = '已生成';
+          }
+        } else if (num > 2 && num <= 10) {
+          if (!isCh1Done) {
+            displayTitle = '【🔒 未解锁 · 待前置抉择】';
+            displayDesc = '请先在第 1 章完成命运抉择以展开后续剧情';
+            badgeText = '🔒 锁定';
+          }
+        } else if (num === 11) {
+          if (!isCh10Done) {
+            displayTitle = '【🔒 待第10章终局抉择生成】';
+            displayDesc = '在第 10 章抢救室门前做出终局抉择，解锁专属大婚/隐世/豪门大结局';
+            badgeText = '🔒 待抉择';
+          } else {
+            const ch11Data = CHAPTERS[10] || {};
+            displayTitle = (ch11Data.title || defaultTitle).replace(/^第\d+章\s*/, '');
+            badgeText = '已生成';
+          }
+        }
+
+        div.className = `catalog-item${isCurrent ? ' active' : ''}${unlocked ? ' ready' : ' locked'}`;
         div.innerHTML = `
           <div>
-            <div class="c-title">第${String(num).padStart(3, '0')}章 ${title}</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${desc}</div>
+            <div class="c-title">第${String(num).padStart(3, '0')}章 ${displayTitle}</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">${displayDesc}</div>
           </div>
-          <div class="c-badge">${isRead ? '可阅读' : '筹备中'}</div>
+          <div class="c-badge" style="${!unlocked ? 'background:rgba(212,175,55,0.15);color:#d4af37;border:1px dashed #d4af37;' : ''}">${badgeText}</div>
         `;
+
         div.onclick = () => {
+          if (!unlocked) {
+            closeAllDrawers();
+            if (num === 2) {
+              renderChapter(0, false);
+              window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+              showToast('🔒 第 2 章尚未生成！请先在第 1 章末尾做出命运抉择！');
+            } else if (num === 11) {
+              renderChapter(9, false);
+              window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+              showToast('🔒 第 11 章尚未解锁！请先在第 10 章做出终局抉择！');
+            } else {
+              renderChapter(0, false);
+              showToast('🔒 前置章节未解锁！请先在第 1 章做出命运抉择！');
+            }
+            return;
+          }
+
           if (num <= CHAPTERS.length) {
             renderChapter(num - 1, false);
             closeAllDrawers();
           } else {
-            alert(`【第 ${num} 章 ${title}】还在火热撰写中！\n\n快对作者说一句‘写第${num}章’，马上为你解锁！`);
+            alert('该章节正在连载创作中，请先阅读已解锁章节～');
           }
         };
+
         listEl.appendChild(div);
       });
     }
@@ -3448,9 +3656,9 @@ const BRANCH_CHAPTER_11 = {
 
       card.innerHTML = `
         <div class="dilemma-title">
-          <span>✨</span> 【第 ${String(chapNum).padStart(2, '0')} 章 · 修罗场抉择时刻】
+          <span>✨</span> 【第 ${String(chapNum).padStart(2, '0')} 章 · 命运抉择时刻】
         </div>
-        <div class="dilemma-subtitle">如果是你，置身于本章的高能现场，你会做出怎样的心动选择？</div>
+        <div class="dilemma-subtitle">⚡ 剧情将严格按照您的选择展开！未做出抉择前，后续章节尚未生成；请轻触下方路线启动大模型实时创作！</div>
         <div class="dilemma-options" id="dilemma-opts-${chapNum}">
           ${optionsHtml}
         </div>
@@ -3461,6 +3669,19 @@ const BRANCH_CHAPTER_11 = {
 
       if (savedChoice !== null) {
         showDilemmaSecret(chapNum, parseInt(savedChoice));
+      } else {
+        const secContainer = card.querySelector(`#dilemma-secret-container-${chapNum}`);
+        if (secContainer) {
+          secContainer.innerHTML = `
+            <div class="dilemma-status-box pending">
+              <div class="status-icon">🔒</div>
+              <div class="status-content">
+                <div class="status-title">【待抉择】第 ${chapNum + 1} 章尚未生成</div>
+                <div class="status-desc">请轻触上方任一男神选项，内置大模型（GPT & Grok）将立即根据您的意愿实时生成专属下一章！</div>
+              </div>
+            </div>
+          `;
+        }
       }
     }
 
@@ -3638,28 +3859,30 @@ function unlockChapter11(optIdx, isInitial = false) {
       const secContainer = document.getElementById(`dilemma-secret-container-${chapNum}`);
       if (!secContainer) return;
 
-      // 组装分支剧情正文段落
-      let branchParasHtml = '';
-      if (opt.branchParagraphs && opt.branchParagraphs.length > 0) {
-        opt.branchParagraphs.forEach(p => {
-          branchParasHtml += `<p>${p}</p>`;
-        });
+      let nextChapNum = chapNum + 1;
+      let branchTitle = '';
+      if (chapNum === 1) {
+        const branchData = BRANCH_CHAPTER_2[String(optIdx)] || BRANCH_CHAPTER_2[0];
+        branchTitle = branchData.title;
+      } else if (chapNum === 10) {
+        const branchData = BRANCH_CHAPTER_11[String(optIdx)] || BRANCH_CHAPTER_11[0];
+        branchTitle = branchData.title;
       }
 
+      // 不在卡片内剧透倾倒正文，而是提供清晰的状态确认与翻页/重选操作
       secContainer.innerHTML = `
-        <div class="branch-story-card">
-          <div class="branch-story-header">
-            <span class="branch-story-tag">🌿 ${opt.branchTitle || '【专属剧情分支已展开】'}</span>
-            <span class="branch-story-hint">（点击其他选项可随时切换不同分支结局）</span>
-          </div>
-          <div class="branch-story-body">
-            ${branchParasHtml}
-          </div>
-          <div class="dilemma-secret-box" style="margin-top:12px;">
-            <div class="dilemma-secret-header">
-              <span>💖</span> 【独家角色心声 · ${opt.secretHeader}】
+        <div class="dilemma-status-box active">
+          <div class="status-icon">✨</div>
+          <div class="status-content" style="flex:1;">
+            <div class="status-title">【已选定】${opt.badge}</div>
+            <div class="status-desc">
+              第 ${nextChapNum} 章专属世界线已就绪：<strong>${branchTitle}</strong>。<br/>
+              已由大模型结合上下文深度创作并匹配专属名场面插画！
             </div>
-            <div>${opt.secretText}</div>
+            <div class="status-actions">
+              <button class="btn-read-branch" onclick="renderChapter(${nextChapNum - 1}, false)">📖 立即翻开第 ${nextChapNum} 章 ›</button>
+              <button class="btn-reset-branch" onclick="${chapNum === 1 ? 'resetChapter1Choice()' : 'localStorage.removeItem(\'novel_dilemma_ch_10\');renderChapter(9,false);'}">🔄 重新推演其他分支</button>
+            </div>
           </div>
         </div>
       `;
