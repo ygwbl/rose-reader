@@ -1694,6 +1694,629 @@
       margin-top: 8px;
     }
 
+
+    /* ===== 互动系统：男神密聊手机、拍立得、沉浸耳语、番外工坊 ===== */
+    
+    /* 导航栏与悬浮按钮 */
+    .nav-phone-btn {
+      position: relative;
+    }
+    .phone-unread-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ff3b69;
+      box-shadow: 0 0 6px #ff3b69;
+      animation: pulseDot 1.5s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    /* 悬浮手机入口 */
+    .floating-phone-trigger {
+      position: fixed;
+      right: 20px;
+      bottom: 90px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(35, 20, 28, 0.94), rgba(20, 12, 18, 0.98));
+      border: 1px solid rgba(255, 77, 121, 0.45);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(255, 77, 121, 0.2);
+      padding: 8px 14px;
+      border-radius: 30px;
+      cursor: pointer;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .floating-phone-trigger:hover {
+      transform: translateY(-3px) scale(1.05);
+      border-color: #ff4d79;
+      box-shadow: 0 12px 28px rgba(255, 77, 121, 0.35);
+    }
+    .phone-trigger-badge {
+      background: #ff4d79;
+      color: #fff;
+      font-size: 10.5px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    /* 手机模态框与机身设计 */
+    .phone-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 10002;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .phone-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .phone-device {
+      width: 100%;
+      max-width: 400px;
+      height: 640px;
+      max-height: 88vh;
+      background: #121319;
+      border-radius: 36px;
+      border: 3px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 77, 121, 0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      animation: phoneSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes phoneSlideUp {
+      from { transform: translateY(40px) scale(0.95); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    /* 手机顶栏灵动岛 */
+    .phone-notch-bar {
+      height: 38px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .dynamic-island {
+      position: absolute;
+      left: 50%;
+      top: 6px;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 22px;
+      background: #000;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 10px;
+      color: #ff859d;
+    }
+
+    /* 手机头部状态 */
+    .phone-header {
+      background: #181922;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .phone-header-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .phone-close-btn {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .phone-close-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* 联系人列表 */
+    .phone-contact-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .phone-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .phone-contact-item:hover {
+      background: rgba(255, 77, 121, 0.1);
+      border-color: rgba(255, 77, 121, 0.3);
+      transform: translateX(3px);
+    }
+    .phone-avatar-wrap {
+      position: relative;
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+    }
+    .phone-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 77, 121, 0.3);
+    }
+    .phone-status-dot {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #2ecc71;
+      border: 2px solid #181922;
+    }
+    .phone-contact-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .phone-contact-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3px;
+    }
+    .phone-contact-name {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .phone-contact-role {
+      font-size: 11px;
+      color: #f4c06a;
+      font-weight: 500;
+      margin-left: 6px;
+    }
+    .phone-contact-time {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .phone-contact-snippet {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.65);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 聊天详情界面 */
+    .phone-chat-view {
+      position: absolute;
+      inset: 38px 0 0 0;
+      background: #121319;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10;
+    }
+    .phone-chat-view.active {
+      transform: translateX(0);
+    }
+    .phone-chat-header {
+      background: #181922;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .phone-back-btn {
+      background: none;
+      border: none;
+      color: #ff859d;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .phone-chat-hero-meta {
+      flex: 1;
+      text-align: center;
+    }
+    .phone-chat-hero-name {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .phone-chat-hero-status {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* 消息气泡流 */
+    .phone-chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .chat-time-tag {
+      text-align: center;
+      font-size: 10.5px;
+      color: rgba(255, 255, 255, 0.4);
+      margin: 4px 0;
+    }
+    .chat-row {
+      display: flex;
+      gap: 10px;
+      max-width: 88%;
+    }
+    .chat-row.hero {
+      align-self: flex-start;
+    }
+    .chat-row.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    .chat-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .chat-bubble {
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      position: relative;
+      word-break: break-word;
+    }
+    .chat-row.hero .chat-bubble {
+      background: #20222e;
+      color: #f0f0f5;
+      border-top-left-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    .chat-row.user .chat-bubble {
+      background: linear-gradient(135deg, #e65166, #ff758c);
+      color: #fff;
+      border-top-right-radius: 4px;
+      box-shadow: 0 4px 12px rgba(230, 81, 102, 0.35);
+    }
+
+    /* 输入与回复选项 */
+    .phone-chat-footer {
+      background: #181922;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .reply-options-title {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 600;
+    }
+    .reply-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .reply-btn {
+      background: rgba(255, 77, 121, 0.12);
+      border: 1px solid rgba(255, 77, 121, 0.35);
+      border-radius: 12px;
+      padding: 8px 12px;
+      color: #ff9fb2;
+      font-size: 12.5px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .reply-btn:hover {
+      background: rgba(255, 77, 121, 0.25);
+      border-color: #ff4d79;
+      color: #fff;
+      transform: translateX(2px);
+    }
+
+    /* ===== 拍立得卡片模态窗 ===== */
+    .illus-btn-polaroid {
+      background: rgba(255, 77, 121, 0.15);
+      border: 1px solid rgba(255, 77, 121, 0.4);
+      color: #ff859d;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .illus-btn-polaroid:hover {
+      background: #ff4d79;
+      color: #fff;
+    }
+    .polaroid-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 10003;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .polaroid-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .polaroid-modal-card {
+      width: 100%;
+      max-width: 440px;
+      background: #181922;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 20px 16px;
+    }
+    .polaroid-canvas-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .polaroid-canvas {
+      max-width: 100%;
+      max-height: 60vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .polaroid-actions {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+    .polaroid-action-btn {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .polaroid-action-btn.primary {
+      background: linear-gradient(135deg, #e65166, #ff758c);
+      color: #fff;
+    }
+    .polaroid-action-btn.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f0f0f5;
+    }
+    .polaroid-action-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+
+    /* ===== 角色沉浸耳语浮窗 ===== */
+    .hero-whisper-capsule {
+      position: fixed;
+      left: 20px;
+      bottom: 24px;
+      z-index: 998;
+      max-width: 340px;
+      background: linear-gradient(135deg, rgba(28, 18, 24, 0.95), rgba(16, 12, 18, 0.98));
+      border: 1px solid rgba(255, 77, 121, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 77, 121, 0.15);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .hero-whisper-capsule.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .whisper-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ff4d79;
+      flex-shrink: 0;
+    }
+    .whisper-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .whisper-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: #ff859d;
+    }
+    .whisper-text {
+      font-size: 12.5px;
+      color: #fff;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .whisper-heart-icon {
+      font-size: 16px;
+      color: #ff4d79;
+      animation: pulseHeart 1.5s infinite ease-in-out;
+    }
+
+    /* ===== 第11章专属终局：AI 番外定制工坊 ===== */
+    .epilogue-studio-card {
+      margin: 40px auto 20px;
+      max-width: 620px;
+      background: linear-gradient(145deg, rgba(32, 22, 30, 0.95), rgba(18, 14, 20, 0.98));
+      border: 1px solid rgba(255, 77, 121, 0.38);
+      border-radius: 24px;
+      padding: 28px 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 77, 121, 0.15);
+      color: #fff;
+    }
+    .epilogue-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      background: rgba(255, 77, 121, 0.2);
+      border: 1px solid rgba(255, 77, 121, 0.4);
+      color: #ff859d;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .epilogue-title {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .epilogue-sub {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .epilogue-buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .epilogue-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 14px;
+      text-align: left;
+      cursor: pointer;
+      color: #fff;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .epilogue-btn:hover {
+      background: rgba(255, 77, 121, 0.18);
+      border-color: #ff4d79;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 77, 121, 0.25);
+    }
+    .epilogue-btn-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ff859d;
+    }
+    .epilogue-btn-desc {
+      font-size: 11.5px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .epilogue-custom-box {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+    }
+    .epilogue-custom-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 10px 14px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+    }
+    .epilogue-custom-input:focus {
+      border-color: #ff4d79;
+    }
+    .epilogue-custom-btn {
+      background: linear-gradient(135deg, #e65166, #ff758c);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 0 18px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
 </style>
 </head>
 <body data-theme="dark">
@@ -1719,6 +2342,13 @@
       </button>
 
       <!-- 好感度专属性感胶囊 -->
+      
+      <!-- 男神密聊手机按钮 -->
+      <button class="nav-btn-icon nav-phone-btn" onclick="openPhoneModal()" title="男神密聊私信">
+        <span>📱</span>
+        <span class="phone-unread-dot"></span>
+      </button>
+
       <button class="nav-aff-pill" onclick="openDrawer('affection-drawer')" title="查看心动值与好感度图谱">
         <span>💖</span>
         <span class="pill-text">好感度</span>
@@ -2003,7 +2633,10 @@
             </div>
             <div class="illus-caption">
               <span>${illus.caption}</span>
-              <span class="illus-badge">🎨 剧情原画</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button class="illus-btn-polaroid" onclick="generatePolaroid('${illus.src}', '${illus.title}', ${idx+1})" title="生成心动拍立得海报">📸 拍立得</button>
+                <span class="illus-badge">🎨 剧情原画</span>
+              </div>
             </div>
           `;
           bodyEl.appendChild(card);
@@ -2027,6 +2660,37 @@
         </button>
       `;
       bodyEl.appendChild(actionRow);
+
+      // 如果是第 11 章，在文末自动追加「AI 专属定制番外工坊」
+      if (idx === 10) {
+        const studio = document.createElement('div');
+        studio.className = 'epilogue-studio-card';
+        studio.innerHTML = `
+          <div class="epilogue-badge">✨ 专属终局互动工坊</div>
+          <div class="epilogue-title">恭喜通关！还想解锁专属甜蜜番外？</div>
+          <div class="epilogue-sub">根据你的心意，由故事引擎为您即刻推演专属平行结局：</div>
+          <div class="epilogue-buttons-grid">
+            <button class="epilogue-btn" onclick="unlockEpilogue('wedding')">
+              <span class="epilogue-btn-name">💒 世纪大婚</span>
+              <span class="epilogue-btn-desc">全城戒严 · 漫天烟花与盛大宣誓</span>
+            </button>
+            <button class="epilogue-btn" onclick="unlockEpilogue('honeymoon')">
+              <span class="epilogue-btn-name">✈️ 异国蜜月</span>
+              <span class="epilogue-btn-desc">瑞士雪山 · 湖畔壁炉与深情缠绵</span>
+            </button>
+            <button class="epilogue-btn" onclick="unlockEpilogue('jealous')">
+              <span class="epilogue-btn-name">🥂 婚后日常</span>
+              <span class="epilogue-btn-desc">霸总吃醋 · 领带缠绵与深情宣告</span>
+            </button>
+          </div>
+          <div class="epilogue-custom-box">
+            <input type="text" class="epilogue-custom-input" id="epilogue-custom-input" placeholder="输入你心里想看的专属情节（如：想看傅总做饭）...">
+            <button class="epilogue-custom-btn" onclick="generateCustomEpilogue()">✨ 立即生成</button>
+          </div>
+        `;
+        bodyEl.appendChild(studio);
+      }
+
 
       // 若处于同步阅读模式，动态联动更新好感度
       if (affTrackingMode === 'sync') {
@@ -3839,6 +4503,87 @@
         </div>
       </div>
     </div>
+  </div>
+
+
+  <!-- 悬浮男神密聊入口 -->
+  <div class="floating-phone-trigger" id="floating-phone-trigger" onclick="openPhoneModal()" title="查看男神发来的私信">
+    <span style="font-size: 16px;">📱</span>
+    <span>男神密聊</span>
+    <span class="phone-trigger-badge" id="floating-phone-badge">私信</span>
+  </div>
+
+  <!-- 男神密聊手机模态窗 -->
+  <div class="phone-modal-overlay" id="phone-modal-overlay" onclick="if(event.target===this)closePhoneModal()">
+    <div class="phone-device">
+      <!-- 灵动岛顶栏 -->
+      <div class="phone-notch-bar">
+        <span id="phone-current-time">23:45</span>
+        <div class="dynamic-island">
+          <span>💖 连线中</span>
+        </div>
+        <span>5G 📶 100%</span>
+      </div>
+
+      <!-- 手机主视图：联系人列表 -->
+      <div class="phone-header">
+        <div class="phone-header-title">💬 见雪的私人通讯</div>
+        <button class="phone-close-btn" onclick="closePhoneModal()">✕</button>
+      </div>
+      <div class="phone-contact-list" id="phone-contact-list">
+        <!-- 动态生成男神联系人 -->
+      </div>
+
+      <!-- 聊天子界面 -->
+      <div class="phone-chat-view" id="phone-chat-view">
+        <div class="phone-chat-header">
+          <button class="phone-back-btn" onclick="backToContacts()">‹ 返回</button>
+          <div class="phone-chat-hero-meta">
+            <div class="phone-chat-hero-name" id="chat-hero-name">傅沉舟</div>
+            <div class="phone-chat-hero-status" id="chat-hero-status">A市云顶 · 在楼下迈巴赫里等你 🌧️</div>
+          </div>
+          <div style="width: 40px;"></div>
+        </div>
+
+        <div class="phone-chat-messages" id="phone-chat-messages">
+          <!-- 消息流 -->
+        </div>
+
+        <div class="phone-chat-footer">
+          <div class="reply-options-title">💬 点击选择见雪的心动回复：</div>
+          <div class="reply-options-list" id="phone-reply-options">
+            <!-- 回复选项按钮 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 拍立得生成模态窗 -->
+  <div class="polaroid-modal-overlay" id="polaroid-modal-overlay" onclick="if(event.target===this)closePolaroidModal()">
+    <div class="polaroid-modal-card">
+      <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:12px; align-items:center;">
+        <div style="font-size:15px; font-weight:700; color:#fff;">📸 剧情名场面 · 专属心动拍立得</div>
+        <button class="phone-close-btn" onclick="closePolaroidModal()">✕</button>
+      </div>
+      <div class="polaroid-canvas-wrap">
+        <canvas id="polaroid-canvas" class="polaroid-canvas" width="600" height="920"></canvas>
+      </div>
+      <div class="polaroid-actions">
+        <button class="polaroid-action-btn primary" onclick="downloadPolaroid()">💾 保存高清卡片</button>
+        <button class="polaroid-action-btn secondary" onclick="copyPolaroidQuote()">📋 复制金句</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 沉浸式男神心动耳语浮窗 -->
+  <div class="hero-whisper-capsule" id="hero-whisper-capsule" onclick="whisperHeartReaction()">
+    <img src="assets/avatars/fu_chenzhou.jpg" class="whisper-avatar" id="whisper-avatar" alt="男神">
+    <div class="whisper-content">
+      <div class="whisper-name" id="whisper-name">傅沉舟 · 心动耳语</div>
+      <div class="whisper-text" id="whisper-text">“这次抓住，我就不会再放手了。”</div>
+    </div>
+    <span class="whisper-heart-icon">💖</span>
   </div>
 
 </body>
