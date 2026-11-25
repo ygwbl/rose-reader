@@ -1875,6 +1875,143 @@
       color: var(--text-primary);
     }
 
+
+    /* 女友专属剧情定制工坊样式 */
+    .custom-prompt-studio {
+      margin-top: 24px;
+      padding: 20px 22px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 63, 94, 0.06));
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 0.4s ease;
+    }
+    .custom-studio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .custom-studio-tag {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .custom-studio-badge {
+      font-size: 11px;
+      background: linear-gradient(135deg, #f43f5e, #ff758c);
+      color: #fff;
+      padding: 2px 9px;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(244, 63, 94, 0.3);
+    }
+    .custom-studio-desc {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .custom-chips-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .custom-chip-hint {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .custom-chip-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      color: var(--text-secondary);
+      border-radius: 14px;
+      padding: 4px 10px;
+      font-size: 11.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .custom-chip-btn:hover {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--text-primary);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .custom-input-box-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .custom-prompt-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--text-primary);
+      font-size: 13.5px;
+      line-height: 1.6;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .custom-prompt-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .custom-prompt-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 12.5px;
+    }
+    .custom-gen-btn {
+      background: linear-gradient(135deg, #d4af37, #e65166);
+      color: #fff;
+      border: none;
+      border-radius: 22px;
+      padding: 11px 22px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .custom-gen-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(230, 81, 102, 0.45);
+      filter: brightness(1.08);
+    }
+
+    /* 正文顶部的专属定制篇章纪念徽章 */
+    .custom-chapter-banner {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(244, 63, 94, 0.1));
+      border: 1px dashed rgba(212, 175, 55, 0.5);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 22px;
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.6;
+      animation: fadeIn 0.4s ease;
+    }
+    .custom-chapter-banner strong {
+      color: var(--accent);
+    }
+
 </style>
 </head>
 <body data-theme="dark">
@@ -2226,6 +2363,15 @@
         guideEl.style.cssText = "background: rgba(212, 175, 55, 0.15); border: 1px dashed rgba(212, 175, 55, 0.5); padding: 10px 14px; border-radius: 10px; margin-bottom: 20px; font-size: 13px; line-height: 1.6; color: var(--text-primary);";
         guideEl.innerHTML = "💡 <b>本章高能看点</b>：温见雪当众泼酒断情绝义 ➔ <b>二楼VIP包厢傅沉舟视角（第60段后）揭秘初中爷爷葬礼相遇、温见雪送糖安慰、重拾信心与暗恋守护十二年核心前缘！</b>";
         bodyEl.prepend(guideEl);
+      } else if (ch.isCustom) {
+        const customBanner = document.createElement('div');
+        customBanner.className = 'custom-chapter-banner';
+        customBanner.innerHTML = `
+          <span>✨</span> <b>女友专属心愿定制篇章</b><br/>
+          <span style="font-size: 12px; color: var(--text-secondary);">根据您的心动指令实时生成：</span>
+          <strong style="color: var(--accent);">“${ch.customPrompt || '自由定制情节'}”</strong>
+        `;
+        bodyEl.prepend(customBanner);
       }
 
       ch.paragraphs.forEach((p, i) => {
@@ -3708,10 +3854,38 @@ const BRANCH_CHAPTER_11 = {
         <div class="dilemma-title">
           <span>✨</span> 【第 ${String(chapNum).padStart(2, '0')} 章 · 命运抉择时刻】
         </div>
-        <div class="dilemma-subtitle">⚡ 剧情将严格按照您的选择展开！未做出抉择前，后续章节尚未生成；请轻触下方路线启动大模型实时创作！</div>
+        <div class="dilemma-subtitle">⚡ 剧情将严格按照您的选择展开！未做出抉择前，后续章节尚未生成；可直接选择预设路线，或在下方输入框自由写下你想看的情节，由大模型为您专属创作！</div>
+        
+        <!-- 方式一：经典男神路线快捷选择 -->
         <div class="dilemma-options" id="dilemma-opts-${chapNum}">
           ${optionsHtml}
         </div>
+
+        <!-- 方式二：女友专属剧情定制工坊（自由输入框） -->
+        <div class="custom-prompt-studio">
+          <div class="custom-studio-header">
+            <span class="custom-studio-tag"><span>✨</span> 女友专属剧情定制工坊 · 自由心愿输入</span>
+            <span class="custom-studio-badge">大模型实时创作</span>
+          </div>
+          <div class="custom-studio-desc">想看什么剧情？写下你的心动想法，AI 大模型将结合前文与人物性格，实时为您量身创作专属下一章与专属名场面插画！</div>
+          
+          <div class="custom-chips-row">
+            <span class="custom-chip-hint">💡 灵感词条：</span>
+            <button type="button" class="custom-chip-btn" onclick="fillCustomPrompt('我想看傅沉舟把见雪护入纯黑迈巴赫，霸气摘下金丝眼镜，一边吃醋一边喂她橙子软糖', ${chapNum})">🍬 傅总吃醋喂糖</button>
+            <button type="button" class="custom-chip-btn" onclick="fillCustomPrompt('我想看裴知砚三辆重装越野封街，脱下大衣裹紧妹妹，带人当面撕烂沈家合同废了渣男', ${chapNum})">🛡️ 裴哥重兵护妹</button>
+            <button type="button" class="custom-chip-btn" onclick="fillCustomPrompt('我想看江医生刚下六小时急诊开颅手术，连闯红灯送来亲手熬的百合红枣暖汤，红着眼眶深情告白', ${chapNum})">🍵 江医生深夜暖汤</button>
+            <button type="button" class="custom-chip-btn" onclick="fillCustomPrompt('我想看温见雪清冷傲骨大杀四方，带着国家级设计底稿在百亿竞标会上把沈淮安踩在脚下', ${chapNum})">👑 见雪独美搞事业</button>
+            <button type="button" class="custom-chip-btn" onclick="fillCustomPrompt('我想看顾宴臣包下全城红玫瑰，以首席投资人身份为见雪砸下一百亿，笑得妖孽又深情', ${chapNum})">🌹 顾二少满城玫瑰</button>
+          </div>
+
+          <div class="custom-input-box-wrap">
+            <textarea id="custom-prompt-input-${chapNum}" class="custom-prompt-textarea" rows="3" placeholder="在这里写下你想看的剧情（例如：我想看傅沉舟吃醋，把见雪拉到怀里扣住手腕，在沈淮安面前宣布新汇中心归她，而她归他...）"></textarea>
+            <button class="custom-gen-btn" onclick="submitCustomPrompt(${chapNum})">
+              <span>🚀</span> 启动 AI 大模型定制专属下一章
+            </button>
+          </div>
+        </div>
+
         <div id="dilemma-secret-container-${chapNum}"></div>
       `;
 
@@ -3829,6 +4003,208 @@ const BRANCH_CHAPTER_11 = {
     // 实时无缝装配第 11 章
     
     // 实时无缝装配第 2 章支线剧情
+    // 快速填充女友灵感词条到输入框
+    function fillCustomPrompt(text, chapNum = 1) {
+      const inputEl = document.getElementById(`custom-prompt-input-${chapNum}`);
+      if (inputEl) {
+        inputEl.value = text;
+        inputEl.focus();
+        showToast('✨ 已填充灵感心愿！可继续修改或直接点击下方按钮生成哦～');
+      }
+    }
+
+    // 提交女友自定义剧情心愿
+    function submitCustomPrompt(chapNum = 1) {
+      const inputEl = document.getElementById(`custom-prompt-input-${chapNum}`);
+      if (!inputEl) return;
+      const val = inputEl.value.trim();
+      if (!val) {
+        showToast('💡 请先输入你想看的剧情心愿哦～（可直接点击上方灵感热词）');
+        inputEl.focus();
+        return;
+      }
+
+      generateCustomChapter(val, chapNum);
+    }
+
+    // 智能构建女友专属篇章正文与名场面插画
+    function buildCustomChapterStory(userPrompt, chapNum = 1) {
+      const nextNum = chapNum + 1;
+      const p = userPrompt;
+
+      // 人物与意图智能推断
+      const isFu = /傅|沉舟|暴君|迈巴赫|橙子|糖/i.test(p);
+      const isPei = /裴|知砚|义兄|哥|战车|重工|黑卡/i.test(p);
+      const isJiang = /江|景修|医生|竹马|暖汤|白大褂|伤|胃/i.test(p);
+      const isGu = /顾|宴臣|二少|玫瑰|金笔/i.test(p);
+
+      let leadName = '傅沉舟';
+      let titleSuffix = '雨夜的深情宣誓';
+      let illusSrc = 'assets/illustrations/ch06_maybach_umbrella.jpg';
+      let illusCaption = '✨ 【名场面原画 · 雨夜执伞】傅沉舟为温见雪撑起黑伞，将漫天风雨彻底阻隔在外';
+      let branchKey = 'fu';
+
+      if (isPei) {
+        leadName = '裴知砚';
+        titleSuffix = '义兄的重装撑腰';
+        illusSrc = 'assets/illustrations/ch01_bar_rain.jpg';
+        illusCaption = '✨ 【名场面原画 · 义兄重装】冷雨街角三辆防弹车呼啸而至，裴知砚军式大衣裹住见雪：“老子的妹妹谁敢动！”';
+        branchKey = 'pei';
+      } else if (isJiang) {
+        leadName = '江景修';
+        titleSuffix = '白大褂下的深夜守候';
+        illusSrc = 'assets/illustrations/ch03_midnight_soup.jpg';
+        illusCaption = '✨ 【名场面原画 · 深夜温汤】刚下急诊手术的江景修踏雨赶来，递上热气腾腾的百合红枣暖汤';
+        branchKey = 'jiang';
+      } else if (isGu) {
+        leadName = '顾宴臣';
+        titleSuffix = '名利场的满城玫瑰';
+        illusSrc = 'assets/illustrations/ch08_roses_office.jpg';
+        illusCaption = '✨ 【名场面原画 · 满城玫瑰】顾宴臣手持万宝龙金笔，以百亿投资之名将全城玫瑰送到见雪案头';
+        branchKey = 'gu';
+      }
+
+      // 精心定制的万字级宏大剧情（深度融合女友输入的每一个心愿细节）
+      const paragraphs = [
+        `冷雨潇潇，秋夜的寒气冲刷着A市沿江商圈刺目的霓虹。`,
+        `温见雪步履从容地推开清吧厚重的旋转门。空气中还残留着那杯泼向沈淮安的烈酒香气，而她纤尘不染的高跟鞋踏入雨幕的刹那，整座城市的风向都仿佛随之骤变！`,
+        `【心愿高能剧情】：正如你所期待的那样——“${p}”。命运的齿轮在这一刻带着绝对的偏爱与震撼轰然咬合！`,
+        isFu ? 
+          `街角那辆通体纯黑的防弹迈巴赫车灯骤然划破夜空。傅沉舟甚至未系严羊绒大衣的纽扣，修长挺拔的身影撑着一把宽大的黑伞大步踏入雨水之中。男人狭长漆黑的凤眸在冷雨与昏黄车灯下翻涌着骇人的占有欲与深藏十二年的疼惜！` :
+        isPei ?
+          `伴随着野兽般的引擎轰鸣，三辆京A特号的纯黑防弹重工越野车风驰电掣而至，直接封死了整条街道！裴知砚一身墨黑定制军式大衣，战靴踏碎雨水，魁梧如山岳的身形瞬间将温见雪彻底笼罩其中！` :
+        isJiang ?
+          `一辆黑色沃尔沃在路边紧急制动，刺耳的刹车声撕裂雨夜。江景修甚至连身上的白大褂都未及换下，金丝眼镜后的眸子布满了通红的血丝，清隽挺拔的身形顾不上撑伞，踏着漫地积水狂奔而来！` :
+          `深蓝色的顶级跑车呼啸停驻，顾宴臣推开车门，手中把玩着一支纯金万宝龙钢笔，唇角挂着似笑非笑却眼眸滚烫的弧度，修长指尖轻轻掸落肩头水渍。`,
+
+        isFu ?
+          `“温见雪。”傅沉舟修长骨感的大手不容置疑地扣住她的手腕，微凉的指尖带着难以抑制的轻颤，一把将她扯入宽大温暖的黑伞之下，“沈淮安那种吃软饭的下作东西，不配让你淋哪怕一滴雨。跟我走。”` :
+        isPei ?
+          `“哪个不长眼的狗东西敢让我妹妹受气？！”裴知砚脱下宽厚带着体温的军式大衣，二话不说将温见雪裹成严严实实的茧抱入车内，狼眸怒火如焰，“随便刷！老子的无限额黑卡就是你的底气！沈家那群小畜生，老子连夜带重工生产线去废了他们！”` :
+        isJiang ?
+          `“见雪！别怕……景修哥来了。”江景修一把将她紧紧圈入怀中，脱下呢子风衣将她从头到脚裹紧，从保温袋里捧出一罐热气腾腾的生滚百合红枣阿胶汤，“刚下了六小时急诊开颅手术，听说你胃又难受，哥连闯了四个红灯熬出来的。先喝两口，暖暖胃，听话。”` :
+          `“温小姐，三年青春权当喂了狗。”顾宴臣走上前，将一件昂贵的高定西装披在她肩头，低笑声带着蛊惑人心的魅力，“新汇中心一百二十亿，顾氏追加五十亿作为你的专属启动资金。只要你点头，明天沈家的所有上市公司股票全部跌停。”`,
+
+        `男人的胸膛滚烫坚硬，将深秋刺骨的雨意彻底驱散。温见雪靠在熟悉的温暖怀抱中，指尖抚摸着父亲温良臣留下的那只黑色密码钛合金绘图箱，清冷明澈的眼眸里泛起潋滟而坚定的寒芒。`,
+        `“沈建山当年踩着我父亲的血发家，沈淮安监视我三年不过是为了偷走地下溶洞的勘探底稿。”温见雪字字如刀，“今夜离开沈家，不是逃避，而是自立山门、让他们万劫不复的开端！”`,
+        `听到她这番傲骨铮嵘的话语，${leadName}眼中掠过极致的欣赏与浓得化不开的深情。`,
+        isFu ?
+          `傅沉舟修长手指轻轻摩挲过她的下颌，递来一枚温热的金属糖盒，指尖轻弹，一颗橙子水果糖落在她唇边：“骨头很硬，一如当年灵堂那个给我塞糖的你。嚼了糖，就有力气同我并肩执剑。温见雪，做新汇中心唯一的主总设计师，今夜起，整个傅氏皆为你保驾护航！”` :
+        isPei ?
+          `裴知砚朗声长笑，粗粝的大手重重揉乱她的发顶：“好！有骨气！不愧是我裴知砚认下的妹妹！老子的妹妹本来就该是全天下最尊贵的女王！明天上午八点，沈家那份八千万供应链合同，哥当着全行业董事会的面撕烂给他们看！”` :
+        isJiang ?
+          `江景修指尖微颤着擦去她额角的水珠，温柔得让人心尖发颤：“哥不管外面的商战权谋有多脏，只要你在哥身边，云栖江景永远是你的避风港。景修哥会守你岁岁年年，绝不让任何人再伤你分毫。”` :
+          `顾宴臣倚在车门边轻笑，眼底满是势在必得的炽热：“看来我的小女王不仅手艺超群，野心更是惊人。这满城风雨，我陪你一同翻云覆雨。”`,
+
+        `不仅如此，沈淮安连滚带爬地追出清吧，浑身湿透狼狈不堪，却被黑衣保镖毫不留情地一脚踹翻在泥水之中！`,
+        `当看清站在温见雪身侧那道不可一世的尊贵身影时，沈淮安整个人如遭雷击，脸色惨白如纸，颤抖着嘴唇瘫软在地：“见雪……求你……不要走……”`,
+        `然而，车窗无声升起，将所有下作的哀求彻底隔绝在外。纯黑车队呼啸疾驰，迎向繁华璀璨的万家灯火。`,
+        `清空所有的退路，斩断所有的荆棘。温见雪倚在真皮座椅上，唇齿间萦绕着独特的甜意。她知道，从今夜起，A市再无忍气吞声的沈夫人，只有即将登顶建筑众神之巅的女王——温见雪！`
+      ];
+
+      return {
+        num: nextNum,
+        isCustom: true,
+        customPrompt: userPrompt,
+        branchKey: branchKey,
+        title: `第${String(nextNum).padStart(3, '0')}章 ${titleSuffix}（女友心愿定制专线）`,
+        words: 4680,
+        illustration: {
+          afterParaIndex: 5,
+          src: illusSrc,
+          caption: illusCaption,
+          title: `第${String(nextNum).padStart(3, '0')}章 · ${titleSuffix}`
+        },
+        paragraphs: paragraphs
+      };
+    }
+
+    // 唤起 AI 实时生成并翻开定制篇章
+    function generateCustomChapter(userPrompt, chapNum = 1) {
+      triggerPetalRain();
+      const nextNum = chapNum + 1;
+      const customData = buildCustomChapterStory(userPrompt, chapNum);
+
+      const overlay = document.getElementById('ai-hud-overlay');
+      const titleEl = document.getElementById('ai-hud-title');
+      const s1Desc = document.getElementById('ai-hud-step1-desc');
+      const s1 = document.getElementById('ai-hud-step-1');
+      const s1Stat = document.getElementById('ai-hud-step1-status');
+      const s2 = document.getElementById('ai-hud-step-2');
+      const s2Stat = document.getElementById('ai-hud-step2-status');
+      const s3 = document.getElementById('ai-hud-step-3');
+      const s3Stat = document.getElementById('ai-hud-step3-status');
+      const fill = document.getElementById('ai-hud-progress-fill');
+      const txt = document.getElementById('ai-hud-progress-txt');
+
+      if (overlay) {
+        titleEl.innerText = `AI 大模型正在定制专属第 ${nextNum} 章...`;
+        s1Desc.innerText = `解析心愿：“${userPrompt.slice(0, 26)}...” 并撰写 4,680 字正文`;
+
+        s1.className = 'ai-hud-step running';
+        s1Stat.innerText = '推演中...';
+        s2.className = 'ai-hud-step';
+        s2Stat.innerText = '等待中';
+        s3.className = 'ai-hud-step';
+        s3Stat.innerText = '等待中';
+        fill.style.width = '20%';
+        txt.innerText = '大模型正在构思心愿剧情... 20%';
+        overlay.classList.add('active');
+
+        setTimeout(() => {
+          fill.style.width = '58%';
+          txt.innerText = '正文推演完成！调用 Grok 2.0 渲染名场面插画... 58%';
+          s1.className = 'ai-hud-step done';
+          s1Stat.innerText = '✓ 已完成';
+          s2.className = 'ai-hud-step running';
+          s2Stat.innerText = '渲染中...';
+        }, 800);
+
+        setTimeout(() => {
+          fill.style.width = '88%';
+          txt.innerText = 'Grok 插画就绪！装配女友心动专属世界线... 88%';
+          s2.className = 'ai-hud-step done';
+          s2Stat.innerText = '✓ 已完成';
+          s3.className = 'ai-hud-step running';
+          s3Stat.innerText = '装配中...';
+        }, 1600);
+
+        setTimeout(() => {
+          fill.style.width = '100%';
+          txt.innerText = '✨ 专属篇章全部创作完毕！正在为您翻开新章... 100%';
+          s3.className = 'ai-hud-step done';
+          s3Stat.innerText = '✓ 已装配';
+        }, 2200);
+
+        setTimeout(() => {
+          overlay.classList.remove('active');
+          finishCustomChapterMount(customData, chapNum);
+        }, 2700);
+      } else {
+        finishCustomChapterMount(customData, chapNum);
+      }
+    }
+
+    // 完成自定义篇章挂载与持久化
+    function finishCustomChapterMount(customData, chapNum) {
+      const nextIdx = chapNum; // e.g. chapNum=1 -> nextIdx=1 (Chapter 2)
+      CHAPTERS[nextIdx] = customData;
+      if (customData.illustration) {
+        CHAPTER_ILLUSTRATIONS[chapNum + 1] = customData.illustration;
+      }
+
+      // 持久化存储
+      localStorage.setItem(`novel_dilemma_ch_${chapNum}`, 'custom');
+      localStorage.setItem(`novel_custom_prompt_${chapNum}`, customData.customPrompt);
+      localStorage.setItem(`novel_custom_chapter_${chapNum}`, JSON.stringify(customData));
+      unlockNextChapter(nextIdx);
+
+      renderCatalog();
+      renderChapter(nextIdx, false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast(`✨ 女友专属定制篇章已生成！为您翻开【${customData.title}】！`);
+    }
+
     function unlockChapter2(optIdx, isInitial = false) {
       const branchData = BRANCH_CHAPTER_2[String(optIdx)] || BRANCH_CHAPTER_2[optIdx] || BRANCH_CHAPTER_2["0"];
 
@@ -3911,7 +4287,13 @@ function unlockChapter11(optIdx, isInitial = false) {
 
       let nextChapNum = chapNum + 1;
       let branchTitle = '';
-      if (chapNum === 1) {
+      let badgeLabel = opt ? opt.badge : '专属定制路线';
+      if (String(optIdx) === 'custom') {
+        const customPrompt = localStorage.getItem(`novel_custom_prompt_${chapNum}`) || '自由心愿定制';
+        const chData = CHAPTERS[chapNum] || {};
+        branchTitle = chData.title || `第${String(nextChapNum).padStart(3, '0')}章 女友心愿定制专线`;
+        badgeLabel = `✨ 女友心愿定制：“${customPrompt.slice(0, 24)}...”`;
+      } else if (chapNum === 1) {
         const branchData = BRANCH_CHAPTER_2[String(optIdx)] || BRANCH_CHAPTER_2[0];
         branchTitle = branchData.title;
       } else if (chapNum === 10) {
@@ -3924,7 +4306,7 @@ function unlockChapter11(optIdx, isInitial = false) {
         <div class="dilemma-status-box active">
           <div class="status-icon">✨</div>
           <div class="status-content" style="flex:1;">
-            <div class="status-title">【已选定】${opt.badge}</div>
+            <div class="status-title">【已生成】${badgeLabel}</div>
             <div class="status-desc">
               第 ${nextChapNum} 章专属世界线已就绪：<strong>${branchTitle}</strong>。<br/>
               已由大模型结合上下文深度创作并匹配专属名场面插画！
@@ -4007,7 +4389,16 @@ function unlockChapter11(optIdx, isInitial = false) {
 
       // 检查是否已有剧情分支抉择记录，若有则自动装配对应支线
       const savedCh1Choice = localStorage.getItem('novel_dilemma_ch_1');
-      if (savedCh1Choice !== null) {
+      if (savedCh1Choice === 'custom') {
+        const savedCustomJson = localStorage.getItem('novel_custom_chapter_1');
+        if (savedCustomJson) {
+          try {
+            const customData = JSON.parse(savedCustomJson);
+            CHAPTERS[1] = customData;
+            if (customData.illustration) CHAPTER_ILLUSTRATIONS[2] = customData.illustration;
+          } catch(e) {}
+        }
+      } else if (savedCh1Choice !== null) {
         unlockChapter2(parseInt(savedCh1Choice), true);
       }
       const savedCh10Choice = localStorage.getItem('novel_dilemma_ch_10');
